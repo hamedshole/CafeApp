@@ -1,5 +1,9 @@
 using CafeApp.Web.Components;
 using CafeApp.Infrastructure.SqlServer;
+using CafeApp.Domain.Interfaces;
+using CafeApp.Web.Util;
+using CafeApp.Shared;
+using CafeApp.Shared.Layouts;
 namespace CafeApp.Web;
 
 public class Program
@@ -8,11 +12,12 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
         builder.AddServiceDefaults();
-
+        builder.Services.AddSingleton<IAuth, AuthService>();
         // Add services to the container.
         builder.Services.AddRazorComponents()
             .AddInteractiveServerComponents();
         builder.Services.RegisterServerDb(builder.Configuration.GetConnectionString("cafeDb"));
+        builder.Services.RegisterAppServices();
         var app = builder.Build();
 
         app.MapDefaultEndpoints();
@@ -31,7 +36,8 @@ public class Program
         app.UseAntiforgery();
 
         app.MapRazorComponents<App>()
-            .AddInteractiveServerRenderMode();
+            .AddInteractiveServerRenderMode()
+            .AddAdditionalAssemblies(typeof(AdminLayout).Assembly);
 
         app.Run();
     }

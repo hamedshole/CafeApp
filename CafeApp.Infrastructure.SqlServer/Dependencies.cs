@@ -8,7 +8,7 @@ namespace CafeApp.Infrastructure.SqlServer
     {
         public static IServiceCollection RegisterServerDb(this IServiceCollection services,string connectionString)
         {
-            services.AddDbContext<CafeDbContext>(opt=>opt.UseSqlServer(connectionString));
+            services.AddDbContext<CafeDbContext>(opt=>opt.UseSqlServer(connectionString),ServiceLifetime.Singleton,ServiceLifetime.Singleton);
             services.RegisterInfrastructure(connectionString);
             return services;
         }

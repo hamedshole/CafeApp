@@ -9,6 +9,7 @@
   <ItemGroup>
     <ProjectReference Include="..\CafeApp.Infrastructure.SqlServer\CafeApp.Infrastructure.SqlServer.csproj" />
     <ProjectReference Include="..\CafeApp.ServiceDefaults\CafeApp.ServiceDefaults.csproj" />
+    <ProjectReference Include="..\CafeApp.Shared\CafeApp.Shared.csproj" />
   </ItemGroup>
 
 </Project>

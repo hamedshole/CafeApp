@@ -66,6 +66,12 @@
 
     <ItemGroup>
       <ProjectReference Include="..\CafeApp.Infrastructure.LocalDb\CafeApp.Infrastructure.LocalDb.csproj" />
+      <ProjectReference Include="..\CafeApp.Shared\CafeApp.Shared.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Components\Layout\" />
+      <Folder Include="Components\Pages\" />
     </ItemGroup>
 
 </Project>

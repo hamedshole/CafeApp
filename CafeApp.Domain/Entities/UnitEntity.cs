@@ -6,7 +6,7 @@ namespace CafeApp.Domain.Entities
     {
         public string Title { get; set; }
         public Guid? ParentId { get; set; }
-        public UnitEntity? parent { get; set; }
+        public UnitEntity? Parent { get; set; }
         public int? Relation { get; set; }
         public bool IsActive { get; set; }
 
