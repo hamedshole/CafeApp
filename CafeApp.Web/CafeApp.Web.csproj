@@ -12,4 +12,8 @@
     <ProjectReference Include="..\CafeApp.Shared\CafeApp.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
 </Project>
