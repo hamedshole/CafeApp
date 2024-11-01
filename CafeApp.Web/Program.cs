@@ -4,6 +4,8 @@ using CafeApp.Domain.Interfaces;
 using CafeApp.Web.Util;
 using CafeApp.Shared;
 using CafeApp.Shared.Layouts;
+using CafeApp.Hubs;
+using CafeApp.Shared.Util;
 namespace CafeApp.Web;
 
 public class Program
@@ -12,10 +14,13 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
         builder.AddServiceDefaults();
+        builder.Services.AddSingleton(new ServerOptions { Url = builder.Configuration.GetValue<string>("ServerUrl") });
         builder.Services.AddSingleton<IAuth, AuthService>();
+        builder.Services.AddSignalR();
+
         // Add services to the container.
         builder.Services.AddRazorComponents()
-            .AddInteractiveServerComponents();
+            .AddInteractiveServerComponents(x=>x.DetailedErrors=true);
         builder.Services.RegisterServerDb(builder.Configuration.GetConnectionString("cafeDb"));
         builder.Services.RegisterAppServices();
         var app = builder.Build();
@@ -31,13 +36,14 @@ public class Program
         }
 
         app.UseHttpsRedirection();
-
+        
         app.UseStaticFiles();
         app.UseAntiforgery();
 
         app.MapRazorComponents<App>()
             .AddInteractiveServerRenderMode()
             .AddAdditionalAssemblies(typeof(AdminLayout).Assembly);
+        app.MapHub<TableHub>("/TableHub");
 
         app.Run();
     }

@@ -13,10 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Data\Configurations\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\CafeApp.Domain\CafeApp.Domain.csproj" />
   </ItemGroup>
 

@@ -4,7 +4,6 @@ using CafeApp.Domain.Interfaces;
 using CafeApp.Infrastructure.Data.Context;
 using CafeApp.Infrastructure.Data.Util;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query;
 using System.Linq.Expressions;
 
 namespace CafeApp.Infrastructure.Data.Repositories
@@ -30,7 +29,8 @@ namespace CafeApp.Infrastructure.Data.Repositories
         {
             try
             {
-                entity.Create(_auth.GetUserId());
+                //entity.Create(_auth.GetUserId());
+                entity.Create(Guid.Empty);
                 await _dbSet.AddAsync(entity);
                 return entity;
             }
@@ -70,7 +70,7 @@ namespace CafeApp.Infrastructure.Data.Repositories
 
 
 
-        async Task<TEntity> IRepository<TEntity>.GetByIdAsync(int id)
+        async Task<TEntity> IRepository<TEntity>.GetByIdAsync(Guid id)
         {
             try
             {
@@ -117,7 +117,7 @@ namespace CafeApp.Infrastructure.Data.Repositories
         }
 
 
-        async Task IRepository<TEntity>.DeleteAsync(int id)
+        async Task IRepository<TEntity>.DeleteAsync(Guid id)
         {
             TEntity? entity = await _dbSet.FindAsync(id) ?? throw new NotFoundException(nameof(TEntity), id);
             entity.Delete(_auth.GetUserId());

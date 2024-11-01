@@ -9,8 +9,8 @@ namespace CafeApp.Business.Interfaces
     {
         Task CreateAsync<TParameter>(TParameter parameters);
         Task UpdateAsync<TParameter>(TParameter parameters);
-        Task DeleteAsync(int id);
-        Task<TDetailedDto> GetById(int id);
+        Task DeleteAsync(Guid id);
+        Task<TDetailedDto> GetById(Guid id);
         Task<List<TDto>> GetAll(ISpecifications<TEntity> parameters);
         TDetailedDto GetBy(ISpecifications<TEntity> parameters);
         Task<PagedList<TDto>> GetPaged(ISpecifications<TEntity> parameters, PagingParameter pagingParameter);

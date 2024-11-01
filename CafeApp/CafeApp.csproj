@@ -74,6 +74,15 @@
       <Folder Include="Resources\Splash\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Content Update="Resources\Raw\appsettings.Development.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <Content Update="Resources\Raw\appsettings.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
     
 
 </Project>

@@ -1,21 +1,28 @@
 ﻿@layout EmptyLayout
+@inject NavigationManager _navigation;
 <div class="mainbody">
     <div class="login-container">
         <!-- اضافه کردن لوگو -->
-    <img src="_content/CafeApp.Shared/images/logo.png" alt="لوگو" class="logo">
+        <img src="_content/CafeApp.Shared/images/logo.png" alt="لوگو" class="login-logo">
 
         <div class="login-box">
             <h2>پنل مدیریتی کافه لاین</h2>
-            <form action="/login" method="post">
+            <form >
                 <div class="input-container">
                     <input type="text" id="username" placeholder="نام کاربری">
                 </div>
                 <div class="input-container">
                     <input type="password" id="password" placeholder="رمز عبور">
                 </div>
-                <button class="btn btn-success btn-lg col-md-8 col-12">ورود</button>
+                <button @onclick=GoToDashboard class="btn btn-success btn-lg col-md-8 col-12">ورود</button>
+
             </form>
         </div>
     </div>
 
 </div>
+@code{
+    void GoToDashboard(){
+        _navigation.NavigateTo("/dashboard",true);
+    }
+}

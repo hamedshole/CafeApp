@@ -1,27 +1,34 @@
-﻿@inherits LayoutComponentBase
+﻿@using CafeApp.Shared.Components.DashboardComponents
+@inherits LayoutComponentBase
 
+<MudRTLProvider RightToLeft="true">
 
 <MudThemeProvider />
+    <MudPopoverProvider />
+    <MudSnackbarProvider/>
+    <MudLayout Class="dashboard">
+   <TablesPanel></TablesPanel>
+            <MudIcon Style="margin-top:100px;margin-right:20px" Size="Size.Large" Icon="@Icons.Material.Rounded.ArrowBack"></MudIcon>
+        <MudDrawer Class="drawer-responsive" Style="margin-top:100px" @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Docked" OpenMiniOnHover="true" Variant="DrawerVariant.Mini" Elevation="2">
 
-<MudLayout>
-    <MudAppBar Elevation="1">
-        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
-        <MudText Typo="Typo.h5" Class="ml-3">Application</MudText>
-        <MudSpacer />
-        <MudIconButton Icon="@Icons.Material.Filled.MoreVert" Color="Color.Inherit" Edge="Edge.End" />
-    </MudAppBar>
-    <MudDrawer @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2">
-        <NavMenu></NavMenu>
+            <NavMenu ></NavMenu>
     </MudDrawer>
-    <MudMainContent>
+        <MudMainContent Class="dashboard" >
+            <div style="margin-right:15px;margin-top:-28px;">
         @Body
+            </div>
     </MudMainContent>
 </MudLayout>
+</MudRTLProvider>
+
 @code {
     bool _drawerOpen = true;
 
     void DrawerToggle()
     {
         _drawerOpen = !_drawerOpen;
+    }
+    string GetMargin(){
+        return _drawerOpen?"":"";
     }
 }

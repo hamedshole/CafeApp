@@ -1,0 +1,16 @@
+﻿@using CafeApp.Business.Interfaces
+@using CafeApp.Shared.Util
+@using Microsoft.JSInterop
+@inject IApplicationUnit _unit;
+@inject IJSRuntime _js
+@inject ServerOptions _server;
+
+<MudStack Justify="Justify.Center" Row="true" Class="dashboard-header">
+    <div class="dashboard-tables">
+        @foreach (var item in _tables)
+        {
+            <TableItem Item="item" ></TableItem>
+        }
+    </div>
+</MudStack>
+

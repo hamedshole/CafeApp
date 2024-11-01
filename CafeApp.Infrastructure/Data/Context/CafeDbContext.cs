@@ -1,11 +1,19 @@
 ﻿using CafeApp.Domain.Entities;
+using CafeApp.Infrastructure.Data.Configurations;
 using Microsoft.EntityFrameworkCore;
 namespace CafeApp.Infrastructure.Data.Context
 {
     internal class CafeDbContext : DbContext
     {
-        public CafeDbContext(DbContextOptions options) : base(options) { }
-        
+        public CafeDbContext(DbContextOptions options) : base(options)
+        {
+            this.Database.EnsureCreated();
+        }
+        public CafeDbContext()
+        {
+            
+        }
+
         public DbSet<AttendanceEntity> Attendances { get; set; }
         public DbSet<CustomerEntity> Customers { get; set; }
         public DbSet<OrderDetailEntity> OrderDetails { get; set; }
@@ -25,9 +33,13 @@ namespace CafeApp.Infrastructure.Data.Context
         public DbSet<UserEntity> Users { get; set; }
         public DbSet<UserRoleEntity> UserRoles { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(EntityConfigurations).Assembly);
+            base.OnModelCreating(modelBuilder);
+        }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            
             base.OnConfiguring(optionsBuilder);
         }
     }

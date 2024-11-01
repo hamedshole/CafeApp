@@ -27,7 +27,7 @@ namespace CafeApp.Business.Services
             }
         }
 
-        public virtual async Task DeleteAsync(int id)
+        public virtual async Task DeleteAsync(Guid id)
         {
             await _repository.DeleteAsync(id);
             await _repository.DataUnit.SaveChangesAsync();
@@ -45,7 +45,7 @@ namespace CafeApp.Business.Services
             return _mapper.Map<TEntity, TDetailedDto>(entity);
         }
 
-        public async Task<TDetailedDto> GetById(int id)
+        public async Task<TDetailedDto> GetById(Guid id)
         {
             var entity = await _repository.GetByIdAsync(id);
             return _mapper.Map<TDetailedDto>(entity);
@@ -56,7 +56,7 @@ namespace CafeApp.Business.Services
 
             var queryable = _repository.Get(specifications);
             int count = queryable.Count();
-            var collection = queryable.Take(pagingParameter.PageSize).Skip((pagingParameter.Page - 1) * pagingParameter.PageSize).ProjectTo<TDto>(_mapper.ConfigurationProvider).ToList();
+            var collection = queryable.Take(pagingParameter.PageSize).Skip((pagingParameter.Page) * pagingParameter.PageSize).ProjectTo<TDto>(_mapper.ConfigurationProvider).ToList();
             PagedList<TDto> result = new(collection, count);
             return await Task.FromResult(result);
         }

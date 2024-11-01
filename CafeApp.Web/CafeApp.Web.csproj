@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -11,8 +11,10 @@
     <ProjectReference Include="..\CafeApp.ServiceDefaults\CafeApp.ServiceDefaults.csproj" />
     <ProjectReference Include="..\CafeApp.Shared\CafeApp.Shared.csproj" />
   </ItemGroup>
+	
+	
 
-  <ItemGroup>
+	<ItemGroup>
     <Folder Include="wwwroot\" />
   </ItemGroup>
 

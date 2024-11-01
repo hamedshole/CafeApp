@@ -2,10 +2,7 @@
 {
     public interface INotification
     {
-        void NotifyCreate();
-        void NotifyUpdate();
-        void NotifyDelete();
+        void NotifySuccess();
         void Error(string message);
-        void NoResult();
     }
 }
