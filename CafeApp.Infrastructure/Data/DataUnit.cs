@@ -69,7 +69,6 @@ namespace CafeApp.Infrastructure.Data
         public async Task SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             var t = await _context.SaveChangesAsync(cancellationToken);
-            var tt = _context.Tables.Count();
         }
     }
 }

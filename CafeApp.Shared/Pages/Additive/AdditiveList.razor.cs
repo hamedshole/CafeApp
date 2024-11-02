@@ -1,5 +1,6 @@
 ﻿using CafeApp.Business.Helpers.Common;
 using CafeApp.Business.Helpers.Dtos;
+using CafeApp.Domain.Entities;
 using MudBlazor;
 
 namespace CafeApp.Shared.Pages.Additive
@@ -29,6 +30,26 @@ namespace CafeApp.Shared.Pages.Additive
         public void Edit(Guid id)
         {
             _navigation.NavigateTo("/dashboard/additives/" + id);
+
+        }
+        public async Task Sync()
+        {
+            try
+            {
+                ICollection<AdditiveEntity> dbEntities = await _unit.Additives.GetAllForSync();
+
+                foreach (AdditiveEntity dbEntity in dbEntities)
+                {
+                    dbEntity.ClearRelations();
+                    await _restUnit.Additives.WriteSync(dbEntity);
+                }
+                await _restUnit.Additives.Apply();
+            }
+            catch (Exception e)
+            {
+
+                throw;
+            }
 
         }
     }

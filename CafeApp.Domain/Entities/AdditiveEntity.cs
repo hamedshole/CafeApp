@@ -11,6 +11,10 @@ namespace CafeApp.Domain.Entities
         public long Amount { get; set; }
         public bool IsActive { get; set; }
 
+        public void ClearRelations()
+        {
+            Material = null;
+        }
      
         public AdditiveEntity()
         {
