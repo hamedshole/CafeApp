@@ -29,7 +29,7 @@ namespace CafeApp.Business.Helpers.Specifications
 
         public Expression<Func<TEntity, object>>? GroupBy { get; private set; }
 
-        private protected void AddInclude(string includeExpression)
+        internal  void AddInclude(string includeExpression)
         {
             Includes.Add(includeExpression);
         }

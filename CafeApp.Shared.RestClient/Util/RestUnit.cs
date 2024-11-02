@@ -1,6 +1,4 @@
-﻿using CafeApp.Business.Helpers.Dtos;
-using CafeApp.Business.Interfaces;
-using CafeApp.Domain.Common;
+﻿using CafeApp.Domain.Common;
 using CafeApp.Shared.RestClient.Interfaces;
 using CafeApp.Shared.RestClient.Repositories;
 
@@ -10,6 +8,16 @@ namespace CafeApp.Shared.RestClient.Util
     {
         private readonly HttpClient _httpClient;
         private ITableClient? _tablesClient;
+        private IMaterialsClient? _materialsClient;
+        private IUnitsClient? _unitsClient;
+        private IAdditivesClient? _additivesClient;
+        private ICategoriesClient? _categoriesClient;
+        private IProductClient? _productsClient;
+        private IUsersClient? _usersClient;
+        private ICustomersClient? _customersClient;
+        private IOrdersClient? _ordersClient;
+        private IInventoriesClient? _inventories;
+        private IFactorsClient? _factors;
 
         public RestUnit(ServerOptions serverOptions)
         {
@@ -18,24 +26,24 @@ namespace CafeApp.Shared.RestClient.Util
 
         public ITableClient Tables => _tablesClient ?? new TableClient(_httpClient, "tables");
 
-        public IMaterialService Materials => throw new NotImplementedException();
+        public IMaterialsClient Materials => _materialsClient ?? new MaterialsClient(_httpClient, "materials");
 
-        public IUnitService Units => throw new NotImplementedException();
+        public IUnitsClient Units => _unitsClient ?? new UnitsClient(_httpClient, "units");
 
-        public IAdditiveService Additives => throw new NotImplementedException();
+        public IAdditivesClient Additives => _additivesClient ?? new AdditivesClient(_httpClient, "additives");
 
-        public IProductCategoryService Categories => throw new NotImplementedException();
+        public ICategoriesClient Categories => _categoriesClient ?? new CategoriesClient(_httpClient, "categories");
 
-        public IProductService Products => throw new NotImplementedException();
+        public IProductClient Products => _productsClient ??new ProductsClient(_httpClient, "products");
 
-        public IUserService Users => throw new NotImplementedException();
+        public IUsersClient Users => _usersClient??new UsersClient(_httpClient,"users");
 
-        public ICustomerService Customers => throw new NotImplementedException();
+        public ICustomersClient Customers => _customersClient ?? new CustomersClient(_httpClient, "customers");
 
-        public IOrderService Orders => throw new NotImplementedException();
+        public IOrdersClient Orders =>  _ordersClient??new OrdersClient(_httpClient, "orders");
 
-        public IInventoryService Inventories => throw new NotImplementedException();
+        public IInventoriesClient Inventories => _inventories ?? new InventoriesClient(_httpClient, "inventories");
 
-        public IFactorService Factors => throw new NotImplementedException();
+        public IFactorsClient Factors => _factors ?? new FactorsClient(_httpClient, "factors");
     }
 }

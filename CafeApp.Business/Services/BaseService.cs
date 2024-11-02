@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using CafeApp.Business.Helpers.Common;
+using CafeApp.Business.Helpers.Specifications;
 using CafeApp.Business.Interfaces;
 using CafeApp.Domain.Common;
 using CafeApp.Domain.Interfaces;
@@ -11,6 +12,12 @@ namespace CafeApp.Business.Services
     {
         protected readonly IRepository<TEntity> _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         protected readonly IMapper _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+
+        public async Task Apply()
+        {
+            await _repository.DataUnit.SaveChangesAsync();
+        }
+
         public virtual async Task CreateAsync<TParameter>(TParameter parameter)
         {
             try
@@ -39,6 +46,18 @@ namespace CafeApp.Business.Services
             return await Task.FromResult(dtos);
         }
 
+        public async Task<ICollection<TEntity>> GetAllForSync(string[]? includes)
+        {
+            BaseSpecification<TEntity> specifications = new BaseSpecification<TEntity>();
+            if (includes is string[])
+                foreach (var item in includes)
+                {
+                    specifications.AddInclude(item);
+                }
+            ICollection<TEntity> entities = _repository.Get(specifications).ToList();
+            return await Task.FromResult(entities);
+        }
+
         public virtual TDetailedDto GetBy(ISpecifications<TEntity> specifications)
         {
             TEntity? entity = _repository.Get(specifications).FirstOrDefault();
@@ -57,7 +76,7 @@ namespace CafeApp.Business.Services
             var queryable = _repository.Get(specifications);
             int count = queryable.Count();
 
-            var collection = queryable.Take(pagingParameter.PageSize).Skip((pagingParameter.Page-1) * pagingParameter.PageSize).ProjectTo<TDto>(_mapper.ConfigurationProvider).ToList();
+            var collection = queryable.Take(pagingParameter.PageSize).Skip((pagingParameter.Page - 1) * pagingParameter.PageSize).ProjectTo<TDto>(_mapper.ConfigurationProvider).ToList();
             PagedList<TDto> result = new(collection, count);
             return await Task.FromResult(result);
         }
@@ -76,6 +95,11 @@ namespace CafeApp.Business.Services
 
                 throw;
             }
+        }
+
+        public async Task WriteSync(TEntity entity)
+        {
+           await _repository.CreateAsync(entity);
         }
     }
     internal class BaseService<TEntity, TDto>(IRepository<TEntity> repository, IMapper mapper) : BaseService<TEntity, TDto, TDto>(repository, mapper), IBaseService<TEntity, TDto> where TDto : class where TEntity : EntityBase

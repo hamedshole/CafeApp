@@ -6,15 +6,15 @@ namespace CafeApp.Shared.RestClient.Interfaces
     public interface IRestUnit
     {
         ITableClient Tables { get; }
-        IMaterialService Materials { get; }
-        IUnitService Units { get; }
-        IAdditiveService Additives { get; }
-        IProductCategoryService Categories { get; }
-        IProductService Products { get; }
-        IUserService Users { get; }
-        ICustomerService Customers { get; }
-        IOrderService Orders { get; }
-        IInventoryService Inventories { get; }
-        IFactorService Factors { get; }
+        IMaterialsClient Materials { get; }
+        IUnitsClient Units { get; }
+        IAdditivesClient Additives { get; }
+        ICategoriesClient Categories { get; }
+        IProductClient Products { get; }
+        IUsersClient Users { get; }
+        ICustomersClient Customers { get; }
+        IOrdersClient Orders { get; }
+        IInventoriesClient Inventories { get; }
+        IFactorsClient Factors { get; }
     }
 }

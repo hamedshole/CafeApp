@@ -14,6 +14,9 @@ namespace CafeApp.Business.Interfaces
         Task<List<TDto>> GetAll(ISpecifications<TEntity> parameters);
         TDetailedDto GetBy(ISpecifications<TEntity> parameters);
         Task<PagedList<TDto>> GetPaged(ISpecifications<TEntity> parameters, PagingParameter pagingParameter);
+        Task<ICollection<TEntity>> GetAllForSync(string[]? includes=null);
+        Task WriteSync(TEntity entity);
+        Task Apply();
     }
 
     public interface IBaseService<TEntity, TDto> : IBaseService<TEntity, TDto, TDto> where TDto : class where TEntity : EntityBase

@@ -1,18 +1,17 @@
 ﻿using CafeApp.Business.Helpers.Dtos;
+using CafeApp.Domain.Entities;
 using CafeApp.Shared.RestClient.Interfaces;
 using System.Net.Http.Json;
 
 namespace CafeApp.Shared.RestClient.Repositories
 {
-    internal class TableClient : ITableClient
+    internal class TableClient : BaseClient<TableEntity>,ITableClient
     {
-        private readonly HttpClient _httpClient;
-        private readonly string _api;
+      
 
-        public TableClient(HttpClient httpClient, string api)
+        public TableClient(HttpClient httpClient, string api):base(httpClient,api)
         {
-            _httpClient = httpClient;
-            _api = api;
+            
         }
 
         public async Task<ICollection<DashboardTableModel>> GetDashboardTables()

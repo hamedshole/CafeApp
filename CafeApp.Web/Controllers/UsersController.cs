@@ -1,6 +1,7 @@
 ﻿using CafeApp.Business.Helpers.Common;
 using CafeApp.Business.Helpers.Dtos;
 using CafeApp.Business.Interfaces;
+using CafeApp.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -33,7 +34,52 @@ namespace CafeApp.Web.Controllers
             }
         }
 
-        
+        [HttpGet("sync")]
+        public async Task<ActionResult<ICollection<ProductCategoryEntity>>> SyncCategories()
+        {
+            try
+            {
+                var res = await _service.GetAllForSync();
+                return Ok(res);
+            }
+            catch (Exception e)
+            {
+
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpGet("apply")]
+        public async Task<IActionResult> Apply()
+        {
+            try
+            {
+                await _service.Apply();
+                return Ok();
+            }
+            catch (Exception e)
+            {
+
+                return BadRequest(e.Message);
+            }
+        }
+
+
+        [HttpGet("writesync")]
+        public async Task<IActionResult> WriteSync(UserEntity entity)
+        {
+            try
+            {
+                await _service.WriteSync(entity);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+
+                return BadRequest(e.Message);
+            }
+        }
+
 
 
         // GET api/<TablesController>/5
