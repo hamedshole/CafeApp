@@ -99,7 +99,11 @@ namespace CafeApp.Business.Services
 
         public async Task WriteSync(TEntity entity)
         {
-           await _repository.CreateAsync(entity);
+            TEntity? existed =  _repository.Get(x=>x.Id==entity.Id).FirstOrDefault();
+            if (existed is TEntity)
+                await _repository.UpdateAsync(entity);
+            else
+                await _repository.CreateAsync(entity);
         }
     }
     internal class BaseService<TEntity, TDto>(IRepository<TEntity> repository, IMapper mapper) : BaseService<TEntity, TDto, TDto>(repository, mapper), IBaseService<TEntity, TDto> where TDto : class where TEntity : EntityBase

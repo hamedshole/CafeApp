@@ -11,5 +11,11 @@ namespace CafeApp.Domain.Entities
         public bool IsActive { get; set; }
         public ICollection<UnitEntity>? Childs { get; set; }
 
+        public void ClearRelations()
+        {
+            Parent = null;
+            Childs = null;
+        }
+
     }
 }

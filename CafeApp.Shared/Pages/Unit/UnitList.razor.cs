@@ -1,5 +1,6 @@
 ﻿using CafeApp.Business.Helpers.Common;
 using CafeApp.Business.Helpers.Dtos;
+using CafeApp.Domain.Entities;
 using MudBlazor;
 
 namespace CafeApp.Shared.Pages.Unit
@@ -21,6 +22,26 @@ namespace CafeApp.Shared.Pages.Unit
         {
             await _unit.Units.DeleteAsync(id);
             await _dataGrid.ReloadServerData();
+        }
+        public async Task Sync()
+        {
+            try
+            {
+                ICollection<UnitEntity> dbEntities = await _unit.Units.GetAllForSync();
+
+                foreach (UnitEntity dbEntity in dbEntities)
+                {
+                    dbEntity.ClearRelations();
+                    await _restUnit.Units.WriteSync(dbEntity);
+                }
+                await _restUnit.Products.Apply();
+            }
+            catch (Exception e)
+            {
+
+                throw;
+            }
+
         }
     }
 }
