@@ -5,6 +5,7 @@ namespace CafeApp.Business.Helpers.Specifications
 {
     public class InventorySpecifications:BaseSpecification<InventoryEntity>
     {
+
         public InventorySpecifications AddFilters(ListInventoryParameter parameter)
         {
             if(!string.IsNullOrEmpty(parameter.Title))

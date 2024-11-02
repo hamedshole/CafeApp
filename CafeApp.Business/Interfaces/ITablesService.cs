@@ -5,5 +5,6 @@ namespace CafeApp.Business.Interfaces
 {
     public interface ITablesService:IBaseService<TableEntity,TableDto>
     {
+        Task<ICollection<DashboardTableModel>> GetDashboardTables();
     }
 }

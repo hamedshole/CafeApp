@@ -1,4 +1,5 @@
 ﻿using CafeApp.Business.Helpers.Common;
+using CafeApp.Business.Helpers.Specifications;
 using CafeApp.Domain.Entities;
 using CafeApp.Domain.Interfaces;
 
@@ -8,7 +9,7 @@ namespace CafeApp.Business.Helpers.Dtos
     {
         public Guid Id { get; set; }
         public string Title { get; set; }
-        public string IsActive { get; set; }
+        public bool IsActive { get; set; }
         public InventoryDto()
         {
             
@@ -25,7 +26,7 @@ namespace CafeApp.Business.Helpers.Dtos
     }
     public class UpdateInventoryParameter
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string Title { get; set; }
         public bool IsActive { get; set; }
     }
@@ -36,7 +37,9 @@ namespace CafeApp.Business.Helpers.Dtos
 
         public ISpecifications<InventoryEntity> GetSpecifications()
         {
-            throw new NotImplementedException();
+            var inventorySpecifications = new InventorySpecifications();
+            inventorySpecifications.AddFilters(this);
+            return inventorySpecifications;
         }
     }
 }

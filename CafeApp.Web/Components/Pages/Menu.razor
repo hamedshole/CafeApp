@@ -4,7 +4,7 @@
 @layout EmptyLayout
 <AntiforgeryToken></AntiforgeryToken>
 
-<CafeApp.Shared.Pages.MenuTemplate></CafeApp.Shared.Pages.MenuTemplate>
+<CafeApp.Shared.Pages.MenuTemplate TableId="@TableId" ></CafeApp.Shared.Pages.MenuTemplate>
 @code {
     [Parameter]
     public string? TableId { get; set; }

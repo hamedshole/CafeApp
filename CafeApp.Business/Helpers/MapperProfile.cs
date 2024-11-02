@@ -63,7 +63,9 @@ namespace CafeApp.Business.Helpers
                 .ForMember(x => x.Title, opt => opt.MapFrom(x => x.Additive!.Title))
                 .ForMember(x => x.Amount, opt => opt.MapFrom(x => x.Additive!.Amount.ToString()));
 
-
+            CreateMap<InventoryEntity, InventoryDto>();
+            CreateMap<CreateInventoryParameter, InventoryEntity>();
+            CreateMap<UpdateInventoryParameter, InventoryEntity>();
 
 
         }

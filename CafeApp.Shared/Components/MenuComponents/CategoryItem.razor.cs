@@ -6,6 +6,6 @@ namespace CafeApp.Shared.Components.MenuComponents
     public partial class CategoryItem
     {
         [Parameter]
-        public ProductCategoryDto Item { get; set; }
+        public MenuCategoryModel Item { get; set; }
     }
 }

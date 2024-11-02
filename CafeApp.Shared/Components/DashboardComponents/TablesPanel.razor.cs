@@ -23,23 +23,26 @@ namespace CafeApp.Shared.Components.DashboardComponents
         }
         protected async override Task OnInitializedAsync()
         {
+
             hubConnection = new HubConnectionBuilder()
          .WithUrl($"{_server.Url}TableHub")
          .Build();
             hubConnection.On<string, string>("TableAlert", Alert);
             await hubConnection.StartAsync();
-            //_tables = await _unit.Dashboard.GetTables();
-            _tables=new List<DashboardTableModel>();
-            _tables.Add(new DashboardTableModel() { Title="1",State=TableState.empty});
+
+            _tables = await _unit.Tables.GetDashboardTables();
         }
         private async void Alert(string tableId, string connectionId)
         {
-            _tables.FirstOrDefault(x => x.Id == int.Parse(tableId)).LastState = _tables.FirstOrDefault(x => x.Id == int.Parse(tableId)).State;
+            _tables.FirstOrDefault(x => x.Number == int.Parse(tableId))!.LastState = _tables.FirstOrDefault(x => x.Number == int.Parse(tableId))!.State;
 
-            _tables.FirstOrDefault(x => x.Id == int.Parse(tableId)).State = TableState.requesting;
-            _tables.FirstOrDefault(x => x.Id == int.Parse(tableId)).LastConnectionId = connectionId;
-            await _module.InvokeVoidAsync("PlayAlert");
-            await InvokeAsync(StateHasChanged);
+            _tables.FirstOrDefault(x => x.Number == int.Parse(tableId))!.State = TableState.requesting;
+            _tables.FirstOrDefault(x => x.Number == int.Parse(tableId))!.LastConnectionId = connectionId;
+            if (_module != null)
+            {
+                await _module!.InvokeVoidAsync("PlayAlert");
+            }
+                await InvokeAsync(StateHasChanged);
         }
     }
 }

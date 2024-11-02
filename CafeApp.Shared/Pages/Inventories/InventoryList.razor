@@ -4,17 +4,15 @@
 @inject IApplicationUnit _unit;
 @inject INotification _notification;
 @inject NavigationManager _navigation;
-@page "/dashboard/tables"
+@page "/dashboard/inventories"
 @layout AdminLayout
 
 <MudButton OnClick=GoToCreatePAge Style="margin-top: -7px; margin-bottom: 10px;" ButtonType="ButtonType.Button" Variant="Variant.Filled" ClickPropagation="true">
     <MudIcon Icon="@Icons.Material.Rounded.Create" Size="Size.Large"></MudIcon>
 </MudButton>
-<MudDataGrid Breakpoint="Breakpoint.None" T="TableDto"  ServerData="LoadData" >
+<MudDataGrid Breakpoint="Breakpoint.None" T="InventoryDto"  ServerData="LoadData" >
     <Columns>
         <PropertyColumn Sortable="false" Title="عنوان" Property="x => x.Title" />
-        <PropertyColumn Sortable="false" Title="شماره" Property="x => x.Number" />
-
         <TemplateColumn Title="وضعیت"  >
             <CellTemplate>
                 <MudStack   Row>

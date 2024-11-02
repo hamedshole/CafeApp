@@ -2,8 +2,9 @@
 {
     public class DashboardTableModel
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string Title { get; set; }
+        public int Number { get; set; }
         public TableState State { get; set; }
         public DashboardFactorModel Factor { get; set; }
         public string LastConnectionId { get; set; }

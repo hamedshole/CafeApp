@@ -527,7 +527,9 @@ h2 {
 }
 
 .new-badge {
-    background-image: url(/images/new.png);
+    width: 40px;
+    height: 40px;
+    background-image: url(/_content/CafeApp.Shared/images/new.png);
     background-size: cover;
     position: absolute;
     right: 0;

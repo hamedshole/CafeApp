@@ -8,6 +8,7 @@ namespace CafeApp.Business.Helpers.Dtos
     public class TableDto
     {
         public Guid Id { get; set; }
+        public int Number { get; set; }
         public string Title { get; set; }
         public bool IsActive { get; set; }
     }
@@ -25,6 +26,8 @@ namespace CafeApp.Business.Helpers.Dtos
     public class CreateTableParameter
     {
         public string Title { get; set; }
+        public int Number { get; set; }
+
         public bool IsActive { get; set; }
     }
     public class UpdateTableParameter : CreateTableParameter

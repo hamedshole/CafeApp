@@ -9,5 +9,9 @@ namespace CafeApp.Shared.Components.MenuComponents
         {
             _categories = new List<MenuCategoryModel>();
         }
+        protected override async Task OnInitializedAsync()
+        {
+            _categories = await _unit.Categories.GetMenu();
+        }
     }
 }
