@@ -1,11 +1,13 @@
 ﻿
 @page "/dashboard/materials"
 @using CafeApp.Business.Helpers.Dtos
+@using CafeApp.Shared.RestClient.Interfaces
 @layout AdminLayout
 @inject NavigationManager _navigation;
 @inject IApplicationUnit _unit;
-
+@inject IRestUnit _restUnit;
 <MudIconButton OnClick=GoToCreatePAge Icon="@Icons.Material.Filled.Add" Title="جدید">افزودن</MudIconButton>
+<MudIconButton OnClick=Sync Icon="@Icons.Material.Filled.Sync" Title="ارسال به سرور">ارسال به سرور</MudIconButton>
 
 <MudPaper Style="margin:10px" Elevation="2">
     <MudDataGrid @ref="_dataGrid" Striped=true ServerData=LoadData T="MaterialDto">

@@ -9,5 +9,9 @@ namespace CafeApp.Domain.Entities
         public UnitEntity? Unit { get; set; }
         public long UnitPrice{ get; set; }
         public bool IsActive { get; set; }
+        public void ClearRelations()
+        {
+            Unit = null;
+        }
     }
 }
