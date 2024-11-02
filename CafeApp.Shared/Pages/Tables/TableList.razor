@@ -1,7 +1,9 @@
 ﻿@using CafeApp.Business.Helpers.Dtos
 @using CafeApp.Business.Interfaces
 @using CafeApp.Domain.Interfaces
+@using CafeApp.Shared.RestClient.Interfaces
 @inject IApplicationUnit _unit;
+@inject IRestUnit _restUnit;
 @inject INotification _notification;
 @inject NavigationManager _navigation;
 @page "/dashboard/tables"
@@ -10,6 +12,8 @@
 <MudButton OnClick=GoToCreatePAge Style="margin-top: -7px; margin-bottom: 10px;" ButtonType="ButtonType.Button" Variant="Variant.Filled" ClickPropagation="true">
     <MudIcon Icon="@Icons.Material.Rounded.Create" Size="Size.Large"></MudIcon>
 </MudButton>
+<MudIconButton OnClick=Sync Icon="@Icons.Material.Filled.Sync" Title="ارسال به سرور">ارسال به سرور</MudIconButton>
+
 <MudDataGrid Breakpoint="Breakpoint.None" T="TableDto"  ServerData="LoadData" >
     <Columns>
         <PropertyColumn Sortable="false" Title="عنوان" Property="x => x.Title" />

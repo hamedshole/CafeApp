@@ -1,4 +1,5 @@
 ﻿using CafeApp.Business.Helpers.Dtos;
+using CafeApp.Domain.Entities;
 using MudBlazor;
 
 namespace CafeApp.Shared.Pages.Tables
@@ -37,6 +38,25 @@ namespace CafeApp.Shared.Pages.Tables
         {
            await _unit.Tables.DeleteAsync(id);
             _notification.NotifySuccess();
+        }
+        public async Task Sync()
+        {
+            try
+            {
+                ICollection<TableEntity> dbEntities = await _unit.Tables.GetAllForSync();
+
+                foreach (TableEntity dbEntity in dbEntities)
+                {
+                    await _restUnit.Tables.WriteSync(dbEntity);
+                }
+                await _restUnit.Products.Apply();
+            }
+            catch (Exception e)
+            {
+
+                throw;
+            }
+
         }
     }
 }
