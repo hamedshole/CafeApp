@@ -21,7 +21,7 @@ namespace CafeApp.Web.Controllers
 
         // GET: api/<TablesController>
         [HttpGet]
-        public async Task<ActionResult<PagedList<AdditiveDto>>> Get(ListAdditiveParameter parameter)
+        public async Task<ActionResult<PagedList<AdditiveDto>>> Get([FromQuery]ListAdditiveParameter parameter)
         {
             try
             {

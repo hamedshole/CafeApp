@@ -1,5 +1,6 @@
 ﻿using CafeApp.Business.Helpers.Common;
 using CafeApp.Business.Helpers.Dtos;
+using CafeApp.Domain.Entities;
 using MudBlazor;
 namespace CafeApp.Shared.Pages.Category
 {
@@ -28,6 +29,24 @@ namespace CafeApp.Shared.Pages.Category
         public async Task Delete(Guid id)
         {
             await _unit.Tables.DeleteAsync(id);
+        }
+        public async Task Sync()
+        {
+            try
+            {
+                ICollection<ProductCategoryEntity> dbEntities = await _unit.Categories.GetAllForSync();
+                foreach (ProductCategoryEntity dbEntity in dbEntities)
+                {
+                    await _restUnit.Categories.WriteSync(dbEntity);
+                }
+                await _restUnit.Categories.Apply();
+            }
+            catch (Exception e)
+            {
+
+                throw;
+            }
+           
         }
     }
 

@@ -26,13 +26,13 @@ namespace CafeApp.Shared.RestClient.Util
 
         public ITableClient Tables => _tablesClient ?? new TableClient(_httpClient, "tables");
 
-        public IMaterialsClient Materials => _materialsClient ?? new MaterialsClient(_httpClient, "materials");
+        public IMaterialsClient Materials => _materialsClient ?? new MaterialsClient(_httpClient, "Materials");
 
         public IUnitsClient Units => _unitsClient ?? new UnitsClient(_httpClient, "units");
 
-        public IAdditivesClient Additives => _additivesClient ?? new AdditivesClient(_httpClient, "additives");
+        public IAdditivesClient Additives => _additivesClient ?? new AdditivesClient(_httpClient, "Additives");
 
-        public ICategoriesClient Categories => _categoriesClient ?? new CategoriesClient(_httpClient, "categories");
+        public ICategoriesClient Categories => _categoriesClient ?? new CategoriesClient(_httpClient, "ProductCategories");
 
         public IProductClient Products => _productsClient ??new ProductsClient(_httpClient, "products");
 
@@ -42,7 +42,7 @@ namespace CafeApp.Shared.RestClient.Util
 
         public IOrdersClient Orders =>  _ordersClient??new OrdersClient(_httpClient, "orders");
 
-        public IInventoriesClient Inventories => _inventories ?? new InventoriesClient(_httpClient, "inventories");
+        public IInventoriesClient Inventories => _inventories ?? new InventoriesClient(_httpClient, "Inventories");
 
         public IFactorsClient Factors => _factors ?? new FactorsClient(_httpClient, "factors");
     }

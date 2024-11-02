@@ -33,12 +33,14 @@ namespace CafeApp.Infrastructure.Data.Configurations
 
         public void Configure(EntityTypeBuilder<TableEntity> builder)
         {
+          
             builder.HasQueryFilter(x => !x.IsDeleted);
 
         }
 
         public void Configure(EntityTypeBuilder<UnitEntity> builder)
         {
+            
             builder.HasQueryFilter(x => !x.IsDeleted);
 
             builder.HasOne(x => x.Parent).WithMany(x => x.Childs).HasForeignKey(x => x.ParentId);
@@ -46,29 +48,34 @@ namespace CafeApp.Infrastructure.Data.Configurations
 
         public void Configure(EntityTypeBuilder<MaterialEntity> builder)
         {
+            
             builder.HasQueryFilter(x => !x.IsDeleted);
 
         }
 
         public void Configure(EntityTypeBuilder<AdditiveEntity> builder)
         {
+           
             builder.HasQueryFilter(x => !x.IsDeleted);
 
         }
 
         public void Configure(EntityTypeBuilder<ProductCategoryEntity> builder)
         {
+           
             builder.HasQueryFilter(x => !x.IsDeleted);
         }
 
         public void Configure(EntityTypeBuilder<ProductEntity> builder)
         {
+            
             builder.HasQueryFilter(x => !x.IsDeleted);
 
         }
 
         public void Configure(EntityTypeBuilder<ProductMaterialEntity> builder)
         {
+         
             builder.HasOne(x=>x.Unit)
                 .WithMany()
                 .OnDelete(DeleteBehavior.NoAction);
@@ -77,18 +84,21 @@ namespace CafeApp.Infrastructure.Data.Configurations
 
         public void Configure(EntityTypeBuilder<ProductPriceLogEntity> builder)
         {
+          
             builder.HasQueryFilter(x => !x.IsDeleted);
 
         }
 
         public void Configure(EntityTypeBuilder<AdditivePriceLogEntity> builder)
         {
+           
             builder.HasQueryFilter(x => !x.IsDeleted);
 
         }
 
         public void Configure(EntityTypeBuilder<MaterialPriceLogEntity> builder)
         {
+          
             builder.HasQueryFilter(x => !x.IsDeleted);
 
 
@@ -96,6 +106,7 @@ namespace CafeApp.Infrastructure.Data.Configurations
 
         public void Configure(EntityTypeBuilder<OrderEntity> builder)
         {
+           
             builder.HasQueryFilter(x => !x.IsDeleted);
 
             builder.Property(x => x.State).HasConversion(x => (byte)x, x =>  (FactorState)x);
@@ -105,18 +116,21 @@ namespace CafeApp.Infrastructure.Data.Configurations
 
         public void Configure(EntityTypeBuilder<OrderItemEntity> builder)
         {
+           
             builder.HasQueryFilter(x => !x.IsDeleted);
 
         }
 
         public void Configure(EntityTypeBuilder<OrderItemAdditiveEntity> builder)
         {
+          
             builder.HasQueryFilter(x => !x.IsDeleted);
 
         }
 
         public void Configure(EntityTypeBuilder<UserEntity> builder)
         {
+           
             builder.Property(propertyExpression: x => x.Gender).HasConversion(x => (byte)x, x => (Gender)x);
             builder.HasQueryFilter(x => !x.IsDeleted);
 
@@ -124,6 +138,7 @@ namespace CafeApp.Infrastructure.Data.Configurations
 
         public void Configure(EntityTypeBuilder<CustomerEntity> builder)
         {
+           
             builder.HasQueryFilter(x => !x.IsDeleted);
 
             builder.Property(propertyExpression: x => x.Gender).HasConversion(x => (byte)x, x => (Gender)x);
@@ -131,28 +146,33 @@ namespace CafeApp.Infrastructure.Data.Configurations
 
         public void Configure(EntityTypeBuilder<InventoryEntity> builder)
         {
+           
             builder.HasQueryFilter(x => !x.IsDeleted);
 
         }
 
         public void Configure(EntityTypeBuilder<InventoryLogEntity> builder)
         {
-            builder.HasQueryFilter(x => !x.IsDeleted);
 
+            builder.HasQueryFilter(x => !x.IsDeleted);
+            
             builder.Property(propertyExpression: x => x.State).HasConversion(x => (byte)x, x =>  (InventoryLogState)x);
 
         }
 
         public void Configure(EntityTypeBuilder<UserRoleEntity> builder)
         {
+          
         }
 
         public void Configure(EntityTypeBuilder<RoleEntity> builder)
         {
+           
         }
 
         public void Configure(EntityTypeBuilder<InventoryFactorEntity> builder)
         {
+           
         }
     }
 }

@@ -11,7 +11,7 @@ namespace CafeApp.Infrastructure.Data.Context
         }
         public CafeDbContext()
         {
-            
+
         }
 
         public DbSet<AttendanceEntity> Attendances { get; set; }
@@ -46,5 +46,5 @@ namespace CafeApp.Infrastructure.Data.Context
 }
 
 
-    
+
 

@@ -64,8 +64,8 @@ namespace CafeApp.Web.Controllers
         }
 
 
-        [HttpGet("writesync")]
-        public async Task<IActionResult> WriteSync(ProductCategoryEntity entity)
+        [HttpPost("writesync")]
+        public async Task<IActionResult> WriteSync([FromBody]ProductCategoryEntity entity)
         {
             try
             {

@@ -20,7 +20,7 @@ namespace CafeApp.Web.Controllers
 
         // GET: api/<TablesController>
         [HttpGet]
-        public async Task<ActionResult<PagedList<InventoryDto>>> Get(ListInventoryParameter parameter)
+        public async Task<ActionResult<PagedList<InventoryDto>>> Get([FromQuery]ListInventoryParameter parameter)
         {
             try
             {

@@ -1,5 +1,6 @@
 ﻿using CafeApp.Business.Helpers.Common;
 using CafeApp.Business.Helpers.Dtos;
+using CafeApp.Domain.Entities;
 using MudBlazor;
 
 namespace CafeApp.Shared.Pages.Product
@@ -28,6 +29,26 @@ namespace CafeApp.Shared.Pages.Product
                 return Icons.Material.Filled.NewReleases;
             else
                 return string.Empty;
+        }
+        public async Task Sync()
+        {
+            try
+            {
+                ICollection<ProductEntity> dbEntities = await _unit.Products.GetAllForSync();
+                
+                foreach (ProductEntity dbEntity in dbEntities)
+                {
+                    dbEntity.ClearRelations();
+                    await _restUnit.Products.WriteSync(dbEntity);
+                }
+                await _restUnit.Products.Apply();
+            }
+            catch (Exception e)
+            {
+
+                throw;
+            }
+
         }
     }
 }

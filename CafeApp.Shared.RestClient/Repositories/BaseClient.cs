@@ -11,23 +11,23 @@ namespace CafeApp.Shared.RestClient.Repositories
         public BaseClient(HttpClient httpClient, string api)
         {
             _httpClient = httpClient;
-            _api = api;
+            _api = $"{api}";
         }
 
         public async Task Apply()
         {
-           await _httpClient.GetAsync($"{_api}/sync");
+           await _httpClient.GetAsync($"api/{_api}/apply");
         }
 
         public async Task<ICollection<TEntity>> SyncCategories()
         {
-            var res = await _httpClient.GetFromJsonAsync<ICollection<TEntity>>($"{_api}/sync");
+            var res = await _httpClient.GetFromJsonAsync<ICollection<TEntity>>($"api/{_api}/sync");
             return res!;
         }
 
         public async Task WriteSync(TEntity entity)
         {
-            await _httpClient.PostAsJsonAsync($"{_api}/writesync",entity);
+            await _httpClient.PostAsJsonAsync($"api/{_api}/writesync",entity);
         }
     }
 }

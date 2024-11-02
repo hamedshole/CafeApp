@@ -18,19 +18,20 @@
 
     public class EntityBase : IEntityBase
     {
-        public Guid Id { get; private set; }
-        public bool IsDeleted { get; private set; }
+        public Guid Id { get;  set; }
+        public bool IsDeleted { get;  set; }
 
-        public Guid CreateUserId { get; private set; }
-        public DateTime CreateTime { get; private set; }
-        public Guid? UpdateUserId { get; private set; }
-        public DateTime? UpdateTime { get; private set; }
-        public Guid? DeleteUserId { get; private set; }
-        public DateTime? DeleteTime { get; private set; }
+        public Guid CreateUserId { get;  set; }
+        public DateTime CreateTime { get;  set; }
+        public Guid? UpdateUserId { get;  set; }
+        public DateTime? UpdateTime { get;  set; }
+        public Guid? DeleteUserId { get;  set; }
+        public DateTime? DeleteTime { get;  set; }
 
         public EntityBase()
         {
-
+            if (Id == Guid.Empty)
+                Id = Guid.NewGuid();
         }
         public EntityBase(Guid id)
         {
