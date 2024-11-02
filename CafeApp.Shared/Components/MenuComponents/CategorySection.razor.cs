@@ -4,10 +4,10 @@ namespace CafeApp.Shared.Components.MenuComponents
 {
     public partial class CategorySection
     {
-        ICollection<ProductCategoryModel> _categories;
+        ICollection<MenuCategoryModel> _categories;
         public CategorySection()
         {
-            _categories = new List<ProductCategoryModel>();
+            _categories = new List<MenuCategoryModel>();
         }
     }
 }

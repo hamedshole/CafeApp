@@ -4,12 +4,12 @@
     {
         DateTime CreateTime { get; }
         Guid CreateUserId { get; }
-        DateTime DeleteTime { get; }
-        Guid DeleteUserId { get; }
+        DateTime? DeleteTime { get; }
+        Guid? DeleteUserId { get; }
         Guid Id { get; }
         bool IsDeleted { get; }
-        DateTime UpdateTime { get; }
-        Guid UpdateUserId { get; }
+        DateTime? UpdateTime { get; }
+        Guid? UpdateUserId { get; }
 
         void Create(Guid userId);
         void Delete(Guid userId);
@@ -23,10 +23,10 @@
 
         public Guid CreateUserId { get; private set; }
         public DateTime CreateTime { get; private set; }
-        public Guid UpdateUserId { get; private set; }
-        public DateTime UpdateTime { get; private set; }
-        public Guid DeleteUserId { get; private set; }
-        public DateTime DeleteTime { get; private set; }
+        public Guid? UpdateUserId { get; private set; }
+        public DateTime? UpdateTime { get; private set; }
+        public Guid? DeleteUserId { get; private set; }
+        public DateTime? DeleteTime { get; private set; }
 
         public EntityBase()
         {

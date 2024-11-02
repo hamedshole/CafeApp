@@ -1,14 +1,33 @@
 ﻿using CafeApp.Domain.Common;
-using CafeApp.Domain.ValueObjects;
 
 namespace CafeApp.Domain.Entities
 {
     public class ProductPriceLogEntity:EntityBase
     {
         public Guid ProductId { get; set; }
-        public PayoutEntity? Product { get; set; }
-        public Money Price{ get; set; }
+        public ProductEntity? Product { get; set; }
+        public long Price{ get; set; }
         public DateTime StartTime { get; set; }
         public DateTime? EndTime { get; set; }
+        public ProductPriceLogEntity(Guid productId, long price)
+        {
+            ProductId = productId;
+            Price = price;
+            StartTime = DateTime.Now;
+        }
+        public ProductPriceLogEntity()
+        {
+            
+        }
+        public ProductPriceLogEntity(ProductEntity product, long price)
+        {
+            Product = product;
+            Price = price   ;
+            StartTime = DateTime.Now;
+        }
+        public void PriceEnded()
+        {
+            EndTime = DateTime.Now;
+        }
     }
 }

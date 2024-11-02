@@ -1,0 +1,61 @@
+﻿
+@page "/dashboard/units"
+@using CafeApp.Business.Helpers.Dtos
+@using MudBlazor
+@layout AdminLayout
+@inject NavigationManager _navigation;
+@inject IApplicationUnit _unit
+<MudButton OnClick=OpenDetail Style="margin-top: -7px; margin-bottom: 10px;" ButtonType="ButtonType.Button" Variant="Variant.Filled" ClickPropagation="true">
+    <MudIcon Icon="@Icons.Material.Filled.Add" Size="Size.Large"></MudIcon>
+</MudButton>
+
+
+    <MudDataGrid @ref="_dataGrid" Striped=true ServerData=LoadData T="UnitDto">
+
+        <Columns>
+
+            <PropertyColumn Title="عنوان" Property="x=>x.Title"></PropertyColumn>
+            <PropertyColumn Title="واحد اصلی" Property="x=>x.Parent"></PropertyColumn>
+            <PropertyColumn Title="مقیاس" Property="x=>x.Relation"></PropertyColumn>
+            <TemplateColumn Title="وضعیت">
+                <CellTemplate>
+                    <MudStack Row>
+                        <MudCheckBox ReadOnly=true UnCheckedColor=Color.Error Color=Color.Success Value="context.Item.IsActive"></MudCheckBox>
+                    </MudStack>
+                </CellTemplate>
+            </TemplateColumn>
+            <TemplateColumn CellClass="d-flex justify-end">
+                <CellTemplate>
+                    <MudStack Row>
+                        <MudIconButton OnClick="()=>Edit(context.Item.Id)" Icon="@Icons.Material.Filled.Edit" />
+                        <MudIconButton OnClick="()=>Delete(context.Item.Id)" Icon="@Icons.Material.Filled.Delete" />
+                    </MudStack>
+                </CellTemplate>
+            </TemplateColumn>
+        </Columns>
+    </MudDataGrid>
+
+@code {
+    private MudDataGrid<UnitDto> _dataGrid;
+    private int rowNumber;
+    private bool _detailPanel = false;
+    private void OpenDetail()
+    {
+        _navigation.NavigateTo("/dashboard/units/new");
+    }
+    public void Edit(Guid id)
+    {
+        _navigation.NavigateTo("/dashboard/units/" + id);
+
+    }
+    private string IsActiveString(bool isActive)
+    {
+        if (isActive)
+            return "فعال";
+        else
+            return "غیرفعال";
+    }
+
+
+
+}

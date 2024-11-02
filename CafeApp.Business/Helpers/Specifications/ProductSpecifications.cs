@@ -1,26 +1,53 @@
 ﻿using CafeApp.Business.Helpers.Dtos;
 using CafeApp.Domain.Entities;
+using System.Linq.Expressions;
 
 namespace CafeApp.Business.Helpers.Specifications
 {
-    internal class ProductSpecifications : BaseSpecification<ProductEntity>
+    public class ProductSpecifications : BaseSpecification<ProductEntity>
     {
-        public ProductSpecifications()
+        public static ProductSpecifications Get(GetProductParameter parameter)
         {
+            ProductSpecifications specs = new ProductSpecifications();
+            specs.SetFilterCondition(x=>x.Id==parameter.Id);
+            specs.IncludeAdditives();
+            specs.IncludeCategory();
+            specs.IncludeMaterials();
+            return specs;
 
         }
-        public ProductSpecifications(ListProductParameter parameter)
+        public ProductSpecifications AddFilters(ListProductParameter parameter)
         {
-            if (parameter.IsActive is bool i)
-                SetFilterCondition(x => x.IsActive == i);
-            if (parameter.IsNew is bool isNew)
-                SetFilterCondition(x => x.IsNew == isNew);
-            if (parameter.OutOfStock is bool outof)
-                SetFilterCondition(x => x.OutOfStock == outof);
-            if (parameter.CategoryId is Guid categoryId)
-                SetFilterCondition(x => x.CategoryId == categoryId);
             if (string.IsNullOrEmpty(parameter.Title))
-                SetFilterCondition(x => x.Title.Contains(parameter.Title!));
+                SetFilterCondition(x => x.Title.Contains(x.Title));
+           
+            if (parameter.Price.HasValue && parameter.Price.Value > 0)
+                SetFilterCondition(x => x.Price == parameter.Price);
+            if (parameter.IsNew.HasValue)
+                SetFilterCondition(x => x.IsNew == parameter.IsNew);
+            if (parameter.IsActive.HasValue)
+                SetFilterCondition(x => x.IsActive == parameter.IsActive);
+            return this;
+        }
+        public ProductSpecifications AddFilter(Expression<Func<ProductEntity,bool>> expression)
+        {
+            base.SetFilterCondition(expression);
+            return this;
+        }
+        public ProductSpecifications IncludeCategory()
+        {
+            AddInclude(nameof(ProductEntity.Category));
+            return this;
+        }
+        public ProductSpecifications IncludeMaterials()
+        {
+            AddInclude("Materials.Material.Unit");
+            return this;
+        }
+        public ProductSpecifications IncludeAdditives()
+        {
+            AddInclude("Additives.Additive");
+            return this;
         }
     }
 }

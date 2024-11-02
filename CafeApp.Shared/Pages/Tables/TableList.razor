@@ -1,6 +1,8 @@
 ﻿@using CafeApp.Business.Helpers.Dtos
 @using CafeApp.Business.Interfaces
+@using CafeApp.Domain.Interfaces
 @inject IApplicationUnit _unit;
+@inject INotification _notification;
 @inject NavigationManager _navigation;
 @page "/dashboard/tables"
 @layout AdminLayout
@@ -11,13 +13,33 @@
 <MudDataGrid Breakpoint="Breakpoint.None" T="TableDto"  ServerData="LoadData" >
     <Columns>
         <PropertyColumn Sortable="false" Title="عنوان" Property="x => x.Title" />
-    <TemplateColumn Title="وضعیت" CellClass="d-flex justify-end">
+        <TemplateColumn Title="وضعیت"  >
             <CellTemplate>
-                <MudStack Row>
+                <MudStack   Row>
                    <MudCheckBox Value="@context.Item.IsActive"></MudCheckBox>
                 </MudStack>
             </CellTemplate>
         </TemplateColumn>
+        <TemplateColumn Title="ویرایش" >
+            <CellTemplate>
+                <MudStack  Row>
+                   <MudButton OnClick="()=>Edit(context.Item.Id)">
+                       <MudIcon Icon="@Icons.Material.Filled.Edit"></MudIcon>
+                   </MudButton>
+                </MudStack>
+            </CellTemplate>
+        </TemplateColumn>
+        <TemplateColumn Title="حذف">
+            <CellTemplate>
+                <MudStack Row>
+                    <MudButton OnClick="()=>Delete(context.Item.Id)">
+                        <MudIcon Icon="@Icons.Material.Filled.Delete"></MudIcon>
+                    </MudButton>
+                </MudStack>
+            </CellTemplate>
+        </TemplateColumn>
+
+        
     </Columns>
 </MudDataGrid>
 

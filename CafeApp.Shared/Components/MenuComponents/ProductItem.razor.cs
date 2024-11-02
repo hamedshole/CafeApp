@@ -6,7 +6,7 @@ namespace CafeApp.Shared.Components.MenuComponents
     public partial class ProductItem
     {
         [Parameter]
-        public ProductModel Item { get; set; }
+        public MenuProductModel Item { get; set; }
 
 
         private string IsNew()

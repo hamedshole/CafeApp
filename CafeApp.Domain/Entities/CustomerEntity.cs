@@ -9,7 +9,7 @@ namespace CafeApp.Domain.Entities
         public string FullName { get{ return $"{GenderTitle} {FirstName} {LastName}"; } }
         public Gender Gender { get; set; }
         public DateTime? Birthday { get; set; }
-        public string? MobileNumber { get; set; }
+        public string? PhoneNumber { get; set; }
 
         private string GenderTitle()
         {

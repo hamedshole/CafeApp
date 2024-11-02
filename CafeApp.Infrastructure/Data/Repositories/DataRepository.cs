@@ -97,7 +97,9 @@ namespace CafeApp.Infrastructure.Data.Repositories
                 TEntity? updateEntity = await _dbSet.FindAsync(entity.Id) ?? throw new NotFoundException(nameof(TEntity), entity.Id);
                 _dbSet.Entry(updateEntity).State = EntityState.Detached;
                 updateEntity = entity;
-                updateEntity.Update(_auth.GetUserId());
+                //updateEntity.Update(_auth.GetUserId());
+                updateEntity.Update(Guid.Empty);
+
                 _dbSet.Entry(updateEntity).State = EntityState.Modified;
 
 
@@ -120,26 +122,28 @@ namespace CafeApp.Infrastructure.Data.Repositories
         async Task IRepository<TEntity>.DeleteAsync(Guid id)
         {
             TEntity? entity = await _dbSet.FindAsync(id) ?? throw new NotFoundException(nameof(TEntity), id);
-            entity.Delete(_auth.GetUserId());
+            entity.Delete(Guid.Empty);
+            _dbSet.Entry(entity).State = EntityState.Modified;
+            //entity.Delete(_auth.GetUserId());
         }
 
- //       Expression<Func<SetPropertyCalls<TEntity>, SetPropertyCalls<TEntity>>> CombineSetters(
- //    IEnumerable<Expression<Func<SetPropertyCalls<TEntity>, SetPropertyCalls<TEntity>>>> setters
- //)
- //       {
- //           Expression<Func<SetPropertyCalls<TEntity>, SetPropertyCalls<TEntity>>> expr = sett => sett;
+        //       Expression<Func<SetPropertyCalls<TEntity>, SetPropertyCalls<TEntity>>> CombineSetters(
+        //    IEnumerable<Expression<Func<SetPropertyCalls<TEntity>, SetPropertyCalls<TEntity>>>> setters
+        //)
+        //       {
+        //           Expression<Func<SetPropertyCalls<TEntity>, SetPropertyCalls<TEntity>>> expr = sett => sett;
 
- //           foreach (var expr2 in setters)
- //           {
- //               var call = (MethodCallExpression)expr2.Body;
- //               expr = Expression.Lambda<Func<SetPropertyCalls<TEntity>, SetPropertyCalls<TEntity>>>(
- //                   Expression.Call(expr.Body, call.Method, call.Arguments),
- //                   expr2.Parameters
- //               );
- //           }
+        //           foreach (var expr2 in setters)
+        //           {
+        //               var call = (MethodCallExpression)expr2.Body;
+        //               expr = Expression.Lambda<Func<SetPropertyCalls<TEntity>, SetPropertyCalls<TEntity>>>(
+        //                   Expression.Call(expr.Body, call.Method, call.Arguments),
+        //                   expr2.Parameters
+        //               );
+        //           }
 
- //           return expr;
- //       }
+        //           return expr;
+        //       }
 
         //async Task IRepository<TEntity>.ExecuteDeleteAsync(Expression<Func<TEntity, bool>> expression)
         //{

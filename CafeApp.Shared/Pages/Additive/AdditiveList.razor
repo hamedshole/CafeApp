@@ -1,0 +1,56 @@
+﻿
+@page "/dashboard/additives"
+@using CafeApp.Business.Helpers.Dtos
+@layout AdminLayout
+@inject IApplicationUnit _unit;
+@inject NavigationManager _navigation;
+<MudIconButton OnClick=GoToCreatePAge Icon="@Icons.Material.Filled.Add" Title="جدید">افزودن</MudIconButton>
+
+
+<MudPaper Style="margin:10px" Elevation="2">
+    <MudDataGrid @ref="_dataGrid" Striped=true ServerData=LoadData T="AdditiveDto">
+
+        <Columns>
+
+            <PropertyColumn Title="عنوان" Property="x=>x.Title"></PropertyColumn>
+            <PropertyColumn Title="ماده اولیه" Property="x=>x.Material"></PropertyColumn>
+            <PropertyColumn Title="قیمت" Property="x=>x.Price"></PropertyColumn>
+
+            <PropertyColumn Title="مقدار" Property="x=>x.Amount"></PropertyColumn>
+            <TemplateColumn Title="وضعیت">
+                <CellTemplate>
+                    <MudStack Row>
+                        <MudCheckBox ReadOnly=true UnCheckedColor=Color.Error Color=Color.Success Value="context.Item.IsActive"></MudCheckBox>
+                    </MudStack>
+                </CellTemplate>
+            </TemplateColumn>
+            <TemplateColumn CellClass="d-flex justify-end">
+                <CellTemplate>
+                    <MudStack Row>
+                        <MudIconButton OnClick="()=>Edit(context.Item.Id)" Icon="@Icons.Material.Filled.Edit" />
+                        <MudIconButton OnClick="()=>Delete(context.Item.Id)" Icon="@Icons.Material.Filled.Delete" />
+                    </MudStack>
+                </CellTemplate>
+            </TemplateColumn>
+        </Columns>
+        
+    </MudDataGrid>
+</MudPaper>
+
+@code {
+    private MudDataGrid<AdditiveDto> _dataGrid;
+    private int rowNumber;
+    private bool _detailPanel = false;
+    
+
+    private string IsActiveString(bool isActive)
+    {
+        if (isActive)
+            return "فعال";
+        else
+            return "غیرفعال";
+    }
+
+
+
+}

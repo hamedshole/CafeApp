@@ -1,5 +1,4 @@
 ﻿using CafeApp.Domain.Common;
-using CafeApp.Domain.ValueObjects;
 
 namespace CafeApp.Domain.Entities
 {
@@ -14,10 +13,10 @@ namespace CafeApp.Domain.Entities
         public FactorType Type { get; set; }
         public Guid? TableId { get; set; }
         public TableEntity? Table { get; set; }
-        public Money TotalPrice{ get; set; }
+        public long TotalPrice{ get; set; }
         public bool HasDiscount { get; set; }
-        public Money PaidAmount { get; set; }
-        public Money TotalCost { get; set; }
+        public long PaidAmount { get; set; }
+        public long TotalCost { get; set; }
         public string? Description { get; set; }
         public ICollection<OrderDetailEntity>? Details { get; set; }
     }

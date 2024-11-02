@@ -56,7 +56,8 @@ namespace CafeApp.Business.Services
 
             var queryable = _repository.Get(specifications);
             int count = queryable.Count();
-            var collection = queryable.Take(pagingParameter.PageSize).Skip((pagingParameter.Page) * pagingParameter.PageSize).ProjectTo<TDto>(_mapper.ConfigurationProvider).ToList();
+
+            var collection = queryable.Take(pagingParameter.PageSize).Skip((pagingParameter.Page-1) * pagingParameter.PageSize).ProjectTo<TDto>(_mapper.ConfigurationProvider).ToList();
             PagedList<TDto> result = new(collection, count);
             return await Task.FromResult(result);
         }

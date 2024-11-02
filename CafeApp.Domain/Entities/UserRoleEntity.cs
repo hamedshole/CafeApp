@@ -8,10 +8,10 @@ namespace CafeApp.Domain.Entities
         public RoleEntity? Role { get; set; }
         public Guid UserId { get; set; }
         public UserEntity? User { get; set; }
-        public bool Create { get; set; }
-        public bool Update { get; set; }
-        public bool Delete { get; set; }
-        public bool Get { get; set; }
+        public bool AllowCreate { get; set; }
+        public bool AllowUpdate { get; set; }
+        public bool AllowDelete { get; set; }
+        public bool AllowGet { get; set; }
         public bool IsActive { get; set; }
     }
 }

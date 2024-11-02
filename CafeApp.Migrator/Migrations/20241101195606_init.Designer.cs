@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CafeApp.Migrator.Migrations
 {
     [DbContext(typeof(CafeDbContext))]
-    [Migration("20241031183858_init")]
+    [Migration("20241101195606_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -24,6 +24,105 @@ namespace CafeApp.Migrator.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("CafeApp.Domain.Entities.AdditiveEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<long>("Amount")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("CreateUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DeleteTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("DeleteUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("MaterialId")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("MaterialId1")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<long>("Price")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("UpdateUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MaterialId1");
+
+                    b.ToTable("AdditiveEntity");
+                });
+
+            modelBuilder.Entity("CafeApp.Domain.Entities.AdditivePriceLogEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AdditiveId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("CreateUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DeleteTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("DeleteUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("EndTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<long>("Price")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("UpdateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("UpdateUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AdditiveId");
+
+                    b.ToTable("AdditivePriceLogEntity");
+                });
 
             modelBuilder.Entity("CafeApp.Domain.Entities.AttendanceEntity", b =>
                 {
@@ -37,10 +136,10 @@ namespace CafeApp.Migrator.Migrations
                     b.Property<Guid>("CreateUserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("DeleteTime")
+                    b.Property<DateTime?>("DeleteTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("DeleteUserId")
+                    b.Property<Guid?>("DeleteUserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsDeleted")
@@ -58,10 +157,10 @@ namespace CafeApp.Migrator.Migrations
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("UpdateTime")
+                    b.Property<DateTime?>("UpdateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("UpdateUserId")
+                    b.Property<Guid?>("UpdateUserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("UserId")
@@ -89,17 +188,17 @@ namespace CafeApp.Migrator.Migrations
                     b.Property<Guid>("CreateUserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("DeleteTime")
+                    b.Property<DateTime?>("DeleteTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("DeleteUserId")
+                    b.Property<Guid?>("DeleteUserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("Gender")
-                        .HasColumnType("bit");
+                    b.Property<byte>("Gender")
+                        .HasColumnType("tinyint");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -108,13 +207,13 @@ namespace CafeApp.Migrator.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("MobileNumber")
+                    b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("UpdateTime")
+                    b.Property<DateTime?>("UpdateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("UpdateUserId")
+                    b.Property<Guid?>("UpdateUserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -134,10 +233,10 @@ namespace CafeApp.Migrator.Migrations
                     b.Property<Guid>("CreateUserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("DeleteTime")
+                    b.Property<DateTime?>("DeleteTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("DeleteUserId")
+                    b.Property<Guid?>("DeleteUserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
@@ -153,15 +252,67 @@ namespace CafeApp.Migrator.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("UpdateTime")
+                    b.Property<DateTime?>("UpdateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("UpdateUserId")
+                    b.Property<Guid?>("UpdateUserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
                     b.ToTable("Inventories");
+                });
+
+            modelBuilder.Entity("CafeApp.Domain.Entities.InventoryFactorEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("CreateUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DeleteTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("DeleteUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("InventoryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Number")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Time")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("TotalPrice")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("UpdateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("UpdateUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InventoryId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("InventoryFactorEntity");
                 });
 
             modelBuilder.Entity("CafeApp.Domain.Entities.InventoryLogEntity", b =>
@@ -179,14 +330,17 @@ namespace CafeApp.Migrator.Migrations
                     b.Property<Guid>("CreateUserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("DeleteTime")
+                    b.Property<DateTime?>("DeleteTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("DeleteUserId")
+                    b.Property<Guid?>("DeleteUserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int?>("Description")
                         .HasColumnType("int");
+
+                    b.Property<Guid?>("InventoryFactorEntityId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -194,19 +348,21 @@ namespace CafeApp.Migrator.Migrations
                     b.Property<Guid>("MaterialId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("State")
-                        .HasColumnType("int");
+                    b.Property<byte>("State")
+                        .HasColumnType("tinyint");
 
                     b.Property<DateTime>("Time")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("UpdateTime")
+                    b.Property<DateTime?>("UpdateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("UpdateUserId")
+                    b.Property<Guid?>("UpdateUserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("InventoryFactorEntityId");
 
                     b.HasIndex("MaterialId");
 
@@ -225,10 +381,10 @@ namespace CafeApp.Migrator.Migrations
                     b.Property<Guid>("CreateUserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("DeleteTime")
+                    b.Property<DateTime?>("DeleteTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("DeleteUserId")
+                    b.Property<Guid?>("DeleteUserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsActive")
@@ -247,10 +403,10 @@ namespace CafeApp.Migrator.Migrations
                     b.Property<long>("UnitPrice")
                         .HasColumnType("bigint");
 
-                    b.Property<DateTime>("UpdateTime")
+                    b.Property<DateTime?>("UpdateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("UpdateUserId")
+                    b.Property<Guid?>("UpdateUserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -266,16 +422,19 @@ namespace CafeApp.Migrator.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<long>("BuyPrice")
+                        .HasColumnType("bigint");
+
                     b.Property<DateTime>("CreateTime")
                         .HasColumnType("datetime2");
 
                     b.Property<Guid>("CreateUserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("DeleteTime")
+                    b.Property<DateTime?>("DeleteTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("DeleteUserId")
+                    b.Property<Guid?>("DeleteUserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("EndTime")
@@ -287,16 +446,16 @@ namespace CafeApp.Migrator.Migrations
                     b.Property<Guid>("MaterialId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<long>("Price")
+                    b.Property<long>("SellPrice")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime>("StartTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("UpdateTime")
+                    b.Property<DateTime?>("UpdateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("UpdateUserId")
+                    b.Property<Guid?>("UpdateUserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -321,10 +480,10 @@ namespace CafeApp.Migrator.Migrations
                     b.Property<Guid>("CreateUserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("DeleteTime")
+                    b.Property<DateTime?>("DeleteTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("DeleteUserId")
+                    b.Property<Guid?>("DeleteUserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
@@ -339,10 +498,10 @@ namespace CafeApp.Migrator.Migrations
                     b.Property<Guid>("ProductId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("UpdateTime")
+                    b.Property<DateTime?>("UpdateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("UpdateUserId")
+                    b.Property<Guid?>("UpdateUserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -369,10 +528,10 @@ namespace CafeApp.Migrator.Migrations
                     b.Property<Guid?>("CustomerId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("DeleteTime")
+                    b.Property<DateTime?>("DeleteTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("DeleteUserId")
+                    b.Property<Guid?>("DeleteUserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
@@ -387,8 +546,8 @@ namespace CafeApp.Migrator.Migrations
                     b.Property<long>("PaidAmount")
                         .HasColumnType("bigint");
 
-                    b.Property<int>("State")
-                        .HasColumnType("int");
+                    b.Property<byte>("State")
+                        .HasColumnType("tinyint");
 
                     b.Property<Guid?>("TableId")
                         .HasColumnType("uniqueidentifier");
@@ -405,10 +564,10 @@ namespace CafeApp.Migrator.Migrations
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("UpdateTime")
+                    b.Property<DateTime?>("UpdateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("UpdateUserId")
+                    b.Property<Guid?>("UpdateUserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("UserId")
@@ -423,6 +582,99 @@ namespace CafeApp.Migrator.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("CafeApp.Domain.Entities.OrderItemAdditiveEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AdditiveId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("CreateUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DeleteTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("DeleteUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("OrderItemId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("UpdateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("UpdateUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AdditiveId");
+
+                    b.HasIndex("OrderItemId");
+
+                    b.ToTable("OrderItemAdditiveEntity");
+                });
+
+            modelBuilder.Entity("CafeApp.Domain.Entities.OrderItemEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("CreateUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DeleteTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("DeleteUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("HasAdditive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("OrderId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("UpdateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("UpdateUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("OrderItemEntity");
                 });
 
             modelBuilder.Entity("CafeApp.Domain.Entities.PayoutEntity", b =>
@@ -443,10 +695,10 @@ namespace CafeApp.Migrator.Migrations
                     b.Property<Guid>("CreateUserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("DeleteTime")
+                    b.Property<DateTime?>("DeleteTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("DeleteUserId")
+                    b.Property<Guid?>("DeleteUserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
@@ -462,10 +714,10 @@ namespace CafeApp.Migrator.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("UpdateTime")
+                    b.Property<DateTime?>("UpdateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("UpdateUserId")
+                    b.Property<Guid?>("UpdateUserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("User")
@@ -481,6 +733,48 @@ namespace CafeApp.Migrator.Migrations
                     b.ToTable("Payouts");
                 });
 
+            modelBuilder.Entity("CafeApp.Domain.Entities.ProductAdditiveEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AdditiveId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("CreateUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DeleteTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("DeleteUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("UpdateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("UpdateUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AdditiveId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductAdditiveEntity");
+                });
+
             modelBuilder.Entity("CafeApp.Domain.Entities.ProductCategoryEntity", b =>
                 {
                     b.Property<Guid>("Id")
@@ -493,10 +787,10 @@ namespace CafeApp.Migrator.Migrations
                     b.Property<Guid>("CreateUserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("DeleteTime")
+                    b.Property<DateTime?>("DeleteTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("DeleteUserId")
+                    b.Property<Guid?>("DeleteUserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
@@ -511,14 +805,17 @@ namespace CafeApp.Migrator.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<int>("Order")
+                        .HasColumnType("int");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("UpdateTime")
+                    b.Property<DateTime?>("UpdateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("UpdateUserId")
+                    b.Property<Guid?>("UpdateUserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -544,13 +841,16 @@ namespace CafeApp.Migrator.Migrations
                     b.Property<Guid>("CreateUserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("DeleteTime")
+                    b.Property<DateTime?>("DeleteTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("DeleteUserId")
+                    b.Property<Guid?>("DeleteUserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -563,8 +863,8 @@ namespace CafeApp.Migrator.Migrations
                     b.Property<bool>("IsNew")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("OutOfStock")
-                        .HasColumnType("bit");
+                    b.Property<int>("Order")
+                        .HasColumnType("int");
 
                     b.Property<long>("Price")
                         .HasColumnType("bigint");
@@ -573,10 +873,10 @@ namespace CafeApp.Migrator.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("UpdateTime")
+                    b.Property<DateTime?>("UpdateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("UpdateUserId")
+                    b.Property<Guid?>("UpdateUserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -592,8 +892,8 @@ namespace CafeApp.Migrator.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<double>("Amount")
-                        .HasColumnType("float");
+                    b.Property<long>("Amount")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime>("CreateTime")
                         .HasColumnType("datetime2");
@@ -601,10 +901,10 @@ namespace CafeApp.Migrator.Migrations
                     b.Property<Guid>("CreateUserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("DeleteTime")
+                    b.Property<DateTime?>("DeleteTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("DeleteUserId")
+                    b.Property<Guid?>("DeleteUserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsDeleted")
@@ -619,10 +919,10 @@ namespace CafeApp.Migrator.Migrations
                     b.Property<Guid>("UnitId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("UpdateTime")
+                    b.Property<DateTime?>("UpdateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("UpdateUserId")
+                    b.Property<Guid?>("UpdateUserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -648,10 +948,10 @@ namespace CafeApp.Migrator.Migrations
                     b.Property<Guid>("CreateUserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("DeleteTime")
+                    b.Property<DateTime?>("DeleteTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("DeleteUserId")
+                    b.Property<Guid?>("DeleteUserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("EndTime")
@@ -669,10 +969,10 @@ namespace CafeApp.Migrator.Migrations
                     b.Property<DateTime>("StartTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("UpdateTime")
+                    b.Property<DateTime?>("UpdateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("UpdateUserId")
+                    b.Property<Guid?>("UpdateUserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -694,10 +994,10 @@ namespace CafeApp.Migrator.Migrations
                     b.Property<Guid>("CreateUserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("DeleteTime")
+                    b.Property<DateTime?>("DeleteTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("DeleteUserId")
+                    b.Property<Guid?>("DeleteUserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsActive")
@@ -710,10 +1010,10 @@ namespace CafeApp.Migrator.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("UpdateTime")
+                    b.Property<DateTime?>("UpdateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("UpdateUserId")
+                    b.Property<Guid?>("UpdateUserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -733,10 +1033,10 @@ namespace CafeApp.Migrator.Migrations
                     b.Property<Guid>("CreateUserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("DeleteTime")
+                    b.Property<DateTime?>("DeleteTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("DeleteUserId")
+                    b.Property<Guid?>("DeleteUserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsActive")
@@ -749,10 +1049,10 @@ namespace CafeApp.Migrator.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("UpdateTime")
+                    b.Property<DateTime?>("UpdateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("UpdateUserId")
+                    b.Property<Guid?>("UpdateUserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -772,10 +1072,10 @@ namespace CafeApp.Migrator.Migrations
                     b.Property<Guid>("CreateUserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("DeleteTime")
+                    b.Property<DateTime?>("DeleteTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("DeleteUserId")
+                    b.Property<Guid?>("DeleteUserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsActive")
@@ -794,10 +1094,10 @@ namespace CafeApp.Migrator.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("UpdateTime")
+                    b.Property<DateTime?>("UpdateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("UpdateUserId")
+                    b.Property<Guid?>("UpdateUserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -822,18 +1122,18 @@ namespace CafeApp.Migrator.Migrations
                     b.Property<Guid>("CreateUserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("DeleteTime")
+                    b.Property<DateTime?>("DeleteTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("DeleteUserId")
+                    b.Property<Guid?>("DeleteUserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("Gender")
-                        .HasColumnType("bit");
+                    b.Property<byte>("Gender")
+                        .HasColumnType("tinyint");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -845,10 +1145,10 @@ namespace CafeApp.Migrator.Migrations
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("UpdateTime")
+                    b.Property<DateTime?>("UpdateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("UpdateUserId")
+                    b.Property<Guid?>("UpdateUserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -862,7 +1162,16 @@ namespace CafeApp.Migrator.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<bool>("Create")
+                    b.Property<bool>("AllowCreate")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("AllowDelete")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("AllowGet")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("AllowUpdate")
                         .HasColumnType("bit");
 
                     b.Property<DateTime>("CreateTime")
@@ -871,17 +1180,11 @@ namespace CafeApp.Migrator.Migrations
                     b.Property<Guid>("CreateUserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<bool>("Delete")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime>("DeleteTime")
+                    b.Property<DateTime?>("DeleteTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("DeleteUserId")
+                    b.Property<Guid?>("DeleteUserId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("Get")
-                        .HasColumnType("bit");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -892,13 +1195,10 @@ namespace CafeApp.Migrator.Migrations
                     b.Property<Guid>("RoleId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<bool>("Update")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime>("UpdateTime")
+                    b.Property<DateTime?>("UpdateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("UpdateUserId")
+                    b.Property<Guid?>("UpdateUserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("UserId")
@@ -913,6 +1213,26 @@ namespace CafeApp.Migrator.Migrations
                     b.ToTable("UserRoles");
                 });
 
+            modelBuilder.Entity("CafeApp.Domain.Entities.AdditiveEntity", b =>
+                {
+                    b.HasOne("CafeApp.Domain.Entities.MaterialEntity", "Material")
+                        .WithMany()
+                        .HasForeignKey("MaterialId1");
+
+                    b.Navigation("Material");
+                });
+
+            modelBuilder.Entity("CafeApp.Domain.Entities.AdditivePriceLogEntity", b =>
+                {
+                    b.HasOne("CafeApp.Domain.Entities.AdditiveEntity", "Additive")
+                        .WithMany()
+                        .HasForeignKey("AdditiveId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Additive");
+                });
+
             modelBuilder.Entity("CafeApp.Domain.Entities.AttendanceEntity", b =>
                 {
                     b.HasOne("CafeApp.Domain.Entities.UserEntity", "User")
@@ -924,8 +1244,31 @@ namespace CafeApp.Migrator.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("CafeApp.Domain.Entities.InventoryFactorEntity", b =>
+                {
+                    b.HasOne("CafeApp.Domain.Entities.InventoryEntity", "Inventory")
+                        .WithMany()
+                        .HasForeignKey("InventoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CafeApp.Domain.Entities.UserEntity", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Inventory");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("CafeApp.Domain.Entities.InventoryLogEntity", b =>
                 {
+                    b.HasOne("CafeApp.Domain.Entities.InventoryFactorEntity", null)
+                        .WithMany("Items")
+                        .HasForeignKey("InventoryFactorEntityId");
+
                     b.HasOne("CafeApp.Domain.Entities.MaterialEntity", "Material")
                         .WithMany()
                         .HasForeignKey("MaterialId")
@@ -999,6 +1342,44 @@ namespace CafeApp.Migrator.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("CafeApp.Domain.Entities.OrderItemAdditiveEntity", b =>
+                {
+                    b.HasOne("CafeApp.Domain.Entities.AdditiveEntity", "Additive")
+                        .WithMany()
+                        .HasForeignKey("AdditiveId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CafeApp.Domain.Entities.OrderItemEntity", "OrderItem")
+                        .WithMany("ItemAdditives")
+                        .HasForeignKey("OrderItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Additive");
+
+                    b.Navigation("OrderItem");
+                });
+
+            modelBuilder.Entity("CafeApp.Domain.Entities.OrderItemEntity", b =>
+                {
+                    b.HasOne("CafeApp.Domain.Entities.OrderEntity", "Order")
+                        .WithMany()
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CafeApp.Domain.Entities.ProductEntity", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("CafeApp.Domain.Entities.PayoutEntity", b =>
                 {
                     b.HasOne("CafeApp.Domain.Entities.UserEntity", "AcceptUser")
@@ -1006,6 +1387,25 @@ namespace CafeApp.Migrator.Migrations
                         .HasForeignKey("AcceptuserId");
 
                     b.Navigation("AcceptUser");
+                });
+
+            modelBuilder.Entity("CafeApp.Domain.Entities.ProductAdditiveEntity", b =>
+                {
+                    b.HasOne("CafeApp.Domain.Entities.AdditiveEntity", "Additive")
+                        .WithMany()
+                        .HasForeignKey("AdditiveId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CafeApp.Domain.Entities.ProductEntity", "Product")
+                        .WithMany("Additives")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Additive");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("CafeApp.Domain.Entities.ProductEntity", b =>
@@ -1048,7 +1448,7 @@ namespace CafeApp.Migrator.Migrations
 
             modelBuilder.Entity("CafeApp.Domain.Entities.ProductPriceLogEntity", b =>
                 {
-                    b.HasOne("CafeApp.Domain.Entities.PayoutEntity", "Product")
+                    b.HasOne("CafeApp.Domain.Entities.ProductEntity", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1060,7 +1460,7 @@ namespace CafeApp.Migrator.Migrations
             modelBuilder.Entity("CafeApp.Domain.Entities.UnitEntity", b =>
                 {
                     b.HasOne("CafeApp.Domain.Entities.UnitEntity", "Parent")
-                        .WithMany()
+                        .WithMany("Childs")
                         .HasForeignKey("ParentId");
 
                     b.Navigation("Parent");
@@ -1085,9 +1485,19 @@ namespace CafeApp.Migrator.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("CafeApp.Domain.Entities.InventoryFactorEntity", b =>
+                {
+                    b.Navigation("Items");
+                });
+
             modelBuilder.Entity("CafeApp.Domain.Entities.OrderEntity", b =>
                 {
                     b.Navigation("Details");
+                });
+
+            modelBuilder.Entity("CafeApp.Domain.Entities.OrderItemEntity", b =>
+                {
+                    b.Navigation("ItemAdditives");
                 });
 
             modelBuilder.Entity("CafeApp.Domain.Entities.ProductCategoryEntity", b =>
@@ -1097,7 +1507,14 @@ namespace CafeApp.Migrator.Migrations
 
             modelBuilder.Entity("CafeApp.Domain.Entities.ProductEntity", b =>
                 {
+                    b.Navigation("Additives");
+
                     b.Navigation("Materials");
+                });
+
+            modelBuilder.Entity("CafeApp.Domain.Entities.UnitEntity", b =>
+                {
+                    b.Navigation("Childs");
                 });
 #pragma warning restore 612, 618
         }
