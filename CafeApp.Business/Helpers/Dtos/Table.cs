@@ -13,6 +13,21 @@ namespace CafeApp.Business.Helpers.Dtos
         public bool IsActive { get; set; }
     }
 
+    public class GetTableParameter : IGetParameter<TableEntity>
+    {
+        public Guid Id { get; set; }
+
+        public GetTableParameter(Guid id)
+        {
+            Id = id;
+        }
+
+        public ISpecifications<TableEntity> GetSpecifications()
+        {
+            return TableSpecification.Get(Id);
+        }
+    }
+
     public class ListTableParameter : PagingParameter,IGetParameter<TableEntity>
     {
         public string? Title { get; set; }

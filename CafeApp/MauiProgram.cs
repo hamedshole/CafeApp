@@ -1,10 +1,10 @@
-﻿using CafeApp.Infrastructure.LocalDb;
-using Microsoft.Extensions.Logging;
-using CafeApp.Shared;
-using CafeApp.Shared.Util;
-using Microsoft.Extensions.Configuration;
+﻿using CafeApp.Domain.Common;
 using CafeApp.Domain.Interfaces;
+using CafeApp.Infrastructure.LocalDb;
+using CafeApp.Shared;
 using CafeApp.Util;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 namespace CafeApp
 {
     public static class MauiProgram
@@ -27,7 +27,8 @@ namespace CafeApp
             IConfiguration configuration = configurationBuilder.Build();
             builder.Configuration.AddConfiguration(configuration);
             builder.Services.AddScoped<IAuth, AuthService>();
-            builder.Services.AddSingleton(new ServerOptions { Url = builder.Configuration.GetValue<string>("ServerUrl") });
+            builder.Services.AddSingleton<IPlatform, Util.PlatformService>();
+            builder.Services.AddSingleton(new ServerOptions { Url = builder.Configuration.GetValue<string>("ServerUrl")! });
             builder.Services.RegisterLocalDb("cafeDb");
             builder.Services.RegisterAppServices();
 

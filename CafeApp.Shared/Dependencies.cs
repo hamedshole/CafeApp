@@ -1,5 +1,6 @@
 ﻿using CafeApp.Business.Util;
 using CafeApp.Domain.Interfaces;
+using CafeApp.Shared.RestClient;
 using CafeApp.Shared.Util;
 using Microsoft.Extensions.DependencyInjection;
 using MudBlazor;
@@ -27,6 +28,7 @@ namespace CafeApp.Shared
            
             services.AddScoped<INotification, NotificationService>();
             services.RegisterBusiness();
+            services.RegisterRestClient();
             return services;
 
         }

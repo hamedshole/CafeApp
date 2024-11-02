@@ -52,6 +52,9 @@ namespace CafeApp.Business.Helpers.Dtos
     {
         public ICollection<UpdateCategoryOrderParameter> Items { get; set; }
     }
+
+    
+
     public class ListProductCategoryParameter : PagingParameter, IGetParameter<ProductCategoryEntity>
     {
         public string? Title { get; set; }

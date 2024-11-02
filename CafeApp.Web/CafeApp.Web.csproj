@@ -10,9 +10,13 @@
     <ProjectReference Include="..\CafeApp.Infrastructure.SqlServer\CafeApp.Infrastructure.SqlServer.csproj" />
     <ProjectReference Include="..\CafeApp.ServiceDefaults\CafeApp.ServiceDefaults.csproj" />
     <ProjectReference Include="..\CafeApp.Shared\CafeApp.Shared.csproj" />
+	  <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+
   </ItemGroup>
-	
-	
+
+	<ItemGroup>
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+	</ItemGroup>
 
 	<ItemGroup>
     <Folder Include="wwwroot\" />

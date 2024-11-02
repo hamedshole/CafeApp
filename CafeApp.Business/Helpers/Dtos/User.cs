@@ -1,4 +1,5 @@
 ﻿using CafeApp.Business.Helpers.Common;
+using CafeApp.Business.Helpers.Specifications;
 using CafeApp.Domain.Entities;
 using CafeApp.Domain.Interfaces;
 
@@ -14,7 +15,7 @@ namespace CafeApp.Business.Helpers.Dtos
         public string Username { get; set; }
         public UserDto()
         {
-            
+
         }
     }
     public class CreateUserRoleParameter
@@ -26,7 +27,7 @@ namespace CafeApp.Business.Helpers.Dtos
     {
         public string? FirstName { get; set; }
         public string LastName { get; set; }
-        public bool? Gender{ get; set; }
+        public bool? Gender { get; set; }
         public string? PhoneNumber { get; set; }
         public DateTime? Birthday { get; set; }
         public string Username { get; set; }
@@ -34,7 +35,7 @@ namespace CafeApp.Business.Helpers.Dtos
         public ICollection<CreateUserRoleParameter> Roles { get; set; }
         public CreateUserParameter()
         {
-            
+
         }
     }
     public class UpdateUserParameter
@@ -54,7 +55,21 @@ namespace CafeApp.Business.Helpers.Dtos
         }
     }
 
-    public class  ListUserParameter:PagingParameter,IGetParameter<UserEntity>
+    public class GetUserParameter : IGetParameter<UserEntity>
+    {
+        public Guid Id { get; set; }
+
+        public GetUserParameter(Guid id)
+        {
+            Id = id;
+        }
+
+        public ISpecifications<UserEntity> GetSpecifications()
+        {
+            return UserSpecifications.Get(this);
+        }
+    }
+    public class ListUserParameter : PagingParameter, IGetParameter<UserEntity>
     {
         public string? FirstName { get; set; }
         public string? LastName { get; set; }

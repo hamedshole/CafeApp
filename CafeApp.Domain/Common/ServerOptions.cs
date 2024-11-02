@@ -1,4 +1,4 @@
-﻿namespace CafeApp.Shared.Util
+﻿namespace CafeApp.Domain.Common
 {
     public class ServerOptions
     {

@@ -1,34 +1,62 @@
-﻿@using CafeApp.Shared.Components.DashboardComponents
+﻿@using CafeApp.Domain.Interfaces
+@using CafeApp.Shared.Components.DashboardComponents
 @inherits LayoutComponentBase
-
+@inject IPlatform _platform;
 <MudRTLProvider RightToLeft="true">
 
-<MudThemeProvider />
+    <MudThemeProvider />
     <MudPopoverProvider />
-    <MudSnackbarProvider/>
+    <MudSnackbarProvider />
     <MudLayout Class="dashboard">
-   <TablesPanel></TablesPanel>
-            <MudIcon Style="margin-top:100px;margin-right:20px" Size="Size.Large" Icon="@Icons.Material.Rounded.ArrowBack"></MudIcon>
-        <MudDrawer Class="drawer-responsive" Style="margin-top:100px" @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Docked" OpenMiniOnHover="true" Variant="DrawerVariant.Mini" Elevation="2">
+        <TablesPanel UpdateConnecting=UpdateConnecting IsConnected="@IsConnected"></TablesPanel>
+        <MudIcon Style="margin-top:100px;margin-right:20px" Size="Size.Large" Icon="@Icons.Material.Rounded.ArrowBack"></MudIcon>
+        @if (_platform.GetPlatform() == Domain.Common.Platform.App)
+        {
+            @if (IsConnected)
+            {
+                <MudStack Row="true">
+                    <MudIcon Style="margin-right:50px" Icon="@Icons.Material.Filled.Cloud"></MudIcon>
+                    <div>متصل</div>
+                </MudStack>
+            }
+            @if (!IsConnected)
+            {
+                <MudStack Row="true">
+                    <MudIcon Style="margin-right:50px" Icon="@Icons.Material.Filled.CloudOff"></MudIcon>
+                    <div>عدم اتصال</div>
+                </MudStack>
 
-            <NavMenu IsOpen="_drawerOpen" ></NavMenu>
-    </MudDrawer>
-        <MudMainContent Class="dashboard" >
+            }
+
+        }
+        <MudDrawer Class="drawer-responsive" Style="margin-top:100px" @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Docked" OpenMiniOnHover="true" Variant="DrawerVariant.Mini" Elevation="2">
+            <NavMenu IsOpen="_drawerOpen"></NavMenu>
+        </MudDrawer>
+        <MudMainContent Class="dashboard">
             <div style="margin-right:15px;margin-top:-28px;">
-        @Body
+                @Body
             </div>
-    </MudMainContent>
-</MudLayout>
+        </MudMainContent>
+    </MudLayout>
 </MudRTLProvider>
 
 @code {
     bool _drawerOpen = true;
-
+    bool IsConnected = false;
     void DrawerToggle()
     {
         _drawerOpen = !_drawerOpen;
     }
-    string GetMargin(){
-        return _drawerOpen?"":"";
+    string GetMargin()
+    {
+        return _drawerOpen ? "" : "";
+    }
+
+    public async Task UpdateConnecting()
+    {
+
+        await InvokeAsync(()=>{
+            StateHasChanged();
+        });
     }
 }

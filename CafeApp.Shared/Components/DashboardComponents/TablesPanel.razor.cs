@@ -23,15 +23,85 @@ namespace CafeApp.Shared.Components.DashboardComponents
         }
         protected async override Task OnInitializedAsync()
         {
+            try
+            {
+                hubConnection = new HubConnectionBuilder()
+             .WithUrl($"{_server.Url}TableHub")
+             .WithAutomaticReconnect(new[]
+             {
+             TimeSpan.Zero,
+             TimeSpan.FromSeconds(10),
+             TimeSpan.FromSeconds(30)
+             })
+             .Build();
+                hubConnection.On<string, string>("TableAlert", Alert);
+                hubConnection.Reconnecting += HubConnection_Reconnecting;
+                hubConnection.Reconnected += HubConnection_Reconnected;
+                hubConnection.Closed += HubConnection_Closed;
+                await hubConnection.StartAsync();
+                
+                if (hubConnection.State == HubConnectionState.Connected)
+                {
+                    IsConnected = true;
+                    await InvokeAsync(StateHasChanged);
 
-            hubConnection = new HubConnectionBuilder()
-         .WithUrl($"{_server.Url}TableHub")
-         .Build();
-            hubConnection.On<string, string>("TableAlert", Alert);
-            await hubConnection.StartAsync();
+                }
+                _tables = await _restUnit.Tables.GetDashboardTables();
 
-            _tables = await _unit.Tables.GetDashboardTables();
+            }
+            catch (Exception e)
+            {
+                if (hubConnection.State != HubConnectionState.Connected)
+                    await Task.Run(TryToConnect);
+            }
         }
+
+        private async Task TryToConnect()
+        {
+            while (true)
+            {
+                try
+                {
+                    if (hubConnection.State == HubConnectionState.Connected && !IsConnected)
+                    {
+                        IsConnected = true;
+                         InvokeAsync(StateHasChanged);
+                    }
+                    else
+                    {
+                    await hubConnection.StartAsync();
+
+                    }
+                    await Task.Delay(10000);
+                }
+                catch (Exception )
+                {
+                    await Task.Delay(10000);
+
+                }
+            }
+
+        }
+
+        private Task HubConnection_Closed(Exception? arg)
+        {
+            Task.Run(TryToConnect);
+            return Task.CompletedTask;
+        }
+
+        private async Task HubConnection_Reconnected(string? arg)
+        {
+            IsConnected = true;
+            await InvokeAsync(StateHasChanged);
+
+        }
+
+        private async Task HubConnection_Reconnecting(Exception? arg)
+        {
+            IsConnected = false;
+            await InvokeAsync(StateHasChanged);
+        }
+
         private async void Alert(string tableId, string connectionId)
         {
             _tables.FirstOrDefault(x => x.Number == int.Parse(tableId))!.LastState = _tables.FirstOrDefault(x => x.Number == int.Parse(tableId))!.State;
@@ -42,7 +112,7 @@ namespace CafeApp.Shared.Components.DashboardComponents
             {
                 await _module!.InvokeVoidAsync("PlayAlert");
             }
-                await InvokeAsync(StateHasChanged);
+            await InvokeAsync(StateHasChanged);
         }
     }
 }

@@ -1,10 +1,14 @@
 ﻿@using CafeApp.Business.Interfaces
+@using CafeApp.Domain.Common
+@using CafeApp.Domain.Interfaces
+@using CafeApp.Shared.RestClient.Interfaces
 @using CafeApp.Shared.Util
 @using Microsoft.JSInterop
 @inject IApplicationUnit _unit;
 @inject IJSRuntime _js
 @inject ServerOptions _server;
-
+@inject IPlatform _platform;
+@inject IRestUnit _restUnit;
 <MudStack Justify="Justify.Center" Row="true" Class="dashboard-header">
     <div class="dashboard-tables">
         @foreach (var item in _tables)
@@ -13,4 +17,12 @@
         }
     </div>
 </MudStack>
+@code{
+    [Parameter]
+    public bool IsConnected { get; set; }
+    [Parameter]
+    public EventCallback UpdateConnecting{ get; set; }
+
+}
+
 

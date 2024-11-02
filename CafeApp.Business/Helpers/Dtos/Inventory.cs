@@ -30,6 +30,22 @@ namespace CafeApp.Business.Helpers.Dtos
         public string Title { get; set; }
         public bool IsActive { get; set; }
     }
+
+    public class GetInventoryParameter : IGetParameter<InventoryEntity>
+    {
+        public Guid Id { get; set; }
+
+        public GetInventoryParameter(Guid id)
+        {
+            Id = id;
+        }
+
+        public ISpecifications<InventoryEntity> GetSpecifications()
+        {
+            return InventorySpecifications.Get(this);
+        }
+    }
+
     public class ListInventoryParameter:PagingParameter,IGetParameter<InventoryEntity>
     {
         public string? Title { get; set; }

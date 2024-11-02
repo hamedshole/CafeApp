@@ -1,11 +1,11 @@
-using CafeApp.Web.Components;
-using CafeApp.Infrastructure.SqlServer;
+using CafeApp.Domain.Common;
 using CafeApp.Domain.Interfaces;
-using CafeApp.Web.Util;
+using CafeApp.Hubs;
+using CafeApp.Infrastructure.SqlServer;
 using CafeApp.Shared;
 using CafeApp.Shared.Layouts;
-using CafeApp.Hubs;
-using CafeApp.Shared.Util;
+using CafeApp.Web.Components;
+using CafeApp.Web.Util;
 namespace CafeApp.Web;
 
 public class Program
@@ -18,6 +18,10 @@ public class Program
         builder.Services.AddSingleton(new ServerOptions { Url = builder.Configuration.GetValue<string>("ServerUrl") });
         builder.Services.AddSingleton<IAuth, AuthService>();
         builder.Services.AddSignalR();
+        builder.Services.AddSingleton<IPlatform, PlatformService>();
+        builder.Services.AddControllers();
+        builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddSwaggerGen();
 
         // Add services to the container.
         builder.Services.AddRazorComponents()
@@ -35,12 +39,15 @@ public class Program
             // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
             app.UseHsts();
         }
+            app.UseSwagger();
+            app.UseSwaggerUI();
+       
 
+        app.MapControllers();
         app.UseHttpsRedirection();
         
         app.UseStaticFiles();
         app.UseAntiforgery();
-
         app.MapRazorComponents<App>()
             .AddInteractiveServerRenderMode()
             .AddAdditionalAssemblies(typeof(AdminLayout).Assembly);
