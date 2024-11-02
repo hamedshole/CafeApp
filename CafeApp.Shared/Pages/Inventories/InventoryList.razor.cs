@@ -1,4 +1,5 @@
 ﻿using CafeApp.Business.Helpers.Dtos;
+using CafeApp.Domain.Entities;
 using MudBlazor;
 
 namespace CafeApp.Shared.Pages.Inventories
@@ -37,6 +38,25 @@ namespace CafeApp.Shared.Pages.Inventories
         {
            await _unit.Tables.DeleteAsync(id);
             _notification.NotifySuccess();
+        }
+        public async Task Sync()
+        {
+            try
+            {
+                ICollection<InventoryEntity> dbEntities = await _unit.Inventories.GetAllForSync();
+
+                foreach (InventoryEntity dbEntity in dbEntities)
+                {
+                    await _restUnit.Inventories.WriteSync(dbEntity);
+                }
+                await _restUnit.Inventories.Apply();
+            }
+            catch (Exception e)
+            {
+
+                throw;
+            }
+
         }
     }
 }
