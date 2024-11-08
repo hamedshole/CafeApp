@@ -10,9 +10,15 @@ namespace CafeApp.Business.Helpers.Dtos
         public Guid Id { get; set; }
         public string? FirstName { get; set; }
         public string LastName { get; set; }
-        public string? Gender { get; set; }
+        public string FullName { get; set; }
+        public byte Gender { get; set; }
+        public string GenderStr { get; set; }
         public string PhoneNumber { get; set; }
-        public string Birthday { get; set; }
+        public DateTime? Birthday { get; set; }
+        public string? BirthdayStr { get; set; }
+        public string? Image { get; set; }
+        public string? Address { get; set; }
+        public bool IsActive { get; set; }
         public CustomerDto()
         {
 
@@ -24,19 +30,16 @@ namespace CafeApp.Business.Helpers.Dtos
         public int Code { get; set; }
         public string? FirstName { get; set; }
         public string LastName { get; set; }
-        public byte? Gender { get; set; }
+        public byte Gender { get; set; }
         public string? PhoneNumber { get; set; }
         public DateTime? Birthday { get; set; }
+        public string? Image { get; set; }
+        public string? Address { get; set; }
+        public bool IsActive { get; set; }
     }
-    public class UpdateCustomerParameter
+    public class UpdateCustomerParameter:CreateCustomerParameter
     {
         public Guid Id { get; set; }
-        public int Code { get; set; }
-        public string? FirstName { get; set; }
-        public string LastName { get; set; }
-        public byte? Gender { get; set; }
-        public string? PhoneNumber { get; set; }
-        public DateTime? Birthday { get; set; }
     }
 
     public class GetCategoryParameter : IGetParameter<ProductCategoryEntity>
@@ -63,7 +66,7 @@ namespace CafeApp.Business.Helpers.Dtos
 
         public ISpecifications<CustomerEntity> GetSpecifications()
         {
-            throw new NotImplementedException();
+            return CustomerSpecifications.FromParameter(this);
         }
 
         public override string ToString()

@@ -3,22 +3,32 @@ using CafeApp.Domain.Entities;
 
 namespace CafeApp.Business.Helpers.Specifications
 {
-    internal class UserSpecifications :BaseSpecification<UserEntity>
+    internal class UserSpecifications : BaseSpecification<UserEntity>
     {
-        private void FromParaemterMethod(ListUserParameter parameter)
+        private void FromParameterMethod(ListUserParameter parameter)
         {
-           
-
+            if (!string.IsNullOrEmpty(parameter.FirstName))
+                SetFilterCondition(x => x.FirstName.Contains(parameter.FirstName));
+            if (!string.IsNullOrEmpty(parameter.LastName))
+                SetFilterCondition(x => x.FirstName.Contains(parameter.LastName));
+            if (!string.IsNullOrEmpty(parameter.Username))
+                SetFilterCondition(x => x.FirstName.Contains(parameter.Username));
+            if (parameter.Gender is byte g)
+                SetFilterCondition(x => (byte)x.Gender==g);
+            if (parameter.IsActive is bool ia)
+                SetFilterCondition(x => x.IsActive);
+            if (!string.IsNullOrEmpty(parameter.Email))
+                SetFilterCondition(x => x.Email!.Contains(parameter.Email));
         }
         private void GetMethod(Guid id)
         {
-            SetFilterCondition(x=>x.Id==id);
+            SetFilterCondition(x => x.Id == id);
             AddInclude(nameof(UnitEntity.Parent));
         }
         public static UserSpecifications FromParameter(ListUserParameter listParameter)
         {
             UserSpecifications specs = new UserSpecifications();
-            specs.FromParaemterMethod(listParameter);
+            specs.FromParameterMethod(listParameter);
             return specs;
         }
         public static UserSpecifications Get(GetUserParameter parameter)

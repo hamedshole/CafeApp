@@ -4,6 +4,7 @@ using CafeApp.Domain.Interfaces;
 using CafeApp.Infrastructure.Data.Context;
 using CafeApp.Infrastructure.Data.Util;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace CafeApp.Infrastructure.Data.Repositories
@@ -125,6 +126,11 @@ namespace CafeApp.Infrastructure.Data.Repositories
             entity.Delete(Guid.Empty);
             _dbSet.Entry(entity).State = EntityState.Modified;
             //entity.Delete(_auth.GetUserId());
+        }
+
+        public T GetLastValue<T>(Expression<Func<TEntity,bool>> expression,Expression<Func<TEntity, T>> property)
+        {
+           return _dbSet.Where(expression).OrderByDescending(x => x.CreateTime).Select(property).FirstOrDefault()!;
         }
 
         //       Expression<Func<SetPropertyCalls<TEntity>, SetPropertyCalls<TEntity>>> CombineSetters(

@@ -5,7 +5,7 @@ namespace CafeApp.Business.Helpers.Specifications
 {
     public class CustomerSpecifications : BaseSpecification<CustomerEntity>
     {
-        public CustomerSpecifications AddFilters(ListCustomerParameter parameter)
+        private CustomerSpecifications AddFilters(ListCustomerParameter parameter)
         {
             if (!string.IsNullOrEmpty(parameter.FirstName))
                 SetFilterCondition(x => !string.IsNullOrEmpty(x.FirstName) && x.FirstName.Contains(parameter.FirstName));
@@ -18,6 +18,13 @@ namespace CafeApp.Business.Helpers.Specifications
             if (parameter.Birthday.HasValue)
                 SetFilterCondition(x => x.Birthday == parameter.Birthday.Value);
             return this;
+        }
+
+        public static CustomerSpecifications FromParameter(ListCustomerParameter parameter)
+        {
+            CustomerSpecifications customerSpecifications = new CustomerSpecifications();
+            customerSpecifications.AddFilters(parameter);
+            return customerSpecifications;
         }
     }
 }

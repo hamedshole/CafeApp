@@ -15,6 +15,7 @@ namespace CafeApp.Domain.Interfaces
         Task<TEntity> GetByIdAsync(Guid id);
         IQueryable<TEntity> Get(ISpecifications<TEntity> specifications);
         IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> expression);
+        T GetLastValue<T>(Expression<Func<TEntity, bool>> expression, Expression<Func<TEntity, T>> property);
         //Task ExecuteDeleteAsync(Expression<Func<TEntity, bool>> expression);
     }
 }

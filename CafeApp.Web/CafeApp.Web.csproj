@@ -4,21 +4,31 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+	  <PublishIISAssets>true</PublishIISAssets>
+
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\CafeApp.Infrastructure.SqlServer\CafeApp.Infrastructure.SqlServer.csproj" />
     <ProjectReference Include="..\CafeApp.ServiceDefaults\CafeApp.ServiceDefaults.csproj" />
     <ProjectReference Include="..\CafeApp.Shared\CafeApp.Shared.csproj" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.1" />
+    <PackageReference Include="Serilog" Version="4.1.0" />
+    <PackageReference Include="Serilog.Extensions.Logging" Version="8.0.0" />
+    <PackageReference Include="Serilog.Settings.Configuration" Version="8.0.4" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
+    <PackageReference Include="Serilog.Sinks.File" Version="6.0.0" />
 	  <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
 
   </ItemGroup>
 
 	<ItemGroup>
+
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
 	</ItemGroup>
 
 	<ItemGroup>
+    <Folder Include="Properties\PublishProfiles\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 

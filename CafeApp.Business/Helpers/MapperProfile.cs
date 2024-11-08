@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using CafeApp.Business.Helpers.Dtos;
+using CafeApp.Domain.Common;
 using CafeApp.Domain.Entities;
+using System.Globalization;
 
 namespace CafeApp.Business.Helpers
 {
@@ -68,6 +70,36 @@ namespace CafeApp.Business.Helpers
             CreateMap<UpdateInventoryParameter, InventoryEntity>();
 
 
+            CreateMap<UserEntity, UserDto>()
+                .ForMember(x => x.GenderStr, opt => opt.MapFrom(x => GetGender(x.Gender)))
+                .ForMember(x => x.Gender, opt => opt.MapFrom(x => (byte)x.Gender))
+                .ForMember(x => x.BirthdayStr, opt => opt.MapFrom(x => x.Birthday!.Value.ToString("yyyy/MM/dd", new CultureInfo("fa-ir"))));
+
+            CreateMap<CreateUserParameter, UserEntity>()
+                .ForMember(x => x.Gender, opt => opt.MapFrom(x => (Gender)x.Gender));
+            CreateMap<UpdateUserParameter, UserEntity>()
+              .ForMember(x => x.Gender, opt => opt.MapFrom(x => (Gender)x.Gender));
+
+            CreateMap<CustomerEntity, CustomerDto>()
+                .ForMember(x => x.Gender, opt => opt.MapFrom(x => (byte)x.Gender))
+                .ForMember(x => x.GenderStr, opt => opt.MapFrom(x => GetGender(x.Gender)))
+                .ForMember(x => x.BirthdayStr, opt => opt.MapFrom(x => x.Birthday!.Value.ToString("yyyy/MM/dd", new CultureInfo("fa-ir"))));
+            CreateMap<UpdateCustomerParameter, CustomerEntity>()
+                .ForMember(x => x.Gender, opt => opt.MapFrom(x => (byte)x.Gender))
+                .ForMember(x => x.Gender, opt => opt.MapFrom(x => (Gender)x.Gender));
+            CreateMap<CreateCustomerParameter, CustomerEntity>()
+                .ForMember(x => x.Gender, opt => opt.MapFrom(x => (Gender)x.Gender));
+        }
+        public static string GetGender(Gender gender)
+        {
+            string res = string.Empty;
+
+            return gender switch
+            {
+                Gender.Male => "مذکر",
+                Gender.Female => "مونث",
+                _ => string.Empty,
+            };
         }
     }
 }

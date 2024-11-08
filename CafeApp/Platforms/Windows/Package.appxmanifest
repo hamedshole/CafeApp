@@ -7,7 +7,7 @@
   xmlns:uap18="http://schemas.microsoft.com/appx/manifest/uap/windows10/18"
   IgnorableNamespaces="uap rescap uap18">
 
-  <Identity Name="maui-package-name-placeholder" Publisher="CN=HShK" Version="1.0.3.0" />
+  <Identity Name="maui-package-name-placeholder" Publisher="CN=HShK" Version="1.0.5.0" />
 
   <mp:PhoneIdentity PhoneProductId="3F9DD751-6EDC-41BF-9AF7-592BEE7F9D0B" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 

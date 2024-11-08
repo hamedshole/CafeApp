@@ -7,12 +7,21 @@ namespace CafeApp.Business.Helpers.Dtos
 {
     public class UserDto
     {
+        public Guid Id { get; set; }
         public string? FirstName { get; set; }
         public string LastName { get; set; }
-        public string? Gender { get; set; }
+        public string FullName { get; set; }
+        public byte Gender { get; set; }
+        public string GenderStr { get; set; }
+        public string? Email { get; set; }
         public string? PhoneNumber { get; set; }
-        public string? Birthday { get; set; }
+        public DateTime? Birthday { get; set; }
+        public string? BirthdayStr { get; set; }
+
         public string Username { get; set; }
+        public string? Image { get; set; }
+        public bool IsActive { get; set; }
+        public string? Address { get; set; }
         public UserDto()
         {
 
@@ -27,28 +36,25 @@ namespace CafeApp.Business.Helpers.Dtos
     {
         public string? FirstName { get; set; }
         public string LastName { get; set; }
-        public bool? Gender { get; set; }
+        public byte Gender { get; set; }
         public string? PhoneNumber { get; set; }
         public DateTime? Birthday { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
-        public ICollection<CreateUserRoleParameter> Roles { get; set; }
+        public string? Image { get; set; }
+        public string? Email { get; set; }
+        public string? Address { get; set; }
+        public bool IsActive { get; set; }
+        public ICollection<CreateUserRoleParameter>? Roles { get; set; }
         public CreateUserParameter()
         {
 
         }
     }
-    public class UpdateUserParameter
+    public class UpdateUserParameter:CreateUserParameter
     {
-        public int Id { get; set; }
-        public string? FirstName { get; set; }
-        public string LastName { get; set; }
-        public bool? Gender { get; set; }
-        public string? PhoneNumber { get; set; }
-        public DateTime? Birthday { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
-        public ICollection<CreateUserRoleParameter>? Roles { get; set; }
+        public Guid Id { get; set; }
+       
         public UpdateUserParameter()
         {
 
@@ -76,10 +82,12 @@ namespace CafeApp.Business.Helpers.Dtos
         public byte? Gender { get; set; }
         public string? PhoneNumber { get; set; }
         public string? Username { get; set; }
+        public string? Email { get; set; }
+        public bool? IsActive { get; set; }
 
         public ISpecifications<UserEntity> GetSpecifications()
         {
-            throw new NotImplementedException();
+            return UserSpecifications.FromParameter(this);
         }
     }
 }

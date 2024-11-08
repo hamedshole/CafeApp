@@ -6,6 +6,7 @@ using CafeApp.Shared;
 using CafeApp.Shared.Layouts;
 using CafeApp.Web.Components;
 using CafeApp.Web.Util;
+using Serilog;
 namespace CafeApp.Web;
 
 public class Program
@@ -22,7 +23,17 @@ public class Program
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
-
+        builder.Logging.AddConsole();
+        var logger = new LoggerConfiguration()
+            .ReadFrom.Configuration(builder.Configuration)
+            .Enrich.FromLogContext()
+            .CreateLogger();
+        builder.Logging.ClearProviders();
+        builder.Logging.AddSerilog(logger);
+        var log = new LoggerConfiguration()
+    .WriteTo.File("log.txt", rollingInterval: RollingInterval.Day)
+    .CreateLogger();
+        
         // Add services to the container.
         builder.Services.AddRazorComponents()
             .AddInteractiveServerComponents(x=>x.DetailedErrors=true);
@@ -37,10 +48,14 @@ public class Program
         {
             app.UseExceptionHandler("/Error");
             // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-            app.UseHsts();
+            //app.UseHsts();
         }
+        if (builder.Configuration.GetValue<bool>("ShowEndPoints"))
+        {
             app.UseSwagger();
             app.UseSwaggerUI();
+
+        }
        
 
         app.MapControllers();
