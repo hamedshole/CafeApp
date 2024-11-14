@@ -89,6 +89,14 @@ namespace CafeApp.Business.Helpers
                 .ForMember(x => x.Gender, opt => opt.MapFrom(x => (Gender)x.Gender));
             CreateMap<CreateCustomerParameter, CustomerEntity>()
                 .ForMember(x => x.Gender, opt => opt.MapFrom(x => (Gender)x.Gender));
+
+            CreateMap<OrderEntity, OrderDto>()
+                .ForMember(x => x.Customer, opt => opt.MapFrom(x => x.Customer!.FullName))
+                .ForMember(x=>x.Date,opt=>opt.MapFrom(x=>x.Time.ToString("yyyy/MM/dd",new CultureInfo("fa-ir"))))
+                .ForMember(x=>x.Time,opt=>opt.MapFrom(x=>x.Time.ToString("HH:mm:ss")));
+            CreateMap<ProductCategoryEntity, DashboardCategoryModel>()
+                .ForMember(x=>x.Items,opt=>opt.MapFrom(x=>x.Products));
+            CreateMap<ProductEntity,DashboardProductModel>();
         }
         public static string GetGender(Gender gender)
         {

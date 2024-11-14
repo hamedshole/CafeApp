@@ -46,5 +46,10 @@ namespace CafeApp.Business.Services
             }
         }
 
+        public async Task<ICollection<DashboardCategoryModel>> GetForDashboard()
+        {
+            var res= _repository.Get(ProductCategorySpecifications.GetForDashboard()).ProjectTo<DashboardCategoryModel>(_mapper.ConfigurationProvider).ToList();
+            return await Task.FromResult(res);
+        }
     }
 }

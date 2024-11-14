@@ -19,23 +19,26 @@ namespace CafeApp.Shared.Components.DashboardComponents
         {
             Item.State = Item.LastState;
             StateHasChanged();
-            await connection.InvokeAsync("ResponseTableAlert", Item.LastConnectionId);
-
+            if (!string.IsNullOrEmpty(Item.LastConnectionId))
+                await connection.InvokeAsync("ResponseTableAlert", Item.LastConnectionId);
+            Item=await _unit.Tables.GetDashboardTable(Item.Id);
+            StateHasChanged();
+            Navigation.NavigateTo("ordering/"+Item.Id);
         }
         protected async override Task OnInitializedAsync()
         {
             connection = new HubConnectionBuilder().WithUrl($"{_server.Url}TableHub",
         opt =>
         {
-           
+
         }).WithAutomaticReconnect().Build();
-            
+
             await connection.StartAsync();
             await base.OnInitializedAsync();
         }
         void Test(string g)
         {
-           
+
         }
     }
 }

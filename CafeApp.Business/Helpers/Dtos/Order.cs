@@ -1,4 +1,5 @@
 ﻿using CafeApp.Business.Helpers.Common;
+using CafeApp.Business.Helpers.Specifications;
 using CafeApp.Domain.Entities;
 using CafeApp.Domain.Interfaces;
 
@@ -7,14 +8,16 @@ namespace CafeApp.Business.Helpers.Dtos
     public class OrderDto
     {
         public Guid Id { get; set; }
-        public DateTime Time { get; set; }
+        public string Date { get; set; }
+        public string Time { get; set; }
+
         public string State { get; set; }
         public string? Customer { get; set; }
         public string Table { get; set; }
         public string TotalPrice { get; set; }
         public OrderDto()
         {
-            
+
         }
     }
     public class CreateOrderItemAdditiveParameter
@@ -25,25 +28,26 @@ namespace CafeApp.Business.Helpers.Dtos
     public class CreateOrderItemParameter
     {
         public Guid Id { get; set; }
+        public Guid ProductId { get; set; }
         public int Amount { get; set; }
         public bool HasAdditive { get; set; }
         public ICollection<CreateOrderItemAdditiveParameter>? Additives { get; set; }
         public CreateOrderItemParameter()
         {
-            
+
         }
     }
     public class CreateOrderParameter
     {
         public Guid? CustomerId { get; set; }
         public Guid TableId { get; set; }
-        public ICollection<CreateOrderItemParameter> Items{ get; set; }
+        public ICollection<CreateOrderItemParameter> Items { get; set; }
         public CreateOrderParameter()
         {
-            
+
         }
     }
-    public class ListOrderParameter:PagingParameter,IGetParameter<OrderEntity>
+    public class ListOrderParameter : PagingParameter, IGetParameter<OrderEntity>
     {
         public byte? State { get; set; }
         public Guid? CustomerId { get; set; }
@@ -52,12 +56,12 @@ namespace CafeApp.Business.Helpers.Dtos
         public DateTime? End { get; set; }
         public ListOrderParameter()
         {
-            
+
         }
 
         public ISpecifications<OrderEntity> GetSpecifications()
         {
-            throw new NotImplementedException();
+            return OrderSpecifications.FromParameter(this);
         }
     }
 }

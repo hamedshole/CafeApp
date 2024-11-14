@@ -1,0 +1,48 @@
+﻿@page "/dashboard/orders"
+@using CafeApp.Business.Helpers.Dtos
+@using CafeApp.Shared.RestClient.Interfaces
+@layout AdminLayout
+@inject IApplicationUnit _unit;
+@inject NavigationManager _navigation;
+@inject IRestUnit _restUnit;
+<MudIconButton OnClick=GoToCreatePAge Icon="@Icons.Material.Filled.Add" Title="جدید">افزودن</MudIconButton>
+<MudIconButton OnClick=Sync Icon="@Icons.Material.Filled.Sync" Title="ارسال به سرور">ارسال به سرور</MudIconButton>
+
+
+<MudDataGrid @ref="_dataGrid" Striped=true ServerData=LoadData T="OrderDto">
+
+    <Columns>
+        <PropertyColumn Title="زمان" Property="x=>x.Time"></PropertyColumn>
+        <PropertyColumn Title="مشتری" Property="x=>x.Customer"></PropertyColumn>
+        <PropertyColumn Title="  وضعیت سفارش" Property="x=>x.State"></PropertyColumn>
+
+        
+        <TemplateColumn CellClass="d-flex justify-end">
+            <CellTemplate>
+                <MudStack Row>
+
+                    <MudIconButton OnClick="()=>Edit(context.Item.Id)" Icon="@Icons.Material.Filled.Edit" />
+                    <MudIconButton OnClick="()=>Delete(context.Item.Id)" Icon="@Icons.Material.Filled.Delete" />
+                </MudStack>
+            </CellTemplate>
+        </TemplateColumn>
+    </Columns>
+
+</MudDataGrid>
+
+
+@code {
+    private MudDataGrid<OrderDto> _dataGrid;
+
+
+    private string IsActiveString(bool isActive)
+    {
+        if (isActive)
+            return "فعال";
+        else
+            return "غیرفعال";
+    }
+
+
+
+}

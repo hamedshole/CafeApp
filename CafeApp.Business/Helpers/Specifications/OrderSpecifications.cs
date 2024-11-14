@@ -5,6 +5,14 @@ namespace CafeApp.Business.Helpers.Specifications
 {
     public class OrderSpecifications : BaseSpecification<OrderEntity>
     {
+        public static OrderSpecifications FromParameter(ListOrderParameter parameter)
+        {
+            OrderSpecifications orderSpecifications = new OrderSpecifications();
+            orderSpecifications.AddFilter(parameter);
+            orderSpecifications.AddInclude("Customer");
+            return orderSpecifications;
+        }
+
         public static OrderSpecifications GetTableState(Guid tableId)
         {
             OrderSpecifications orderSpecifications=new OrderSpecifications();

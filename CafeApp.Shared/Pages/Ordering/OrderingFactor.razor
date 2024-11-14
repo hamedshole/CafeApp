@@ -1,0 +1,43 @@
+﻿@page "/ordering/{Id}"
+@using CafeApp.Business.Helpers.Dtos
+@using CafeApp.Shared.Components.DashboardComponents
+@layout AdminLayout
+@inject IApplicationUnit _unit;
+<div style="display:flex">
+
+    <div class="order-system col-md-6 col-12">
+        <CategoriesSection ShowItemsMethod="ShowItems"></CategoriesSection>
+        <CategoryItemsSection MinusFactorItem="MinusItem" AddFactorItem="AddItem" @ref=_selectedCategory></CategoryItemsSection>
+        <div>
+            <MudButton OnClick="Fill" Style="background-color:green" ButtonType="ButtonType.Button" FullWidth="true" Color="Color.Success" Class="mobile-submit col-12">ثبت سفارش</MudButton>
+        </div>
+    </div>
+    <div class="order-system col-md-6 col-12">
+        <Factor Item="_factor" @ref=_factorPanel></Factor>
+    </div>
+
+</div>
+@code {
+    [Parameter]
+    public string Id { get; set; }
+
+    [CascadingParameter]
+    public TablesPanel _table { get; set; }
+    private async Task Fill()
+    {
+        CreateOrderParameter orderParameter = new CreateOrderParameter
+            {
+                CustomerId = _factor.CustomerId,
+                TableId = _factor.TableId,
+                Items = _factor.Items.Select(x => new CreateOrderItemParameter
+                {
+                    HasAdditive = false,
+                    ProductId = x.Id,
+                    Amount = x.TotalAmount,
+                    Additives = null
+                }).ToList()
+            };
+        await _unit.Factors.CreateAsync(orderParameter);
+        await _table.FillTable(Guid.Parse(Id));
+    }
+}

@@ -15,7 +15,7 @@ namespace CafeApp.Business.Services
 
         public async Task<ICollection<DashboardTableModel>> GetDashboardTables()
         {
-            ICollection<DashboardTableModel> tables =  _repository.Get(x => x.IsActive)
+            ICollection<DashboardTableModel> tables = _repository.Get(x => x.IsActive)
                             .Select(x => new DashboardTableModel
                             {
                                 Number = x.Number,
@@ -24,7 +24,7 @@ namespace CafeApp.Business.Services
                             }).ToList();
             foreach (var table in tables)
             {
-               OrderEntity? order= _repository.DataUnit.Orders.Get(OrderSpecifications.GetTableState(table.Id)).FirstOrDefault();
+                OrderEntity? order = _repository.DataUnit.Orders.Get(OrderSpecifications.GetTableState(table.Id)).FirstOrDefault();
                 if (order is OrderEntity)
                 {
                     table.State = TableState.filled;
@@ -37,6 +37,30 @@ namespace CafeApp.Business.Services
                 }
             }
             return tables;
+        }
+        public async Task<DashboardTableModel> GetDashboardTable(Guid id)
+        {
+            DashboardTableModel table = _repository.Get(x => x.IsActive)
+                            .Select(x => new DashboardTableModel
+                            {
+                                Number = x.Number,
+                                Id = x.Id,
+                                Title = x.Title
+                            }).FirstOrDefault()!;
+
+            OrderEntity? order = _repository.DataUnit.Orders.Get(OrderSpecifications.GetTableState(table.Id)).FirstOrDefault();
+            if (order is OrderEntity)
+            {
+                table.State = TableState.filled;
+                table.LastState = TableState.filled;
+            }
+            else
+            {
+                table.State = TableState.empty;
+                table.LastState = TableState.empty;
+            }
+
+            return await Task.FromResult( table);
         }
     }
 }

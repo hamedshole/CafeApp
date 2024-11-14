@@ -114,5 +114,12 @@ namespace CafeApp.Shared.Components.DashboardComponents
             }
             await InvokeAsync(StateHasChanged);
         }
+
+        public async Task FillTable(Guid id)
+        {
+            var filledTable=_tables.FirstOrDefault(x => x.Id == id);
+            filledTable!.State=TableState.filled;
+           await InvokeAsync(StateHasChanged);
+        }
     }
 }

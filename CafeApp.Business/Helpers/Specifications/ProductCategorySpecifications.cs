@@ -6,6 +6,13 @@ namespace CafeApp.Business.Helpers.Specifications
 {
     public class ProductCategorySpecifications:BaseSpecification<ProductCategoryEntity>
     {
+        public static ProductCategorySpecifications GetForDashboard()
+        {
+            ProductCategorySpecifications specs=new ProductCategorySpecifications();
+            specs.SetFilterCondition(x=>x.IsActive);
+            specs.AddInclude(nameof(ProductCategoryEntity.Products));
+            return specs;
+        }
         public static ProductCategorySpecifications FromParameter(ListProductCategoryParameter parameter)
         {
             ProductCategorySpecifications productCategorySpecifications = new ProductCategorySpecifications();

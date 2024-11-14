@@ -8,7 +8,7 @@
     <MudPopoverProvider />
     <MudSnackbarProvider />
     <MudLayout Class="dashboard">
-        <TablesPanel UpdateConnecting=UpdateConnecting IsConnected="@IsConnected"></TablesPanel>
+        <TablesPanel @ref="TablesPanel" UpdateConnecting=UpdateConnecting IsConnected="@IsConnected"></TablesPanel>
         <MudIcon Style="margin-top:100px;margin-right:20px" Size="Size.Large" Icon="@Icons.Material.Rounded.ArrowBack"></MudIcon>
         @if (_platform.GetPlatform() == Domain.Common.Platform.App)
         {
@@ -34,13 +34,18 @@
         </MudDrawer>
         <MudMainContent Class="dashboard">
             <div style="margin-right:15px;margin-top:-28px;">
+                <CascadingValue Value="TablesPanel">
                 @Body
+                </CascadingValue>
+
             </div>
         </MudMainContent>
     </MudLayout>
 </MudRTLProvider>
 
 @code {
+    [CascadingParameter]
+    protected TablesPanel TablesPanel{ get; set; }
     bool _drawerOpen = true;
     bool IsConnected = false;
     void DrawerToggle()

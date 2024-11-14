@@ -18,11 +18,11 @@
     }
     public class DashboardFactorModel
     {
-        public int TableId { get; set; }
+        public Guid TableId { get; set; }
         public string TableTitle { get; set; }
-        public int CustomerId { get; set; }
+        public Guid CustomerId { get; set; }
         public string CustomerName { get; set; }
-        public int UserId { get; set; }
+        public Guid UserId { get; set; }
         public string UserName { get; set; }
         public string FactorNumber { get; set; }
         public DateTime RecordTime { get; set; }
@@ -37,7 +37,7 @@
     }
     public class DashboardFactorItemModel
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string ProductTitle { get; set; }
         public int TotalAmount { get; set; }
         public int PaidAmount { get; set; }
@@ -51,5 +51,22 @@
             SubmittedDongi = PaidAmount;
         }
 
+    }
+    public class DashboardProductModel
+    {
+        public Guid Id { get; set; }
+        public string Title { get; set; }
+        public int Amount { get; set; }
+        public long Price { get; set; }
+    }
+    public class DashboardCategoryModel
+    {
+        public Guid Id { get; set; }
+        public string Title { get; set; }
+        public ICollection<DashboardProductModel> Items { get; set; }
+        public DashboardCategoryModel()
+        {
+            Items = new List<DashboardProductModel>();
+        }
     }
 }

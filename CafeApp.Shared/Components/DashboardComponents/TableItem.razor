@@ -2,5 +2,7 @@
 @using CafeApp.Shared.Util
 @inject NavigationManager Navigation
 @inject ServerOptions _server;
+@inject IApplicationUnit _unit;
 <div class="dashboard-table   @Item.State.ToString()" @onclick=Click><span>@Item.Title</span></div>
 
+ 

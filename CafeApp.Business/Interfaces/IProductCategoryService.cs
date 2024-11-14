@@ -8,5 +8,6 @@ namespace CafeApp.Business.Interfaces
         Task UpdateOrder(UpdateCategoryOrderParameterCollection parameters);
         Task<ICollection<ProductDto>> GetProducts(Guid id);
         Task<ICollection<MenuCategoryModel>> GetMenu();
+        Task<ICollection<DashboardCategoryModel>> GetForDashboard();
     }
 }
