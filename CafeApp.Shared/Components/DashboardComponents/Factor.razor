@@ -40,7 +40,7 @@
                 <tbody>
                     @foreach (var item in Item.Items)
                     {
-                    <FactorItem Item="item"></FactorItem>
+                    <FactorItem Factor="this"  Item="item"></FactorItem>
                     }
                 </tbody>
             </table>
@@ -51,7 +51,7 @@
                 </div>
                 <div class="summary-item">
                     <span class="summary-label">تسویه دنگی:</span>
-                    <span class="summary-value">@Item.Dongi</span>
+                    <span class="summary-value">@_livePaidAmount</span>
                 </div>
                 <div class="summary-item">
                     <span class="summary-label">تسویه شده:</span>

@@ -8,8 +8,12 @@ namespace CafeApp.Shared.Components.DashboardComponents
     public partial class Factor
     {
        
+        private long _livePaidAmount=0;
+
         [Parameter]
         public DashboardFactorModel Item { get; set; } = new DashboardFactorModel();
+
+        public long LivePaidAmount { get; set; }
 
         private IJSObjectReference _module;
         private bool _dongi = false;
@@ -73,5 +77,16 @@ namespace CafeApp.Shared.Components.DashboardComponents
         }
         
 
+        public void AddPrice(long unitPrice)
+        {
+            _livePaidAmount+=unitPrice;
+            InvokeAsync(StateHasChanged);
+
+        }
+        public void MinusPrice(long unitPrice)
+        {
+            _livePaidAmount -= unitPrice;
+            InvokeAsync(StateHasChanged);
+        }
     }
 }

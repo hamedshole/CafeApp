@@ -14,7 +14,10 @@
 }
 
 /*login styles start */
-
+.category-section h1:focus-visible {
+    outline: none;
+    border: none;
+}
 .mainbody {
     overflow-y:auto;
     direction:rtl;
@@ -247,7 +250,7 @@ h2 {
 .container {
     padding: 2rem;
     position: relative;
-    padding-top: 9rem;
+    /*padding-top: 9rem;*/
 }
 
 .content {
