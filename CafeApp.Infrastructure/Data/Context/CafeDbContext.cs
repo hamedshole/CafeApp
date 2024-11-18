@@ -7,7 +7,9 @@ namespace CafeApp.Infrastructure.Data.Context
     {
         public CafeDbContext(DbContextOptions options) : base(options)
         {
+            //this.Database.EnsureDeleted();
             this.Database.EnsureCreated();
+
         }
         public CafeDbContext()
         {

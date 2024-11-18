@@ -92,23 +92,29 @@ namespace CafeApp.Business.Helpers
 
             CreateMap<OrderEntity, OrderDto>()
                 .ForMember(x => x.Customer, opt => opt.MapFrom(x => x.Customer!.FullName))
-                .ForMember(x=>x.Date,opt=>opt.MapFrom(x=>x.Time.ToString("yyyy/MM/dd",new CultureInfo("fa-ir"))))
-                .ForMember(x=>x.Time,opt=>opt.MapFrom(x=>x.Time.ToString("HH:mm:ss")));
+                .ForMember(x => x.Date, opt => opt.MapFrom(x => x.Time.ToString("yyyy/MM/dd", new CultureInfo("fa-ir"))))
+                .ForMember(x => x.Time, opt => opt.MapFrom(x => x.Time.ToString("HH:mm:ss")))
+                .ForMember(x => x.Table, opt => opt.MapFrom(x => x.Table!.Title))
+                .ForMember(x => x.TotalPrice, opt => opt.MapFrom(x => x.TotalPrice.ToString("#,#")))
+                .ForMember(x=>x.State,opt=>opt.MapFrom(x=>GetOrderState(x.State)));
             CreateMap<ProductCategoryEntity, DashboardCategoryModel>()
-                .ForMember(x=>x.Items,opt=>opt.MapFrom(x=>x.Products));
-            CreateMap<ProductEntity,DashboardProductModel>();
+                .ForMember(x => x.Items, opt => opt.MapFrom(x => x.Products));
+            CreateMap<ProductEntity, DashboardProductModel>();
 
 
             CreateMap<OrderEntity, DashboardFactorModel>()
-                .ForMember(x=>x.Items,opt=>opt.MapFrom(x=>x.Details))
-                .ForMember(x=>x.CustomerName,opt=>opt.MapFrom(x=>x.Customer!.FullName))
-                .ForMember(x=>x.TableTitle,opt=>opt.MapFrom(x=>x.Table!.Title));
-            CreateMap<OrderDetailEntity,DashboardFactorItemModel>()
-                .ForMember(x=>x.ProductId,opt=>opt.MapFrom(x=>x.ProductId))
-                .ForMember(x=>x.CategoryId,opt=>opt.MapFrom(x=>x.Product!.CategoryId))
-                .ForMember(x=>x.ProductTitle,opt=>opt.MapFrom(x=>x.Product!.Title))
-                .ForMember(x=>x.TotalAmount,opt=>opt.MapFrom(x=>x.Amount))
-                .ForMember(x=>x.UnitPrice,opt=>opt.MapFrom(x=>x.Product!.Price));
+                .ForMember(x => x.Items, opt => opt.MapFrom(x => x.Details))
+                .ForMember(x => x.CustomerName, opt => opt.MapFrom(x => x.Customer!.FullName))
+                .ForMember(x => x.TableTitle, opt => opt.MapFrom(x => x.Table!.Title))
+                .ForMember(x=>x.RecordTime,opt=>opt.MapFrom(x=>x.Time.ToString("HH:mm")))
+                .ForMember(x => x.RecordDate, opt => opt.MapFrom(x => x.Time.ToString("yyyy/MM/dd",new CultureInfo("fa-ir"))));
+
+            CreateMap<OrderDetailEntity, DashboardFactorItemModel>()
+                .ForMember(x => x.ProductId, opt => opt.MapFrom(x => x.ProductId))
+                .ForMember(x => x.CategoryId, opt => opt.MapFrom(x => x.Product!.CategoryId))
+                .ForMember(x => x.ProductTitle, opt => opt.MapFrom(x => x.Product!.Title))
+                .ForMember(x => x.TotalAmount, opt => opt.MapFrom(x => x.Amount))
+                .ForMember(x => x.UnitPrice, opt => opt.MapFrom(x => x.Product!.Price));
 
             CreateMap<CreateOrderParameter, OrderEntity>()
                 .ForMember(x => x.Details, opt => opt.MapFrom(x => x.Items))
@@ -126,6 +132,18 @@ namespace CafeApp.Business.Helpers
                 Gender.Female => "مونث",
                 _ => string.Empty,
             };
+        }
+        public static string GetOrderState(FactorState state)
+        {
+
+            switch (state)
+            {
+                case FactorState.Cancelled: return "لغو";
+                case FactorState.New: return "جدید";
+                case FactorState.InProgress: return "آماده سازی";
+                case FactorState.Completed: return "تحویل";
+                default: return string.Empty;
+            }
         }
     }
 }

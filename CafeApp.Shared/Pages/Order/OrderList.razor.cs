@@ -49,5 +49,30 @@ namespace CafeApp.Shared.Pages.Order
             }
 
         }
+        public void GoToDetails(Guid id)
+        {
+            _navigation.NavigateTo($"/dashboard/order/{id}");
+        }
+        public string GetChangeStateButtonStyle(string state, string button)
+        {
+            if (state.Equals(button))
+                if (state.Equals("لغو"))
+                    return "background-color:red;margin:5px;disabled:true";
+                else
+                    return "background-color:yellow;margin:5px;disabled:true";
+            else
+                return "background-color:slategrey;margin:5px";
+
+        }
+        public bool GetStateButtonEnable(string state, string button)
+        {
+            return state.Equals(button);
+
+        }
+        public async Task ChangeState(Guid orderId, short state)
+        {
+            await _unit.Orders.ChangeState(orderId, state);
+            await _dataGrid.ReloadServerData();
+        }
     }
 }

@@ -21,9 +21,8 @@ namespace CafeApp.Shared.Components.DashboardComponents
             StateHasChanged();
             if (!string.IsNullOrEmpty(Item.LastConnectionId))
                 await connection.InvokeAsync("ResponseTableAlert", Item.LastConnectionId);
-            Item=await _unit.Tables.GetDashboardTable(Item.Id);
             StateHasChanged();
-            Navigation.NavigateTo("ordering/"+Item.Id);
+            Navigation.NavigateTo("/dashboard/tableOrder/"+Item.Id);
         }
         protected async override Task OnInitializedAsync()
         {

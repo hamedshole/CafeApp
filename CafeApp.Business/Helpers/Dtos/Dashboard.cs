@@ -18,6 +18,7 @@
     }
     public class DashboardFactorModel
     {
+        public Guid Id { get; set; }
         public Guid TableId { get; set; }
         public string TableTitle { get; set; }
         public Guid CustomerId { get; set; }
@@ -25,7 +26,9 @@
         public Guid UserId { get; set; }
         public string UserName { get; set; }
         public string FactorNumber { get; set; }
-        public DateTime RecordTime { get; set; }
+        public string RecordDate { get; set; }
+        public string RecordTime { get; set; }
+
         public long TotalPrice { get { return Items.Select(x => x.TotalPrice).Sum(); } }
         public long Paid { get; set; }
         public long Dongi { get { return Items.Select(x => x.UnitPrice * x.SubmittedDongi).Sum(); } }

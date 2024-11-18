@@ -21,7 +21,6 @@ namespace CafeApp.Shared.Components.DashboardComponents
         {
             Item = new DashboardFactorModel();
         }
-
         public void SetCustomer(CustomerDto value)
         {
             Item.CustomerId=value.Id;
@@ -73,15 +72,21 @@ namespace CafeApp.Shared.Components.DashboardComponents
                 _module = await _js.InvokeAsync<IJSObjectReference>("import", "/_content/CafeApp.Shared/scripts/Item.js");
             }
         }
-        private CustomerDto _selectedCustomer=new CustomerDto();
-        private async Task<IEnumerable<CustomerDto>> SearchCustomer(string text,CancellationToken cancellationToken = default)
+        //private CustomerDto _selectedCustomer=new CustomerDto();
+        //private async Task<IEnumerable<CustomerDto>> SearchCustomer(string text,CancellationToken cancellationToken = default)
+        //{
+        //    ListCustomerParameter parameter = new ListCustomerParameter();
+
+        //   return await _unit.Customers.GetAll(CustomerSpecifications.FromParameter(parameter));
+        //}
+
+        protected override async void OnAfterRender(bool firstRender)
         {
-            ListCustomerParameter parameter = new ListCustomerParameter();
-
-           return await _unit.Customers.GetAll(CustomerSpecifications.FromParameter(parameter));
+            if (firstRender)
+            {
+                //_selectedCustomer=await _unit.Customers.GetById(Item.CustomerId);
+            }
         }
-        
-
         public void AddPrice(long unitPrice)
         {
             _livePaidAmount+=unitPrice;

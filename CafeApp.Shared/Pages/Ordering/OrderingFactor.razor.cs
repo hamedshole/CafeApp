@@ -1,4 +1,5 @@
 ﻿using CafeApp.Business.Helpers.Dtos;
+using CafeApp.Business.Helpers.Specifications;
 using CafeApp.Shared.Components.DashboardComponents;
 
 namespace CafeApp.Shared.Pages.Ordering
@@ -13,14 +14,39 @@ namespace CafeApp.Shared.Pages.Ordering
         {
             if (firstRender)
             {
-                DashboardTableModel table = await _unit.Tables.GetDashboardTable(Guid.Parse(Id));
-                if (table.State == TableState.filled)
-                    _factor = table.Factor;
+
+                //_customers = await _unit.Customers.GetAll(CustomerSpecifications.FromParameter(parameter));
+                if (_navigation.Uri.Contains("/tableOrder/", StringComparison.OrdinalIgnoreCase))
+                {
+                    DashboardTableModel table = await _unit.Tables.GetDashboardTable(Guid.Parse(Id));
+                    if (table.State == TableState.filled)
+                        _factor = table.Factor;
+                    else
+                        _factor = new DashboardFactorModel { TableId = table.Id, TableTitle = table.Title };
+                }
                 else
-                    _factor = new DashboardFactorModel { TableId = table.Id, TableTitle = table.Title };
+                {
+                    _factor = _unit.Orders.GetBy(OrderSpecifications.GetOrder(Guid.Parse(Id)));
+                }
                 StateHasChanged();
             }
         }
+        private List<CustomerDto> _customers = new List<CustomerDto>();
+        private async Task<IEnumerable<Guid>> SearchCustomer(string text, CancellationToken cancellationToken = default)
+        {
+            ListCustomerParameter parameter = new ListCustomerParameter();
+
+            _customers = await _unit.Customers.GetAll(CustomerSpecifications.FromParameter(parameter));
+            return _customers.Select(x => x.Id).ToList();
+        }
+
+        //string GetCustomerName(Guid customerId)
+        //{
+        //    if (customerId == Guid.Empty)
+        //        return string.Empty;
+        //    else
+        //        return _customers.FirstOrDefault(x => x.Id == customerId)!.FullName;
+        //}
         public void ShowItems(DashboardCategoryModel category)
         {
             _selectedCategory.Category = category;

@@ -25,6 +25,16 @@ namespace CafeApp.Business.Helpers.Specifications
             return specs;
 
         }
+        public static OrderSpecifications GetOrder(Guid orderId)
+        {
+            OrderSpecifications specs = new OrderSpecifications();
+            specs.SetFilterCondition(x => x.Id == orderId);
+            specs.AddInclude("Details.Product");
+            specs.AddInclude("Table");
+            specs.AddInclude("Customer");
+            return specs;
+
+        }
 
         public static OrderSpecifications GetTableState(Guid tableId)
         {

@@ -1,6 +1,7 @@
 ﻿@using CafeApp.Business.Helpers.Dtos
 @using Microsoft.AspNetCore.Components.Forms
 @using Microsoft.JSInterop
+@using System.Globalization
 @inject IJSRuntime _js;
 @inject IApplicationUnit _unit;
 <div class="invoice-wrapper">
@@ -10,18 +11,20 @@
             <div class="header-left">
                 <div class="detail">
                     <div>
-                        <MudAutocomplete ValueChanged="SetCustomer" InputMode="InputMode.search" Variant="Variant.Text" Clearable=true Required=false T="CustomerDto" Label="مشتری"
-                                         SearchFunc=SearchCustomer ToStringFunc="@(e=> e==null?null : $"{e.FullName}")" />
+                        @* <MudTextField Label="مشتری" ReadOnly="true" T="string" @bind-Value="Item.CustomerName"></MudTextField> *@
+                        
                     </div>
                    </div>
-                <div class="detail">ویتر:  @Item.UserName</div>
-            </div>
+@*                 <div class="detail">ویتر:  @Item.UserName</div>
+ *@            </div>
             <div class="header-center">
                 <div class="table-number">@Item.TableTitle</div>
             </div>
             <div class="header-right">
-                <div class="detail">ساعت: @Item.RecordTime.ToString("HH:mm")</div>
-                <div class="detail">فاکتور: @Item.FactorNumber</div>
+                <div class="detail">تاریخ: @Item.RecordDate</div>
+                <div class="detail">ساعت: @Item.RecordTime</div>
+
+                @* <div class="detail">فاکتور: @Item.FactorNumber</div> *@
             </div>
         </header>
         <div class="invoice-body">
