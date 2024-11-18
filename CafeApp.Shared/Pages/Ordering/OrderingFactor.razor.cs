@@ -13,10 +13,12 @@ namespace CafeApp.Shared.Pages.Ordering
         {
             if (firstRender)
             {
-            DashboardTableModel table = await _unit.Tables.GetDashboardTable(Guid.Parse( Id));
-            if (table.State == TableState.empty)
-                _factor = new DashboardFactorModel { TableId = table.Id, TableTitle = table.Title };
-            StateHasChanged();
+                DashboardTableModel table = await _unit.Tables.GetDashboardTable(Guid.Parse(Id));
+                if (table.State == TableState.filled)
+                    _factor = table.Factor;
+                else
+                    _factor = new DashboardFactorModel { TableId = table.Id, TableTitle = table.Title };
+                StateHasChanged();
             }
         }
         public void ShowItems(DashboardCategoryModel category)

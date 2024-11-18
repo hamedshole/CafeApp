@@ -1,5 +1,6 @@
 ﻿using CafeApp.Business.Helpers.Common;
 using CafeApp.Business.Helpers.Specifications;
+using CafeApp.Domain.Common;
 using CafeApp.Domain.Entities;
 using CafeApp.Domain.Interfaces;
 
@@ -30,6 +31,7 @@ namespace CafeApp.Business.Helpers.Dtos
         public Guid Id { get; set; }
         public Guid ProductId { get; set; }
         public int Amount { get; set; }
+        public long TotalPrice { get; set; }
         public bool HasAdditive { get; set; }
         public ICollection<CreateOrderItemAdditiveParameter>? Additives { get; set; }
         public CreateOrderItemParameter()
@@ -39,6 +41,11 @@ namespace CafeApp.Business.Helpers.Dtos
     }
     public class CreateOrderParameter
     {
+        public string? Description { get; set; }
+        public FactorType Type { get; set; }
+        public DateTime Time { get; set; }
+        public FactorState State { get; set; }
+        public Guid UserId { get; set; }
         public Guid? CustomerId { get; set; }
         public Guid TableId { get; set; }
         public ICollection<CreateOrderItemParameter> Items { get; set; }

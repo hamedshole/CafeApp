@@ -21,9 +21,14 @@ namespace CafeApp.Shared.Components.DashboardComponents
         {
             Item = new DashboardFactorModel();
         }
+
+        public void SetCustomer(CustomerDto value)
+        {
+            Item.CustomerId=value.Id;
+        }
         public void Add(DashboardProductModel dashboardProduct)
         {
-            DashboardFactorItemModel item = Item.Items.FirstOrDefault(x => x.Id == dashboardProduct.Id);
+            DashboardFactorItemModel item = Item.Items.FirstOrDefault(x => x.ProductId == dashboardProduct.Id);
             if (item == null)
             {
                 item = new DashboardFactorItemModel() { Id = dashboardProduct.Id, ProductTitle = dashboardProduct.Title, TotalAmount = dashboardProduct.Amount, UnitPrice = dashboardProduct.Price };

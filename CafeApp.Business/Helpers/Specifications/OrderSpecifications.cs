@@ -13,13 +13,29 @@ namespace CafeApp.Business.Helpers.Specifications
             return orderSpecifications;
         }
 
+        public static OrderSpecifications GetTableOrder(Guid tableId)
+        {
+            OrderSpecifications specs=new OrderSpecifications();
+            specs.SetFilterCondition(x=>x.TableId == tableId);
+            specs.SetFilterCondition(x => x.State == Domain.Common.FactorState.New || x.State == Domain.Common.FactorState.InProgress);
+            specs.SetFilterCondition(x => DateOnly.FromDateTime(x.Time) == DateOnly.FromDateTime(DateTime.Now));
+            specs.AddInclude("Details");
+            specs.AddInclude("Table");
+            specs.AddInclude("Customer");
+            return specs;
+
+        }
+
         public static OrderSpecifications GetTableState(Guid tableId)
         {
-            OrderSpecifications orderSpecifications=new OrderSpecifications();
-            orderSpecifications.SetFilterCondition(x => x.TableId == tableId);
-            orderSpecifications.SetFilterCondition(x => x.State == Domain.Common.FactorState.InProgress);
-            orderSpecifications.SetFilterCondition(x=>x.Time==DateTime.Now);
-            return orderSpecifications;
+            OrderSpecifications specs = new OrderSpecifications();
+            specs.SetFilterCondition(x => x.TableId == tableId);
+            specs.SetFilterCondition(x => x.State == Domain.Common.FactorState.New|| x.State == Domain.Common.FactorState.InProgress);
+            specs.SetFilterCondition(x=>DateOnly.FromDateTime( x.Time)==DateOnly.FromDateTime(DateTime.Now));
+            specs.AddInclude("Details.Product");
+            specs.AddInclude("Table");
+            specs.AddInclude("Customer");
+            return specs;
         }
         public OrderSpecifications AddFilter(ListOrderParameter parameter)
         {

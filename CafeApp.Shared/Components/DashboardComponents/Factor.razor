@@ -10,7 +10,7 @@
             <div class="header-left">
                 <div class="detail">
                     <div>
-                        <MudAutocomplete InputMode="InputMode.search" Variant="Variant.Text" Clearable=true Required=false T="CustomerDto" Label="مشتری" @bind-Value="_selectedCustomer"
+                        <MudAutocomplete ValueChanged="SetCustomer" InputMode="InputMode.search" Variant="Variant.Text" Clearable=true Required=false T="CustomerDto" Label="مشتری"
                                          SearchFunc=SearchCustomer ToStringFunc="@(e=> e==null?null : $"{e.FullName}")" />
                     </div>
                    </div>
@@ -30,11 +30,10 @@
                     <tr>
                         <th>محصول</th>
                         <th> نعداد</th>
-                        <th>تسویه شده</th>
+                        <th class="NotMobile">تسویه شده</th>
                         <th>قیمت</th>
                         <th>فی</th>
-                        <th>توضیحات</th>
-                        <th>وضعیت</th>
+                        <th class="NotMobile">وضعیت</th>
                     </tr>
                 </thead>
                 <tbody>

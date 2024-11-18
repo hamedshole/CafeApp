@@ -30,8 +30,9 @@
 	public enum FactorState
 	{
 		Cancelled=0,
-		Completed=1,
-		InProgress=2
+		New=1,
+		InProgress=2,
+		Completed=3,
 	}
 	public enum Platform
 	{

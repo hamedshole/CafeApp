@@ -6,14 +6,22 @@
 <div style="display:flex">
 
     <div class="order-system col-md-6 col-12">
-        <CategoriesSection ShowItemsMethod="ShowItems"></CategoriesSection>
-        <CategoryItemsSection MinusFactorItem="MinusItem" AddFactorItem="AddItem" @ref=_selectedCategory></CategoryItemsSection>
+        <CategoriesSection FactorItems="_factor.Items" ShowItemsMethod="ShowItems"></CategoriesSection>
+        <CategoryItemsSection  MinusFactorItem="MinusItem" AddFactorItem="AddItem" @ref=_selectedCategory></CategoryItemsSection>
         <div>
-            <MudButton OnClick="Fill" Style="background-color:green" ButtonType="ButtonType.Button" FullWidth="true" Color="Color.Success" Class="mobile-submit col-12">ثبت سفارش</MudButton>
+            <MudButton OnClick="Fill" Style="background-color:green" ButtonType="ButtonType.Button" FullWidth="true" Class=" fishbtn btn btn-settle-all col-12"> بازبینی</MudButton>
+
+            <MudButton OnClick="Fill" Style="background-color:green" ButtonType="ButtonType.Button" FullWidth="true" Class=" fishbtn btn btn-settle-all col-12">ثبت سفارش</MudButton>
         </div>
     </div>
     <div class="order-system col-md-6 col-12">
         <Factor Item="_factor" @ref=_factorPanel></Factor>
+        توضیحات
+        <MudPaper Style="border-radius:15px" Elevation="20">
+            <MudTextField @bind-Text="_factor.Description" Style="padding:5px" T="string" Lines="5"></MudTextField>
+            <MudButton OnClick="Fill" Style="background-color:green" ButtonType="ButtonType.Button" FullWidth="true" Class="mobile-submit fishbtn btn btn-settle-all col-12">ثبت سفارش</MudButton>
+
+        </MudPaper>
     </div>
 
 </div>
@@ -27,17 +35,32 @@
     {
         CreateOrderParameter orderParameter = new CreateOrderParameter
             {
+                Description=_factor.Description,
+                Type=Domain.Common.FactorType.Inside,
+                Time=DateTime.Now,
+                State=Domain.Common.FactorState.New,
+                UserId = Guid.Parse("C5A4121B-7FE9-48F8-9576-09B6F082F494"),
                 CustomerId = _factor.CustomerId,
                 TableId = _factor.TableId,
                 Items = _factor.Items.Select(x => new CreateOrderItemParameter
                 {
                     HasAdditive = false,
                     ProductId = x.Id,
+                    TotalPrice=x.TotalPrice,
                     Amount = x.TotalAmount,
                     Additives = null
                 }).ToList()
             };
-        await _unit.Factors.CreateAsync(orderParameter);
-        await _table.FillTable(Guid.Parse(Id));
+        try
+        {
+            await _unit.Orders.CreateAsync(orderParameter);
+            await _table.FillTable(Guid.Parse(Id));
+
+        }
+        catch (Exception e)
+        {
+
+            throw;
+        }
     }
 }

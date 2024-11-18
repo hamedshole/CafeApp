@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using CafeApp.Business.Helpers.Dtos;
 using CafeApp.Business.Helpers.Specifications;
 using CafeApp.Business.Interfaces;
@@ -49,6 +50,7 @@ namespace CafeApp.Business.Services
                             }).FirstOrDefault()!;
 
             OrderEntity? order = _repository.DataUnit.Orders.Get(OrderSpecifications.GetTableState(table.Id)).FirstOrDefault();
+            table.Factor = _mapper.Map<DashboardFactorModel>(order);
             if (order is OrderEntity)
             {
                 table.State = TableState.filled;
@@ -61,6 +63,13 @@ namespace CafeApp.Business.Services
             }
 
             return await Task.FromResult( table);
+        }
+
+        public async Task<DashboardFactorModel> GetTableFactor(Guid tableId)
+        {
+            OrderSpecifications specs=OrderSpecifications.GetTableOrder(tableId);
+           var res= _repository.DataUnit.Orders.Get(specs).ProjectTo<DashboardFactorModel>(_mapper.ConfigurationProvider).FirstOrDefault();
+            return await Task.FromResult(res!);
         }
     }
 }

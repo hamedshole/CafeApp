@@ -4,13 +4,12 @@
     <td>
         <span class="total">@Item.TotalAmount</span>
     </td>
-    <td>
+    <td class="NotMobile">
         <button @onclick="@Minus" class="dongi adjust-button minus hide">-</button>
         <span class="quantity">@Item.PaidAmount</span>
         <button @onclick="Add" class="dongi adjust-button plus hide">+</button>
     </td>
     <td>@Item.TotalPrice</td>
     <td>@Item.UnitPrice</td>
-    <td>@Item.Description</td>
-    <td>@Item.State</td>
+    <td class="NotMobile">@Item.State</td>
 </tr>

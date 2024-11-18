@@ -97,6 +97,24 @@ namespace CafeApp.Business.Helpers
             CreateMap<ProductCategoryEntity, DashboardCategoryModel>()
                 .ForMember(x=>x.Items,opt=>opt.MapFrom(x=>x.Products));
             CreateMap<ProductEntity,DashboardProductModel>();
+
+
+            CreateMap<OrderEntity, DashboardFactorModel>()
+                .ForMember(x=>x.Items,opt=>opt.MapFrom(x=>x.Details))
+                .ForMember(x=>x.CustomerName,opt=>opt.MapFrom(x=>x.Customer!.FullName))
+                .ForMember(x=>x.TableTitle,opt=>opt.MapFrom(x=>x.Table!.Title));
+            CreateMap<OrderDetailEntity,DashboardFactorItemModel>()
+                .ForMember(x=>x.ProductId,opt=>opt.MapFrom(x=>x.ProductId))
+                .ForMember(x=>x.CategoryId,opt=>opt.MapFrom(x=>x.Product!.CategoryId))
+                .ForMember(x=>x.ProductTitle,opt=>opt.MapFrom(x=>x.Product!.Title))
+                .ForMember(x=>x.TotalAmount,opt=>opt.MapFrom(x=>x.Amount))
+                .ForMember(x=>x.UnitPrice,opt=>opt.MapFrom(x=>x.Product!.Price));
+
+            CreateMap<CreateOrderParameter, OrderEntity>()
+                .ForMember(x => x.Details, opt => opt.MapFrom(x => x.Items))
+                .ForMember(x => x.TotalPrice, opt => opt.MapFrom(x => x.Items.Sum(x => x.TotalPrice)));
+            CreateMap<CreateOrderItemParameter, OrderDetailEntity>();
+            CreateMap<CreateOrderItemParameter, InventoryFactorEntity>();
         }
         public static string GetGender(Gender gender)
         {

@@ -30,6 +30,7 @@
         public long Paid { get; set; }
         public long Dongi { get { return Items.Select(x => x.UnitPrice * x.SubmittedDongi).Sum(); } }
         public ICollection<DashboardFactorItemModel> Items { get; set; }
+        public string Description { get; set; }
         public DashboardFactorModel()
         {
             Items = new List<DashboardFactorItemModel>();
@@ -38,6 +39,8 @@
     public class DashboardFactorItemModel
     {
         public Guid Id { get; set; }
+        public Guid? CategoryId { get; set; }
+        public Guid ProductId { get; set; }
         public string ProductTitle { get; set; }
         public int TotalAmount { get; set; }
         public int PaidAmount { get; set; }
@@ -63,7 +66,7 @@
     {
         public Guid Id { get; set; }
         public string Title { get; set; }
-        public ICollection<DashboardProductModel> Items { get; set; }
+        public List<DashboardProductModel> Items { get; set; }
         public DashboardCategoryModel()
         {
             Items = new List<DashboardProductModel>();
