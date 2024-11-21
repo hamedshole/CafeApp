@@ -44,6 +44,14 @@ namespace CafeApp.Shared.Pages.Additive
                     await _restUnit.Additives.WriteSync(dbEntity);
                 }
                 await _restUnit.Additives.Apply();
+                ICollection<AdditiveEntity> _apiEntities = await _restUnit.Additives.Sync();
+
+                foreach (AdditiveEntity dbEntity in _apiEntities)
+                {
+                    dbEntity.ClearRelations();
+                    await _unit.Additives.WriteSync(dbEntity);
+                }
+                await _unit.Additives.Apply();
             }
             catch (Exception e)
             {

@@ -50,6 +50,13 @@ namespace CafeApp.Shared.Pages.Inventories
                     await _restUnit.Inventories.WriteSync(dbEntity);
                 }
                 await _restUnit.Inventories.Apply();
+                ICollection<InventoryEntity> _apiEntities = await _restUnit.Inventories.Sync();
+
+                foreach (InventoryEntity dbEntity in _apiEntities)
+                {
+                    await _unit.Inventories.WriteSync(dbEntity);
+                }
+                await _unit.Inventories.Apply();
             }
             catch (Exception e)
             {

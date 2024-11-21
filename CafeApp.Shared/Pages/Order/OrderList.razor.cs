@@ -41,6 +41,12 @@ namespace CafeApp.Shared.Pages.Order
                     await _restUnit.Orders.WriteSync(dbEntity);
                 }
                 await _restUnit.Orders.Apply();
+                ICollection<OrderEntity> _apiEntities = await _restUnit.Orders.Sync();
+                foreach (OrderEntity dbEntity in _apiEntities)
+                {
+                    await _unit.Orders.WriteSync(dbEntity);
+                }
+                await _unit.Orders.Apply();
             }
             catch (Exception e)
             {

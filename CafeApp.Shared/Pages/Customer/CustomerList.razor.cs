@@ -40,6 +40,12 @@ namespace CafeApp.Shared.Pages.Customer
                     await _restUnit.Customers.WriteSync(dbEntity);
                 }
                 await _restUnit.Customers.Apply();
+                ICollection<CustomerEntity> _apiEntities = await _restUnit.Customers.Sync();
+                foreach (CustomerEntity dbEntity in _apiEntities)
+                {
+                    await _unit.Customers.WriteSync(dbEntity);
+                }
+                await _unit.Customers.Apply();
             }
             catch (Exception e)
             {

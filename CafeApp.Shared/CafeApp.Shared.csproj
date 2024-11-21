@@ -12,6 +12,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="BlazorSortableList" Version="2.1.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.10" />
 		<PackageReference Include="MudBlazor" Version="7.14.0" />
 		<PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="8.0.10" />

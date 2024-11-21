@@ -50,6 +50,13 @@ namespace CafeApp.Shared.Pages.Tables
                     await _restUnit.Tables.WriteSync(dbEntity);
                 }
                 await _restUnit.Products.Apply();
+
+                ICollection<TableEntity> _apiTables=await _restUnit.Tables.Sync();
+                foreach (var item in _apiTables)
+                {
+                    await _unit.Tables.WriteSync(item);
+                }
+                await _unit.Tables.Apply();
             }
             catch (Exception e)
             {

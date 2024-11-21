@@ -2,7 +2,7 @@
 {
     public interface IBaseClient<TEntity>
     {
-        public  Task<ICollection<TEntity>> SyncCategories();
+        public  Task<ICollection<TEntity>> Sync();
         public  Task Apply();
         public Task WriteSync(TEntity entity);
     }

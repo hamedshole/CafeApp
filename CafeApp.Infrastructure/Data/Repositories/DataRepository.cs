@@ -55,7 +55,7 @@ namespace CafeApp.Infrastructure.Data.Repositories
         {
             try
             {
-                var result = SpecificationEvaluator<TEntity>.GetQuery(_dbSet, specifications);
+                var result = SpecificationEvaluator<TEntity>.GetQuery(_dbSet, specifications).Where(x=>x.IsDeleted==false);
                 return result;
             }
             catch (Exception)
@@ -65,7 +65,7 @@ namespace CafeApp.Infrastructure.Data.Repositories
         }
         IQueryable<TEntity> IRepository<TEntity>.Get(Expression<Func<TEntity, bool>> expression)
         {
-            return _dbSet.Where(expression);
+            return _dbSet.Where(x=>x.IsDeleted==false).Where(expression);
         }
 
 

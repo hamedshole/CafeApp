@@ -11,62 +11,103 @@
 
     </MudToolBar>
     <MudStack Row>
-
         <MudItem xs="6">
-            <MudDropContainer ItemPicked="CategoryPicked" T="DropCategoryItem" Items="@_dropzoneCategories" @ref="_Categorycontainer" ItemsSelector="@((item,dropzone) => item.Selector == dropzone)" ItemDropped="CategoryUpdated" Class="d-flex flex-wrap flex-grow-1">
-                <ChildContent>
 
-                    <MudPaper Class="ma-4 flex-grow-1">
-                        <MudList T="DropCategoryItem" Clickable="true" Class="d-flex flex-column mud-height-full">
-                            <MudListSubheader>دسته بندی ها</MudListSubheader>
-                            <MudDropZone T="DropCategoryItem" Identifier="1" Class="flex-grow-1" AllowReorder="true" />
-                        </MudList>
-                    </MudPaper>
-
-                </ChildContent>
-                <ItemRenderer>
-                    <MudListItem T="DropProductItem" OnClick="()=>LoadProductsData(context.Id)">
-                        <MudStack Row>
-                            <MudAvatar>
-                                <MudImage Src=@string.Format("{0},{1}","data:image/png;base64",context.Image)></MudImage>
-                            </MudAvatar>
-                            <MudText>@string.Format("{0} ({1})", context.Title, context.Order)</MudText>
-                        </MudStack>
-                    </MudListItem>
-                </ItemRenderer>
-            </MudDropContainer>
+            <MudPaper Class="ma-4 flex-grow-1">
+                <MudList T="DropCategoryItem" Clickable="true" Class="d-flex flex-column mud-height-full">
+                    <MudListSubheader>دسته بندی ها</MudListSubheader>
+                    <BlazorSortableList.SortableList Style="padding:5px" T="DropCategoryItem" Items="_dropzoneCategories" OnUpdate="SortCategoryList">
+                        <SortableItemTemplate >
+                            <MudStack @onclick="()=>LoadProductsData(context.Id)" Row Style="margin:5px">
+                                <MudAvatar>
+                                    <MudImage Src=@string.Format("{0},{1}","data:image/png;base64",context.Image)></MudImage>
+                                </MudAvatar>
+                                <MudText>@string.Format("{0} ({1})", context.Title, context.Order)</MudText>
+                            </MudStack>
+                        </SortableItemTemplate>
+                    </BlazorSortableList.SortableList>
+                </MudList>
+            </MudPaper>
 
         </MudItem>
-        <MudItem xs="6">
-            <MudDropContainer ItemPicked="ProductPicked" T="DropProductItem" Items="@_dropzoneProducts" @ref="_Productcontainer" ItemsSelector="@((item,dropzone) => item.Selector == dropzone)" ItemDropped="ProductUpdated" Class="d-flex flex-wrap flex-grow-1">
-                <ChildContent>
 
-                    <MudPaper Class="ma-4 flex-grow-1">
-                        <MudList T="DropProductItem" Clickable="true" Class="d-flex flex-column mud-height-full">
-                            <MudListSubheader>محصولات دسته بندی</MudListSubheader>
-                            <MudDropZone T="DropProductItem" Identifier="1" Class="flex-grow-1" AllowReorder="true" />
-                        </MudList>
-                    </MudPaper>
+        @code {
+            private void SortCategoryList((int oldIndex, int newIndex) indices)
+        {
+            var items = this._dropzoneCategories;
+            var itemToMove = items[indices.oldIndex];
 
+            items.RemoveAt(indices.oldIndex);
 
-                </ChildContent>
-                <ItemRenderer>
-                    <MudListItem T="DropProductItem">
-                        <MudStack Row>
-                            <MudAvatar>
-                                <MudImage Src=@string.Format("{0},{1}","data:image/png;base64",context.Image)></MudImage>
-                            </MudAvatar>
-                            <MudText>@string.Format("{0} ({1})", context.Title, context.Order)</MudText>
-                        </MudStack>
-                    </MudListItem>
-                </ItemRenderer>
-            </MudDropContainer>
+            if (indices.newIndex < items.Count)
+            {
+                items.Insert(indices.newIndex, itemToMove);
+            }
+            else
+            {
+                items.Add(itemToMove);
+            }
+            var t = _dropzoneCategories;
+            // _dropzoneCategories.Find(x => x.Id == dropItem.Item.Id).Order = nowindex;
+            // _dropzoneCategories = _dropzoneCategories.OrderBy(x => x.Order).ToList();
+            for (int i = 0; i < _dropzoneCategories.Count; i++)
+            {
+                _dropzoneCategories[i].Order = i;
+            }
+            StateHasChanged();
+        }
+        private void SortProductList((int oldIndex, int newIndex) indices)
+        {
+            var items = this._dropzoneProducts;
+            var itemToMove = items[indices.oldIndex];
 
+            items.RemoveAt(indices.oldIndex);
+
+            if (indices.newIndex < items.Count)
+            {
+                items.Insert(indices.newIndex, itemToMove);
+            }
+            else
+            {
+                items.Add(itemToMove);
+            }
+            var t = _dropzoneProducts;
+            // _dropzoneCategories.Find(x => x.Id == dropItem.Item.Id).Order = nowindex;
+            // _dropzoneCategories = _dropzoneCategories.OrderBy(x => x.Order).ToList();
+            for (int i = 0; i < _dropzoneProducts.Count; i++)
+            {
+                _dropzoneProducts[i].Order = i;
+            }
+            StateHasChanged();
+        }
+        }
+
+       <MudItem xs="6">
+            <MudPaper Class="ma-4 flex-grow-1">
+                <MudList T="DropProductItem" Clickable="true" Class="d-flex flex-column mud-height-full">
+                    <MudListSubheader>محصولات دسته بندی</MudListSubheader>
+                    <BlazorSortableList.SortableList Style="padding:5px" T="DropProductItem" Items="_dropzoneProducts" OnUpdate="SortProductList">
+                        <SortableItemTemplate>
+                            <MudStack  Row Style="margin:5px">
+                                <MudAvatar>
+                                    <MudImage Src=@string.Format("{0},{1}","data:image/png;base64",context.Image)></MudImage>
+                                </MudAvatar>
+                                <MudText>@string.Format("{0} ({1})", context.Title, context.Order)</MudText>
+                            </MudStack>
+                        </SortableItemTemplate>
+                    </BlazorSortableList.SortableList>
+                </MudList>
+            </MudPaper>
+        
         </MudItem>
     </MudStack>
 
 </div>
 @code {
+
+
+
+
     private MudDropContainer<DropCategoryItem> _Categorycontainer;
     private MudDropContainer<DropProductItem> _Productcontainer;
 
@@ -168,7 +209,7 @@
         StateHasChanged();
 
         //the container refreshes the internal state
-        _Categorycontainer.Refresh();
+        // _Categorycontainer.Refresh();
     }
     private void RefreshProductContainer()
     {
@@ -176,7 +217,6 @@
         StateHasChanged();
 
         //the container refreshes the internal state
-        _Productcontainer.Refresh();
     }
 
     private async Task LoadCategoriesData()
@@ -193,7 +233,7 @@
     private async Task<List<DropCategoryItem>> LoadCategories()
     {
         ListProductCategoryParameter categoryParameter = new ListProductCategoryParameter();
-        var res = await _unit.Categories.GetPaged(categoryParameter.GetSpecifications(),categoryParameter);
+        var res = await _unit.Categories.GetPaged(categoryParameter.GetSpecifications(), categoryParameter);
         return res.Items.OrderBy(x => x.Order).Select(x => new DropCategoryItem { Id = x.Id, Title = x.Title, Image = x.Image, Order = x.Order, Selector = "1" }).ToList();
     }
     private async Task<List<DropProductItem>> LoadProducts(Guid id)

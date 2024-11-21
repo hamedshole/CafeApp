@@ -43,6 +43,14 @@ namespace CafeApp.Shared.Pages.Material
                     await _restUnit.Materials.WriteSync(dbEntity);
                 }
                 await _restUnit.Materials.Apply();
+                ICollection<MaterialEntity> _apiEntities = await _restUnit.Materials.Sync();
+
+                foreach (MaterialEntity dbEntity in _apiEntities)
+                {
+                    dbEntity.ClearRelations();
+                    await _unit.Materials.WriteSync(dbEntity);
+                }
+                await _unit.Materials.Apply();
             }
             catch (Exception e)
             {
