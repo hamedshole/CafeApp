@@ -1,4 +1,5 @@
-﻿@using Shared.RestClient.Interfaces
+﻿@using CafeApp.Business.Helpers.Dtos
+@using Shared.RestClient.Interfaces
 @inject IApplicationUnit _unit;
 
 <div class="categories">
@@ -6,7 +7,17 @@
     <ul>
         @foreach (var item in _categories)
         {
-            <li @onclick="()=> ShowItems(item)">‌ @item.Title</li>
+            <li class="@GetClass(item)" @onclick="()=> ShowItems(item)">‌ @item.Title</li>
         }
     </ul>
 </div>
+
+@code{
+    string GetClass(DashboardCategoryModel item)
+    {
+        string _styleClass = string.Empty;
+        if (item.Items.Any(x=>x.Amount>0))
+            _styleClass = "selected";
+        return _styleClass;
+    }
+}

@@ -31,7 +31,11 @@ namespace CafeApp.Shared.Pages
             if (string.IsNullOrEmpty(TableId))
                 await _module.InvokeVoidAsync("ShowDialog", "با اسکن بارکد میزتان را انتخاب کرده و مجدد زنگ بزنید");
             else
+            {
                 await hubConnection.InvokeAsync("SendTableAlert", TableId, hubConnection.ConnectionId);
+                await _module.InvokeVoidAsync("ShowDialog", "پیام شما ارسال شد");
+
+            }
         }
         public async void Response(string msg)
         {

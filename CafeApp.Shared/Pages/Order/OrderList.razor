@@ -24,6 +24,8 @@
                         <MudButton Disabled="@GetStateButtonEnable(context.Item.State,"جدید")" Style="@GetChangeStateButtonStyle(context.Item.State,"جدید")" Color="Color.Surface"> جدید</MudButton>
                         <MudButton Onclick="()=>ChangeState(context.Item.Id,2)" Disabled="@GetStateButtonEnable(context.Item.State,"آماده سازی")" Style="@GetChangeStateButtonStyle(context.Item.State,"آماده سازی")" Color="Color.Surface">آماده سازی</MudButton>
                         <MudButton Onclick="()=>ChangeState(context.Item.Id,3)" Disabled="@GetStateButtonEnable(context.Item.State,"تحویل")" Style="@GetChangeStateButtonStyle(context.Item.State,"تحویل")" Color="Color.Surface">تحویل</MudButton>
+                        <MudButton Disabled="true" Style="@GetChangeStateButtonStyle(context.Item.State,"تسویه شد")" Color="Color.Surface">تسویه شد</MudButton>
+
                         <MudButton Onclick="()=>ChangeState(context.Item.Id,0)" Disabled="@GetStateButtonEnable(context.Item.State,"لغو")" Style="@GetChangeStateButtonStyle(context.Item.State,"لغو")" Color="Color.Surface">لغو</MudButton>
 
                     </MudButtonGroup>

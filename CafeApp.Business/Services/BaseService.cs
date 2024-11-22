@@ -73,7 +73,7 @@ namespace CafeApp.Business.Services
         public virtual async Task<PagedList<TDto>> GetPaged(ISpecifications<TEntity> specifications, PagingParameter pagingParameter)
         {
 
-            var queryable = _repository.Get(specifications);
+                var queryable = _repository.Get(specifications);
             int count = queryable.Count();
 
             var collection = queryable.Take(pagingParameter.PageSize).Skip((pagingParameter.Page - 1) * pagingParameter.PageSize).ProjectTo<TDto>(_mapper.ConfigurationProvider).ToList();

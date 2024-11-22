@@ -31,14 +31,14 @@ namespace CafeApp.Shared.Pages.Ordering
                 StateHasChanged();
             }
         }
-        private List<CustomerDto> _customers = new List<CustomerDto>();
-        private async Task<IEnumerable<Guid>> SearchCustomer(string text, CancellationToken cancellationToken = default)
-        {
-            ListCustomerParameter parameter = new ListCustomerParameter();
+        //private List<CustomerDto> _customers = new List<CustomerDto>();
+        //private async Task<IEnumerable<Guid>> SearchCustomer(string text, CancellationToken cancellationToken = default)
+        //{
+        //    ListCustomerParameter parameter = new ListCustomerParameter();
 
-            _customers = await _unit.Customers.GetAll(CustomerSpecifications.FromParameter(parameter));
-            return _customers.Select(x => x.Id).ToList();
-        }
+        //    _customers = await _unit.Customers.GetAll(CustomerSpecifications.FromParameter(parameter));
+        //    return _customers.Select(x => x.Id).ToList();
+        //}
 
         //string GetCustomerName(Guid customerId)
         //{

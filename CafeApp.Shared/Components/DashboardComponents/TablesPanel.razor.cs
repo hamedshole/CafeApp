@@ -8,7 +8,7 @@ namespace CafeApp.Shared.Components.DashboardComponents
     {
         HubConnection hubConnection;
         private IJSObjectReference? _module;
-        public ICollection<DashboardTableModel> _tables { get; set; }
+        public List<DashboardTableModel> _tables { get; set; }
         public TablesPanel()
         {
 
@@ -46,7 +46,11 @@ namespace CafeApp.Shared.Components.DashboardComponents
                     await InvokeAsync(StateHasChanged);
 
                 }
-                _tables = await _restUnit.Tables.GetDashboardTables();
+                _tables = (await _restUnit.Tables.GetDashboardTables()).ToList();
+                for (int i = 0; i < _tables.Count; i++)
+                {
+                    _tables[i] = await _unit.Tables.GetDashboardTable(_tables[i].Id);
+                }
 
             }
             catch (Exception e)
@@ -120,6 +124,22 @@ namespace CafeApp.Shared.Components.DashboardComponents
             var filledTable=_tables.FirstOrDefault(x => x.Id == id);
             filledTable!.State=TableState.filled;
            await InvokeAsync(StateHasChanged);
+        }
+        public async Task EmptyTable(Guid id)
+        {
+            var filledTable = _tables.FirstOrDefault(x => x.Id == id);
+            filledTable!.State = TableState.empty;
+            await InvokeAsync(StateHasChanged);
+        }
+        public async Task ReloadTables()
+        {
+            _tables = (await _restUnit.Tables.GetDashboardTables()).ToList();
+            for (int i = 0; i < _tables.Count; i++)
+            {
+                _tables[i] = await _unit.Tables.GetDashboardTable(_tables[i].Id);
+            }
+            await InvokeAsync(StateHasChanged);
+
         }
     }
 }

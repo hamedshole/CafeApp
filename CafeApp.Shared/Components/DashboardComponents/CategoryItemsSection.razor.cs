@@ -8,6 +8,8 @@ namespace CafeApp.Shared.Components.DashboardComponents
     {
         private IJSObjectReference? _module;
 
+        
+
         [Parameter]
         public EventCallback<DashboardProductModel> AddFactorItem { get; set; }
 

@@ -5,6 +5,7 @@ using CafeApp.Business.Helpers.Specifications;
 using CafeApp.Business.Interfaces;
 using CafeApp.Domain.Entities;
 using CafeApp.Domain.Interfaces;
+using Microsoft.VisualBasic;
 
 namespace CafeApp.Business.Services
 {
@@ -25,6 +26,8 @@ namespace CafeApp.Business.Services
                             }).ToList();
             foreach (var table in tables)
             {
+                
+
                 OrderEntity? order = _repository.DataUnit.Orders.Get(OrderSpecifications.GetTableState(table.Id)).FirstOrDefault();
                 if (order is OrderEntity)
                 {
@@ -51,7 +54,7 @@ namespace CafeApp.Business.Services
 
             OrderEntity? order = _repository.DataUnit.Orders.Get(OrderSpecifications.GetTableState(table.Id)).FirstOrDefault();
             table.Factor = _mapper.Map<DashboardFactorModel>(order);
-            if (order is OrderEntity)
+            if (order is OrderEntity && (order.State==Domain.Common.FactorState.InProgress || order.State == Domain.Common.FactorState.New))
             {
                 table.State = TableState.filled;
                 table.LastState = TableState.filled;

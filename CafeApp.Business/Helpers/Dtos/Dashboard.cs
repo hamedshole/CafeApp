@@ -61,6 +61,7 @@
     public class DashboardProductModel
     {
         public Guid Id { get; set; }
+        public Guid CategoryId { get; set; }
         public string Title { get; set; }
         public int Amount { get; set; }
         public long Price { get; set; }

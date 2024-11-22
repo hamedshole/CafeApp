@@ -7,7 +7,9 @@ namespace CafeApp.Shared.Components.DashboardComponents
 {
     public partial class Factor
     {
-       
+        [Parameter]
+        public EventCallback Pay { get; set; }
+
         private long _livePaidAmount=0;
 
         [Parameter]
@@ -30,7 +32,7 @@ namespace CafeApp.Shared.Components.DashboardComponents
             DashboardFactorItemModel item = Item.Items.FirstOrDefault(x => x.ProductId == dashboardProduct.Id);
             if (item == null)
             {
-                item = new DashboardFactorItemModel() { Id = dashboardProduct.Id, ProductTitle = dashboardProduct.Title, TotalAmount = dashboardProduct.Amount, UnitPrice = dashboardProduct.Price };
+                item = new DashboardFactorItemModel() {ProductId=dashboardProduct.Id, CategoryId=dashboardProduct.CategoryId, Id = dashboardProduct.Id, ProductTitle = dashboardProduct.Title, TotalAmount = dashboardProduct.Amount, UnitPrice = dashboardProduct.Price };
                 Item.Items.Add(item);
             }
             else

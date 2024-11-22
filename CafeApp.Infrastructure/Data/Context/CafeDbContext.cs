@@ -37,7 +37,7 @@ namespace CafeApp.Infrastructure.Data.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.ApplyConfigurationsFromAssembly(typeof(EntityConfigurations).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(EntityConfigurations).Assembly);
             base.OnModelCreating(modelBuilder);
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

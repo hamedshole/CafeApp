@@ -142,6 +142,8 @@ namespace CafeApp.Business.Helpers
                 case FactorState.New: return "جدید";
                 case FactorState.InProgress: return "آماده سازی";
                 case FactorState.Completed: return "تحویل";
+                case FactorState.Paid: return "تسویه شد";
+
                 default: return string.Empty;
             }
         }

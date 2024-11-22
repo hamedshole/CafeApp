@@ -1,12 +1,16 @@
 ﻿using CafeApp.Business.Helpers.Common;
 using CafeApp.Business.Helpers.Dtos;
 using CafeApp.Domain.Entities;
+using CafeApp.Shared.Components.DashboardComponents;
+using Microsoft.AspNetCore.Components;
 using MudBlazor;
 
 namespace CafeApp.Shared.Pages.Order
 {
     public partial class OrderList
     {
+        [CascadingParameter]
+        public TablesPanel _table { get; set; }
         private readonly string _route = "orders";
         private async Task<GridData<OrderDto>> LoadData(GridState<OrderDto> gridState)
         {
@@ -78,6 +82,7 @@ namespace CafeApp.Shared.Pages.Order
         public async Task ChangeState(Guid orderId, short state)
         {
             await _unit.Orders.ChangeState(orderId, state);
+            await _table.ReloadTables();
             await _dataGrid.ReloadServerData();
         }
     }

@@ -14,13 +14,11 @@
         <CategoriesSection FactorItems="_factor.Items" ShowItemsMethod="ShowItems"></CategoriesSection>
         <CategoryItemsSection  MinusFactorItem="MinusItem" AddFactorItem="AddItem" @ref=_selectedCategory></CategoryItemsSection>
         <div>
-            <MudButton OnClick="Fill" Style="background-color:green" ButtonType="ButtonType.Button" FullWidth="true" Class=" fishbtn btn btn-settle-all col-12"> بازبینی</MudButton>
-
             <MudButton OnClick="Fill" Style="background-color:green" ButtonType="ButtonType.Button" FullWidth="true" Class=" fishbtn btn btn-settle-all col-12">ثبت سفارش</MudButton>
         </div>
     </div>
     <div class="order-system col-md-6 col-12">
-        <Factor Item="_factor" @ref=_factorPanel></Factor>
+        <Factor Pay="Pay" Item="_factor" @ref=_factorPanel></Factor>
         توضیحات
         <MudPaper Style="border-radius:15px" Elevation="20">
             <MudTextField @bind-Text="_factor.Description" Style="padding:5px" T="string" Lines="5"></MudTextField>
@@ -58,6 +56,10 @@
             };
         try
         {
+            if (orderParameter.CustomerId == Guid.Empty)
+            {
+                orderParameter.CustomerId = null;
+            }
             await _unit.Orders.CreateAsync(orderParameter);
             await _table.FillTable(Guid.Parse(Id));
 
@@ -67,5 +69,10 @@
 
             throw;
         }
+    }
+    public async Task Pay()
+    {
+        await _unit.Orders.ChangeState(Guid.Parse(Id), 4);
+        _navigation.NavigateTo("dashboard/orders");
     }
 }

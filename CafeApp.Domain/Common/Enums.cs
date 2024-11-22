@@ -33,6 +33,12 @@
 		New=1,
 		InProgress=2,
 		Completed=3,
+		Paid=4,
+	}
+	public enum PaymentState
+	{
+		NotPaid=0,
+		Paid=1
 	}
 	public enum Platform
 	{

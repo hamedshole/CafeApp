@@ -9,7 +9,7 @@
     <MudSnackbarProvider />
     <MudLayout Class="dashboard">
         <TablesPanel @ref="TablesPanel" UpdateConnecting=UpdateConnecting IsConnected="@IsConnected"></TablesPanel>
-        <MudIcon Style="margin-top:100px;margin-right:20px" Size="Size.Large" Icon="@Icons.Material.Rounded.ArrowBack"></MudIcon>
+       @*  <MudIcon Style="margin-top:100px;margin-right:20px" Size="Size.Large" Icon="@Icons.Material.Rounded.ArrowBack"></MudIcon>
         @if (_platform.GetPlatform() == Domain.Common.Platform.App)
         {
             @if (IsConnected)
@@ -28,12 +28,12 @@
 
             }
 
-        }
+        } *@
         <MudDrawer Class="drawer-responsive" Style="margin-top:100px" @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Docked" OpenMiniOnHover="true" Variant="DrawerVariant.Mini" Elevation="2">
             <NavMenu IsOpen="_drawerOpen"></NavMenu>
         </MudDrawer>
         <MudMainContent Class="dashboard">
-            <div style="margin-right:15px;margin-top:-28px;">
+            <div style="margin-right:15px;margin-top:100px;">
                 <CascadingValue Value="TablesPanel">
                 @Body
                 </CascadingValue>

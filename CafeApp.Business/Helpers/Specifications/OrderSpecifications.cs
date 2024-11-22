@@ -40,8 +40,8 @@ namespace CafeApp.Business.Helpers.Specifications
         {
             OrderSpecifications specs = new OrderSpecifications();
             specs.SetFilterCondition(x => x.TableId == tableId);
-            specs.SetFilterCondition(x => x.State == Domain.Common.FactorState.New|| x.State == Domain.Common.FactorState.InProgress);
-            specs.SetFilterCondition(x=>DateOnly.FromDateTime( x.Time)==DateOnly.FromDateTime(DateTime.Now));
+            specs.SetFilterCondition(x => x.State == Domain.Common.FactorState.New || x.State == Domain.Common.FactorState.InProgress);
+            specs.SetFilterCondition(x => DateOnly.FromDateTime(x.Time) == DateOnly.FromDateTime(DateTime.Now));
             specs.AddInclude("Details.Product");
             specs.AddInclude("Table");
             specs.AddInclude("Customer");
