@@ -9,11 +9,8 @@
 @page "/dashboard/tables"
 @layout AdminLayout
 
-<MudButton OnClick=GoToCreatePAge Style="margin-top: -7px; margin-bottom: 10px;" ButtonType="ButtonType.Button" Variant="Variant.Filled" ClickPropagation="true">
-    <MudIcon Icon="@Icons.Material.Rounded.Create" Size="Size.Large"></MudIcon>
-</MudButton>
+<MudIconButton OnClick=GoToCreatePAge Icon="@Icons.Material.Filled.Add" Title="جدید">افزودن</MudIconButton>
 <MudIconButton OnClick=Sync Icon="@Icons.Material.Filled.Sync" Title="ارسال به سرور">ارسال به سرور</MudIconButton>
-
 <MudDataGrid Breakpoint="Breakpoint.None" T="TableDto"  ServerData="LoadData" >
     <Columns>
         <PropertyColumn Sortable="false" Title="عنوان" Property="x => x.Title" />

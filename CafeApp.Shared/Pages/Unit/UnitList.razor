@@ -7,12 +7,8 @@
 @inject NavigationManager _navigation;
 @inject IApplicationUnit _unit
 @inject IRestUnit _restUnit;
-<MudButton OnClick=OpenDetail Style="margin-top: -7px; margin-bottom: 10px;" ButtonType="ButtonType.Button" Variant="Variant.Filled" ClickPropagation="true">
-    <MudIcon Icon="@Icons.Material.Filled.Add" Size="Size.Large"></MudIcon>
-</MudButton>
+<MudIconButton OnClick=OpenDetail Icon="@Icons.Material.Filled.Add" Title="جدید">افزودن</MudIconButton>
 <MudIconButton OnClick=Sync Icon="@Icons.Material.Filled.Sync" Title="ارسال به سرور">ارسال به سرور</MudIconButton>
-
-
     <MudDataGrid @ref="_dataGrid" Striped=true ServerData=LoadData T="UnitDto">
 
         <Columns>

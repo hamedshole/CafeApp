@@ -1,6 +1,7 @@
 ﻿@page "/dashboard/orders"
 @using CafeApp.Business.Helpers.Dtos
 @using CafeApp.Shared.RestClient.Interfaces
+@using System.Globalization
 @layout AdminLayout
 @inject IApplicationUnit _unit;
 @inject NavigationManager _navigation;
@@ -8,6 +9,26 @@
 <MudIconButton OnClick=GoToCreatePAge Icon="@Icons.Material.Filled.Add" Title="جدید">افزودن</MudIconButton>
 <MudIconButton OnClick=Sync Icon="@Icons.Material.Filled.Sync" Title="ارسال به سرور">ارسال به سرور</MudIconButton>
 
+<MudPaper Style="margin-bottom:20px">
+    <MudStack Row>
+        <div class="col-md-2 col-4">
+            <MudDateRangePicker Label="تاریخ" Style="font-family:Ariz" Culture=cultureInfo></MudDateRangePicker>
+        </div>
+        <div class="col-md-2 col-3">
+            <MudAutocomplete Label="مشتری" T="CustomerDto"></MudAutocomplete>
+        </div>
+        <div class="col-md-1 col-3">
+            <MudSelect Label="وضعیت" Value="1" T="short">
+                <MudSelectItem Value=1 T="short">جدید</MudSelectItem>
+                <MudSelectItem Value=2 T="short">آماده سازی</MudSelectItem>
+                <MudSelectItem Value=3 T="short">تحویل</MudSelectItem>
+                <MudSelectItem Value=4 T="short">تسویه</MudSelectItem>
+                <MudSelectItem Value=5 T="short">لغو</MudSelectItem>
+            </MudSelect>
+        </div>
+       
+    </MudStack>
+</MudPaper>
 
 <MudDataGrid @ref="_dataGrid" Striped=true ServerData=LoadData T="OrderDto">
 
@@ -17,7 +38,7 @@
         <PropertyColumn Title="مشتری" Property="x=>x.Customer"></PropertyColumn>
         <PropertyColumn Title="   میز" Property="x=>x.Table"></PropertyColumn>
         <PropertyColumn Title="   مجموع کل" Property="x=>x.TotalPrice"></PropertyColumn>
-        <TemplateColumn  >
+        <TemplateColumn>
             <CellTemplate>
                 <MudStack Row>
 
@@ -37,16 +58,18 @@
             </CellTemplate>
         </TemplateColumn>
 
-        
-       
-    </Columns>
 
+
+    </Columns>
+<PagerContent>
+    <MudDataGridPager  RowsPerPageString="اندازه صفحه"></MudDataGridPager>
+</PagerContent>
 </MudDataGrid>
 
 
 @code {
     private MudDataGrid<OrderDto> _dataGrid;
-
+    private CultureInfo cultureInfo = new CultureInfo("fa-ir");
 
     private string IsActiveString(bool isActive)
     {
