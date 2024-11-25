@@ -99,6 +99,7 @@ namespace CafeApp.Business.Services
 
         public async Task WriteSync(TEntity entity)
         {
+            var t = _repository.Get(x => x.IsDeleted == false).ToList();
             TEntity? existed =  _repository.Get(x=>x.Id==entity.Id).FirstOrDefault();
             if (existed is TEntity)
                 await _repository.UpdateAsync(entity);

@@ -42,7 +42,8 @@ namespace CafeApp.Shared.Pages.Category
                 await _restUnit.Categories.Apply();
                 ICollection<ProductCategoryEntity> apiEntities = await _restUnit.Categories.Sync();
                 foreach (ProductCategoryEntity dbEntity in apiEntities)
-                {
+                {                 
+                    dbEntity.Products=null;
                     await _unit.Categories.WriteSync(dbEntity);
                 }
                 await _unit.Categories.Apply();

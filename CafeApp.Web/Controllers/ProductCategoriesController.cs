@@ -39,6 +39,8 @@ namespace CafeApp.Web.Controllers
             try
             {
                 var res = await _service.GetAllForSync();
+                
+
                 return Ok(res);
             }
             catch (Exception e)
@@ -47,7 +49,20 @@ namespace CafeApp.Web.Controllers
                 return BadRequest(e.Message);
             }
         }
+        [HttpGet("getImage")]
+        public async Task<IActionResult> GetImage(Guid catId)
+        {
+            try
+            {
+                var res=await _service.GetById(catId);
+                return Ok(res.Image);
+            }
+            catch (Exception e)
+            {
 
+                throw;
+            }
+        }
         [HttpGet("apply")]
         public async Task<IActionResult> Apply()
         {

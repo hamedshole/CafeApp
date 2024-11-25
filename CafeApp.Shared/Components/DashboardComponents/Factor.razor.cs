@@ -63,6 +63,8 @@ namespace CafeApp.Shared.Components.DashboardComponents
             {
                 foreach (var item in Item.Items)
                     item.SubmitDongi();
+                Item.Paid =Item.Paid+ _livePaidAmount;
+                _livePaidAmount = 0;
                 StateHasChanged();
             }
             _dongi = !_dongi;

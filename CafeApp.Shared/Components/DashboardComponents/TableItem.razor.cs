@@ -17,12 +17,14 @@ namespace CafeApp.Shared.Components.DashboardComponents
         }
         public async void Click()
         {
+            if (Item.State==TableState.requesting && !string.IsNullOrEmpty(Item.LastConnectionId))
+                await connection.InvokeAsync("ResponseTableAlert", Item.LastConnectionId);
+            if (Item.State == TableState.empty)
+                Navigation.NavigateTo("/dashboard/tableOrder/" + Item.Id);
+            if(Item.State==TableState.filled&&Item.Factor!=null)
+                Navigation.NavigateTo($"dashboard/order/{Item.Factor.Id}");
             Item.State = Item.LastState;
             StateHasChanged();
-            if (!string.IsNullOrEmpty(Item.LastConnectionId))
-                await connection.InvokeAsync("ResponseTableAlert", Item.LastConnectionId);
-            StateHasChanged();
-            Navigation.NavigateTo("/dashboard/tableOrder/"+Item.Id);
         }
         protected async override Task OnInitializedAsync()
         {

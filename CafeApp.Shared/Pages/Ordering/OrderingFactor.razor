@@ -61,7 +61,7 @@
                 orderParameter.CustomerId = null;
             }
             await _unit.Orders.CreateAsync(orderParameter);
-            await _table.FillTable(Guid.Parse(Id));
+            await _table.FillTable(_factor.TableId);
 
         }
         catch (Exception e)
@@ -73,6 +73,7 @@
     public async Task Pay()
     {
         await _unit.Orders.ChangeState(Guid.Parse(Id), 4);
+        await _table.EmptyTable(_factor.TableId);
         _navigation.NavigateTo("dashboard/orders");
     }
 }

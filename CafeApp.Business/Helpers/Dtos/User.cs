@@ -2,9 +2,18 @@
 using CafeApp.Business.Helpers.Specifications;
 using CafeApp.Domain.Entities;
 using CafeApp.Domain.Interfaces;
+using System.ComponentModel.DataAnnotations;
 
 namespace CafeApp.Business.Helpers.Dtos
 {
+    public class Login
+    {
+        [Required]
+        public string Username { get; set; }
+
+        [Required]
+        public string Password { get; set; }
+    }
     public class UserDto
     {
         public Guid Id { get; set; }
@@ -22,6 +31,7 @@ namespace CafeApp.Business.Helpers.Dtos
         public string? Image { get; set; }
         public bool IsActive { get; set; }
         public string? Address { get; set; }
+        public string Token { get; set; }
         public UserDto()
         {
 

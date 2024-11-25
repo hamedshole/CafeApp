@@ -42,6 +42,14 @@ namespace CafeApp.Shared.Pages.Product
                     await _restUnit.Products.WriteSync(dbEntity);
                 }
                 await _restUnit.Products.Apply();
+                ICollection<ProductEntity> _apiEntities = await _restUnit.Products.Sync();
+
+                foreach (ProductEntity dbEntity in _apiEntities)
+                {
+                    dbEntity.ClearRelations();
+                    await _unit.Products.WriteSync(dbEntity);
+                }
+                await _unit.Products.Apply();
             }
             catch (Exception e)
             {

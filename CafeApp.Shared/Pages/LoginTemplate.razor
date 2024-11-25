@@ -1,4 +1,6 @@
-﻿@layout EmptyLayout
+﻿@using CafeApp.Business.Helpers.Dtos
+@using CafeApp.Shared.Interfaces
+@layout EmptyLayout
 @inject NavigationManager _navigation;
 <div class="mainbody">
     <div class="login-container">
@@ -9,12 +11,12 @@
             <h2>پنل مدیریتی کافه لاین</h2>
             <form >
                 <div class="input-container">
-                    <input type="text" id="username" placeholder="نام کاربری">
+                    <input type="text" @bind-value=model.Username id="username" placeholder="نام کاربری">
                 </div>
                 <div class="input-container">
-                    <input type="password" id="password" placeholder="رمز عبور">
+                    <input @bind-value=model.Password type="password" id="password" placeholder="رمز عبور">
                 </div>
-                <button @onclick=GoToDashboard class="btn btn-success btn-lg col-md-8 col-12">ورود</button>
+                <button @onclick=Login class="btn btn-success btn-lg col-md-8 col-12">ورود</button>
 
             </form>
         </div>
@@ -22,7 +24,8 @@
 
 </div>
 @code{
-    void GoToDashboard(){
+    Login model = new Login();
+    void Login(){
         _navigation.NavigateTo("/dashboard",true);
     }
 }

@@ -59,7 +59,8 @@ namespace CafeApp.Business.Helpers
                 .ForMember(x => x.Start, opt => opt.MapFrom(x => x.StartTime))
                 .ForMember(x => x.End, opt => opt.MapFrom(x => x.EndTime));
 
-            CreateMap<ProductCategoryEntity, MenuCategoryModel>();
+            CreateMap<ProductCategoryEntity, MenuCategoryModel>()
+                .ForMember(x=>x.Products,opt=>opt.MapFrom(x=>x.Products!.OrderBy(x=>x.Order)));
             CreateMap<ProductEntity, MenuProductModel>();
             CreateMap<ProductAdditiveEntity, MenuAdditiveDto>()
                 .ForMember(x => x.Title, opt => opt.MapFrom(x => x.Additive!.Title))

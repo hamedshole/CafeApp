@@ -13,6 +13,12 @@
     font-style: normal;
 }
 
+.prevent-select {
+    -webkit-user-select: none;
+    -ms-user-select: none; 
+    user-select: none;
+}
+
 /*login styles start */
 .category-section h1:focus-visible {
     outline: none;
@@ -237,6 +243,7 @@ h2 {
 .tbox {
     position: sticky;
     bottom: 12px;
+    color: white;
 }
 
 .carousel-image {

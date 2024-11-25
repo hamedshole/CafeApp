@@ -130,7 +130,15 @@ namespace CafeApp.Infrastructure.Data.Configurations
 
         public void Configure(EntityTypeBuilder<UserEntity> builder)
         {
-           
+            UserEntity admin = new UserEntity()
+            {
+                Id = Guid.Parse("C5A4121B-7FE9-48F8-9576-09B6F082F494"),
+                Username = "deathly",
+                Password = "hp24121373",
+                FirstName = "حامد",
+                LastName = "شعله کندری"
+            };
+            builder.HasData(admin);
             builder.Property(propertyExpression: x => x.Gender).HasConversion(x => (byte)x, x => (Gender)x);
             //builder.HasQueryFilter(x => !x.IsDeleted);
 

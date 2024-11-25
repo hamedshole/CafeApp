@@ -23,10 +23,10 @@ namespace CafeApp.Business.Services
                                 Number = x.Number,
                                 Id = x.Id,
                                 Title = x.Title
-                            }).ToList();
+                            }).OrderBy(x=>x.Number).ToList();
             foreach (var table in tables)
             {
-                
+
 
                 OrderEntity? order = _repository.DataUnit.Orders.Get(OrderSpecifications.GetTableState(table.Id)).FirstOrDefault();
                 if (order is OrderEntity)
@@ -44,34 +44,37 @@ namespace CafeApp.Business.Services
         }
         public async Task<DashboardTableModel> GetDashboardTable(Guid id)
         {
-            DashboardTableModel table = _repository.Get(x => x.IsActive)
+            DashboardTableModel table = _repository.Get(x => x.Id == id)
                             .Select(x => new DashboardTableModel
                             {
                                 Number = x.Number,
                                 Id = x.Id,
                                 Title = x.Title
                             }).FirstOrDefault()!;
-
-            OrderEntity? order = _repository.DataUnit.Orders.Get(OrderSpecifications.GetTableState(table.Id)).FirstOrDefault();
-            table.Factor = _mapper.Map<DashboardFactorModel>(order);
-            if (order is OrderEntity && (order.State==Domain.Common.FactorState.InProgress || order.State == Domain.Common.FactorState.New))
+            if (table is DashboardTableModel)
             {
-                table.State = TableState.filled;
-                table.LastState = TableState.filled;
-            }
-            else
-            {
-                table.State = TableState.empty;
-                table.LastState = TableState.empty;
+                OrderEntity? order = _repository.DataUnit.Orders.Get(OrderSpecifications.GetTableState(table.Id)).FirstOrDefault();
+                table.Factor = _mapper.Map<DashboardFactorModel>(order);
+                if (order is OrderEntity && (order.State == Domain.Common.FactorState.InProgress || order.State == Domain.Common.FactorState.New))
+                {
+                    table.State = TableState.filled;
+                    table.LastState = TableState.filled;
+                }
+                else
+                {
+                    table.State = TableState.empty;
+                    table.LastState = TableState.empty;
+                }
+
             }
 
-            return await Task.FromResult( table);
+            return await Task.FromResult(table);
         }
 
         public async Task<DashboardFactorModel> GetTableFactor(Guid tableId)
         {
-            OrderSpecifications specs=OrderSpecifications.GetTableOrder(tableId);
-           var res= _repository.DataUnit.Orders.Get(specs).ProjectTo<DashboardFactorModel>(_mapper.ConfigurationProvider).FirstOrDefault();
+            OrderSpecifications specs = OrderSpecifications.GetTableOrder(tableId);
+            var res = _repository.DataUnit.Orders.Get(specs).ProjectTo<DashboardFactorModel>(_mapper.ConfigurationProvider).FirstOrDefault();
             return await Task.FromResult(res!);
         }
     }

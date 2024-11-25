@@ -12,6 +12,7 @@
 <MudDataGrid @ref="_dataGrid" Striped=true ServerData=LoadData T="OrderDto">
 
     <Columns>
+        <PropertyColumn Title="تاریخ" Property="x=>x.Date"></PropertyColumn>
         <PropertyColumn Title="زمان" Property="x=>x.Time"></PropertyColumn>
         <PropertyColumn Title="مشتری" Property="x=>x.Customer"></PropertyColumn>
         <PropertyColumn Title="   میز" Property="x=>x.Table"></PropertyColumn>

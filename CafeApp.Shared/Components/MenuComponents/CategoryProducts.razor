@@ -1,9 +1,9 @@
-﻿<section id="cat1" class="category-section">
+﻿<section id="@Item.Id" class="category-section">
     <h1>@Item.Title</h1>
     <div class="products">
         @foreach (var item in Item.Products)
         {
-            <ProductItem Item="item"></ProductItem>
+            <ProductItem  Item="item"></ProductItem>
         }
     </div>
 </section>

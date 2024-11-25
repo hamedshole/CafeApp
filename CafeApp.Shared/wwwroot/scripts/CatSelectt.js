@@ -11,7 +11,9 @@
 }
 
 export function GoToCategory(catId) {
-    debugger
+    
     var cat = document.getElementById(catId)
-    window.scrollTo(cat.top)
+    var p=cat.offsetTop+70
+    document.getElementsByClassName('menubody')[0].scrollTo({top:p,behavior:'smooth'})
+    //cat.scrollIntoView({  ,behavior:'smooth',block:"center"})
 }

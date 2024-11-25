@@ -15,12 +15,20 @@ public class Program
     {
 
         var builder = WebApplication.CreateBuilder(args);
+        builder.WebHost.ConfigureKestrel(opt=>
+            {
+                opt.Limits.MaxRequestBufferSize = 100 * 1024 * 1024;
+                opt.Limits.MaxResponseBufferSize = 100 * 1024 * 1024;
+                opt.Limits.RequestHeadersTimeout=TimeSpan.FromMinutes(5);
+
+
+            });
         builder.AddServiceDefaults();
         builder.Services.AddSingleton(new ServerOptions { Url = builder.Configuration.GetValue<string>("ServerUrl") });
         builder.Services.AddSingleton<IAuth, AuthService>();
         builder.Services.AddSignalR();
         builder.Services.AddSingleton<IPlatform, PlatformService>();
-        builder.Services.AddControllers();
+        builder.Services.AddControllers().AddJsonOptions(x=>x.JsonSerializerOptions.ReferenceHandler=System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles);
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
         builder.Logging.AddConsole();

@@ -1,6 +1,8 @@
 ﻿using CafeApp.Business.Util;
 using CafeApp.Domain.Interfaces;
+using CafeApp.Shared.Interfaces;
 using CafeApp.Shared.RestClient;
+using CafeApp.Shared.Services;
 using CafeApp.Shared.Util;
 using Microsoft.Extensions.DependencyInjection;
 using MudBlazor;
@@ -12,8 +14,7 @@ namespace CafeApp.Shared
     {
         public static IServiceCollection RegisterAppServices(this IServiceCollection services)
         {
-            
-            services.AddMudServices(config =>
+             services.AddMudServices(config =>
             {
                 config.SnackbarConfiguration.PositionClass = Defaults.Classes.Position.BottomCenter;
 
@@ -29,6 +30,10 @@ namespace CafeApp.Shared
             services.AddScoped<INotification, NotificationService>();
             services.RegisterBusiness();
             services.RegisterRestClient();
+            services.AddScoped<IHttpService, HttpService>();
+            services.AddScoped<ILocalStorageService, LocalStorageService>();
+            services.AddScoped<IAccountService, AccountService>();
+
             return services;
 
         }

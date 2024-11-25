@@ -21,7 +21,13 @@ namespace CafeApp.Shared.RestClient.Repositories
 
         public async Task<ICollection<TEntity>> Sync()
         {
+            //var ress = await _httpClient.GetStringAsync($"api/{_api}/sync");
             var res = await _httpClient.GetFromJsonAsync<ICollection<TEntity>>($"api/{_api}/sync");
+            return res!;
+        }
+        public async Task<TEntity> GetById(Guid id)
+        {
+            var res = await _httpClient.GetFromJsonAsync<TEntity>($"api/{_api}/{id}");
             return res!;
         }
 

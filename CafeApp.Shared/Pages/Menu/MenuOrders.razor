@@ -254,7 +254,7 @@
     {
         UpdateProductsOrderCollection parameters = new UpdateProductsOrderCollection
             {
-                Items = _dropzoneCategories.Select(x => new UpdateProductOrderParameter { ProductId = x.Id, Order = x.Order }).ToList()
+                Items = _dropzoneProducts.Select(x => new UpdateProductOrderParameter { ProductId = x.Id, Order = x.Order }).ToList()
             };
         await _unit.Products.UpdateOrder(parameters);
     }

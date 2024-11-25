@@ -49,9 +49,10 @@ namespace CafeApp.Shared.Components.DashboardComponents
                 _tables = (await _restUnit.Tables.GetDashboardTables()).ToList();
                 for (int i = 0; i < _tables.Count; i++)
                 {
-                    _tables[i] = await _unit.Tables.GetDashboardTable(_tables[i].Id);
+                    var db_table= await _unit.Tables.GetDashboardTable(_tables[i].Id);
+                    if (db_table is DashboardTableModel t)
+                        _tables[i] = t;
                 }
-
             }
             catch (Exception e)
             {
@@ -138,6 +139,7 @@ namespace CafeApp.Shared.Components.DashboardComponents
             {
                 _tables[i] = await _unit.Tables.GetDashboardTable(_tables[i].Id);
             }
+            _tables=_tables.ToList();
             await InvokeAsync(StateHasChanged);
 
         }

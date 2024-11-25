@@ -1,4 +1,5 @@
-﻿using CafeApp.Domain.Entities;
+﻿using CafeApp.Domain.Common;
+using CafeApp.Domain.Entities;
 using CafeApp.Infrastructure.Data.Configurations;
 using Microsoft.EntityFrameworkCore;
 namespace CafeApp.Infrastructure.Data.Context
@@ -7,6 +8,7 @@ namespace CafeApp.Infrastructure.Data.Context
     {
         public CafeDbContext(DbContextOptions options) : base(options)
         {
+            
             //this.Database.EnsureDeleted();
             this.Database.EnsureCreated();
 

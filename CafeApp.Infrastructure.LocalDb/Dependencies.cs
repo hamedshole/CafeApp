@@ -10,7 +10,7 @@ namespace CafeApp.Infrastructure.LocalDb
         {
             SQLitePCL.Batteries_V2.Init();
             var sqlitePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), $"{dbName}.db");
-            services.AddDbContext<CafeDbContext>(opt=> opt.UseSqlite($"Data Source={sqlitePath}"));
+            services.AddDbContext<CafeDbContext>(opt=> opt.UseSqlite($"Data Source={sqlitePath}").EnableSensitiveDataLogging().EnableDetailedErrors());
             services.RegisterInfrastructure($"Data Source={sqlitePath}");
             
             return services;

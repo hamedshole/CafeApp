@@ -34,9 +34,9 @@ namespace CafeApp
 
             builder.Services.AddMauiBlazorWebView();
 
-#if DEBUG
             builder.Services.AddBlazorWebViewDeveloperTools();
             builder.Logging.AddDebug();
+#if DEBUG
 #endif
 
             return builder.Build();

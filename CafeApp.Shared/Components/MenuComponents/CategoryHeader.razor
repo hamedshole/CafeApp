@@ -1,9 +1,13 @@
-﻿@inject IApplicationUnit _unit;
+﻿@using Microsoft.JSInterop
+@inject IApplicationUnit _unit;
+@inject IJSRuntime _js;
 <div class="carousel-wrapper">
     <div class="carousel-content">
         @foreach (var item in _categories)
         {
-            <CategoryItem Item="item"></CategoryItem>
+            <div @onclick="()=>GoToCategory(item.Id)" >
+            <CategoryItem  Item="item"></CategoryItem>
+            </div>
         }
 
     </div>
