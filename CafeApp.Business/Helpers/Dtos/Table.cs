@@ -2,6 +2,8 @@
 using CafeApp.Business.Helpers.Specifications;
 using CafeApp.Domain.Entities;
 using CafeApp.Domain.Interfaces;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace CafeApp.Business.Helpers.Dtos
 {
@@ -35,6 +37,15 @@ namespace CafeApp.Business.Helpers.Dtos
         public ISpecifications<TableEntity> GetSpecifications()
         {
             return TableSpecification.FromParameter(this);
+        }
+        public override string ToString()
+        {
+            string _parameter = $"Page={Page}&PageSize={PageSize}";
+            if (!string.IsNullOrEmpty(Title))
+                _parameter += $"Title={Title}";
+            if (IsActive is bool ia)
+                _parameter += $"IsActive={ia}";
+            return _parameter;
         }
     }
 

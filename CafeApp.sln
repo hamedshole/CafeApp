@@ -31,6 +31,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CafeApp", "CafeApp\CafeApp.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CafeApp.Shared.RestClient", "CafeApp.Shared.RestClient\CafeApp.Shared.RestClient.csproj", "{44C1ED63-8C1D-43A4-B84D-AD50A05E015A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiTests", "ApiTests\ApiTests.csproj", "{C36FBD16-AFCE-4737-80A6-F5881BF59845}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +89,10 @@ Global
 		{44C1ED63-8C1D-43A4-B84D-AD50A05E015A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{44C1ED63-8C1D-43A4-B84D-AD50A05E015A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{44C1ED63-8C1D-43A4-B84D-AD50A05E015A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C36FBD16-AFCE-4737-80A6-F5881BF59845}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C36FBD16-AFCE-4737-80A6-F5881BF59845}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C36FBD16-AFCE-4737-80A6-F5881BF59845}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C36FBD16-AFCE-4737-80A6-F5881BF59845}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -102,5 +108,9 @@ Global
 		{01F73111-0C29-45FD-AD2F-D677844ED3E0} = {B5F59B30-1E96-4C5C-8DD5-2C09F4A4381C}
 		{B4DD6C4E-8724-4B99-BAC9-808FB5A23EA2} = {B5F59B30-1E96-4C5C-8DD5-2C09F4A4381C}
 		{44C1ED63-8C1D-43A4-B84D-AD50A05E015A} = {B5F59B30-1E96-4C5C-8DD5-2C09F4A4381C}
+		{C36FBD16-AFCE-4737-80A6-F5881BF59845} = {3E6612A4-6C75-4C2E-B5DF-474D490757BD}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {56DCCDE6-6108-48F7-80BD-081988174221}
 	EndGlobalSection
 EndGlobal

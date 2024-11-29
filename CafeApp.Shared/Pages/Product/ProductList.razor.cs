@@ -8,12 +8,12 @@ namespace CafeApp.Shared.Pages.Product
     public partial class ProductList
     {
         private ProductDetail _panel;
+        private ListProductParameter _filter=new();
         private async Task<GridData<ProductDto>> LoadData(GridState<ProductDto> gridState)
         {
-            ListProductParameter parameter=new ListProductParameter();
-            parameter.Page = gridState.Page + 1;
-            parameter.PageSize = gridState.PageSize;
-            var res = await _unit.Products.GetPaged(parameter.GetSpecifications(),parameter);
+            _filter.Page = gridState.Page + 1;
+            _filter.PageSize = gridState.PageSize;
+            var res = await _unit.Products.GetPaged(_filter.GetSpecifications(), _filter);
             if (res.Items is null)
                 res = new PagedList<ProductDto>(new List<ProductDto>(), res.TotalItems);
             return new GridData<ProductDto> { Items = res.Items, TotalItems = res.TotalItems };

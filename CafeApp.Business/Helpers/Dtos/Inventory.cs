@@ -1,5 +1,6 @@
 ﻿using CafeApp.Business.Helpers.Common;
 using CafeApp.Business.Helpers.Specifications;
+using CafeApp.Domain.Common;
 using CafeApp.Domain.Entities;
 using CafeApp.Domain.Interfaces;
 
@@ -56,6 +57,15 @@ namespace CafeApp.Business.Helpers.Dtos
             var inventorySpecifications = new InventorySpecifications();
             inventorySpecifications.AddFilters(this);
             return inventorySpecifications;
+        }
+        public override string ToString()
+        {
+            string _parameter = $"Page={Page}&PageSize={PageSize}";
+            if (!string.IsNullOrEmpty(Title))
+                _parameter += $"Title={Title}";
+            if (IsActive is bool ia)
+                _parameter += $"IsActive={ia}";
+            return _parameter;
         }
     }
 }

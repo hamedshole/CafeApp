@@ -1,5 +1,6 @@
 ﻿using CafeApp.Business.Helpers.Common;
 using CafeApp.Business.Helpers.Specifications;
+using CafeApp.Domain.Common;
 using CafeApp.Domain.Entities;
 using CafeApp.Domain.Interfaces;
 
@@ -150,6 +151,21 @@ namespace CafeApp.Business.Helpers.Dtos
             productSpecifications.AddFilters(this);
             productSpecifications.IncludeCategory();
             return productSpecifications;
+        }
+        public override string ToString()
+        {
+            string _parameter = $"Page={Page}&PageSize={PageSize}";
+            if (!string.IsNullOrEmpty(Title))
+                _parameter += $"Title={Title}";
+            if (CategoryId is Guid ci)
+                _parameter += $"CategoryId={ci}";
+            if (Price is long p)
+                _parameter += $"Price={p}";
+            if (IsActive is bool ia)
+                _parameter += $"IsActive={ia}";
+            if (IsNew is bool inew)
+                _parameter += $"IsNew={inew}";
+            return _parameter;
         }
     }
     public class UpdateProductPriceParameter

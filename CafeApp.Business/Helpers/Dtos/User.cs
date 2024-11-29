@@ -99,5 +99,20 @@ namespace CafeApp.Business.Helpers.Dtos
         {
             return UserSpecifications.FromParameter(this);
         }
+        public override string ToString()
+        {
+            string _parameter = $"Page={Page}&PageSize={PageSize}";
+            if (!string.IsNullOrEmpty(FirstName))
+                _parameter += $"FirstName={FirstName}";
+            if (!string.IsNullOrEmpty(LastName))
+                _parameter += $"LastName={LastName}";
+            if (Gender is byte g)
+                _parameter += $"Gender={g}";
+            if (!string.IsNullOrEmpty(PhoneNumber))
+                _parameter += $"PhonenUmber={PhoneNumber}";
+            if (!string.IsNullOrEmpty(Email))
+                _parameter += $"Email={Email}";
+            return _parameter;
+        }
     }
 }

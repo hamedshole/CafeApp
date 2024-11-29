@@ -6,6 +6,7 @@ using CafeApp.Domain.Interfaces;
 
 namespace CafeApp.Business.Helpers.Dtos
 {
+
     public class OrderDto
     {
         public Guid Id { get; set; }
@@ -69,6 +70,21 @@ namespace CafeApp.Business.Helpers.Dtos
         public ISpecifications<OrderEntity> GetSpecifications()
         {
             return OrderSpecifications.FromParameter(this);
+        }
+        public override string ToString()
+        {
+            string _parameter = $"Page={Page}&PageSize={PageSize}";
+            if (State is byte s)
+                _parameter += $"$State={State}";
+            if (Start is DateTime sd)
+                _parameter += $"&Start={sd}";
+            if (End is DateTime ed)
+                _parameter += $"&End={ed}";
+            if (TableId is Guid ti)
+                _parameter += $"&TableId={ti}";
+            if (CustomerId is Guid ci)
+                _parameter += $"&CustomerId={ci}";
+            return _parameter;
         }
     }
 }

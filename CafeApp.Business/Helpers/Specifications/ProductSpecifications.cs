@@ -18,8 +18,8 @@ namespace CafeApp.Business.Helpers.Specifications
         }
         public ProductSpecifications AddFilters(ListProductParameter parameter)
         {
-            if (string.IsNullOrEmpty(parameter.Title))
-                SetFilterCondition(x => x.Title.Contains(x.Title));
+            if (!string.IsNullOrEmpty(parameter.Title))
+                SetFilterCondition(x => x.Title.Contains(parameter.Title));
            
             if (parameter.Price.HasValue && parameter.Price.Value > 0)
                 SetFilterCondition(x => x.Price == parameter.Price);

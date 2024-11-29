@@ -76,10 +76,10 @@ namespace CafeApp.Business.Helpers.Dtos
             string? route = string.Empty;
             if (!string.IsNullOrEmpty(Title))
                 route = string.Format(string.Format("{0}={1}", nameof(Title), Title));
-            if (IsActive.HasValue)
-                route = route + "&" + string.Format("{0}={1}", nameof(IsActive), IsActive);
-            if (ParentId.HasValue)
-                route = route + "&" + string.Format("{0}={1}", nameof(ParentId), ParentId);
+            if (IsActive is bool ia)
+                route = route + "&" + string.Format("{0}={1}", nameof(IsActive), ia);
+            if (ParentId is Guid pi)
+                route = route + "&" + string.Format("{0}={1}", nameof(ParentId), pi);
             return route + base.ToString();
         }
     }

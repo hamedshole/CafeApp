@@ -71,7 +71,18 @@ namespace CafeApp.Business.Helpers.Dtos
 
         public override string ToString()
         {
-            return base.ToString();
+            string _parameter = $"Page={Page}&PageSize={PageSize}";
+            if (!string.IsNullOrEmpty(FirstName))
+                _parameter += $"FirstName={FirstName}";
+            if (!string.IsNullOrEmpty(LastName))
+                _parameter += $"LastName={LastName}";
+            if (Gender is byte g)
+                _parameter += $"Gender={g}";
+            if (!string.IsNullOrEmpty(PhoneNumber))
+                _parameter += $"PhonenUmber={PhoneNumber}";
+            if (Birthday is DateTime bd)
+                _parameter += $"Birthday={Birthday}";
+            return _parameter;
         }
     }
 }

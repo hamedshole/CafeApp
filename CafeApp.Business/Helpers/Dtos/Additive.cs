@@ -46,16 +46,11 @@ namespace CafeApp.Business.Helpers.Dtos
         public long Price { get; set; }
         public bool IsActive { get; set; }
     }
-    public class UpdateAdditiveParameter
+    public class UpdateAdditiveParameter:CreateAdditiveParameter
     {
         public Guid Id { get; set; }
-        public string Title { get; set; }
-        public Guid MaterialId { get; set; }
-        public long Amount { get; set; }
-        public long Price { get; set; }
-        public bool IsActive { get; set; }
     }
-    public class GetAdditiveParameter : IGetParameter<AdditiveEntity>
+    public class GetAdditiveParameter : PagingParameter,IGetParameter<AdditiveEntity>
     {
         public Guid Id { get; set; }
 
@@ -68,6 +63,8 @@ namespace CafeApp.Business.Helpers.Dtos
         {
             return AdditiveSpecifications.Get(this);
         }
+       
+
     }
     public class ListAdditiveParameter : PagingParameter, IGetParameter<AdditiveEntity>
     {

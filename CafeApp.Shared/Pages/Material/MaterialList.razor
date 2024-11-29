@@ -1,5 +1,4 @@
-﻿
-@page "/dashboard/materials"
+﻿@page "/dashboard/materials"
 @using CafeApp.Business.Helpers.Dtos
 @using CafeApp.Shared.RestClient.Interfaces
 @layout AdminLayout
@@ -33,7 +32,9 @@
                 </CellTemplate>
             </TemplateColumn>
         </Columns>
-        
+        <PagerContent>
+            <MudDataGridPager RowsPerPageString="اندازه صفحه"></MudDataGridPager>
+        </PagerContent>
     </MudDataGrid>
 </MudPaper>
 
@@ -41,7 +42,7 @@
     private MudDataGrid<MaterialDto> _dataGrid;
     private int rowNumber;
     private bool _detailPanel = false;
-   
+
 
     private string IsActiveString(bool isActive)
     {
