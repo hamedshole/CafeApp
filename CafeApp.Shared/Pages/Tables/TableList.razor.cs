@@ -1,12 +1,16 @@
 ﻿using CafeApp.Business.Helpers.Dtos;
 using CafeApp.Domain.Entities;
+using CafeApp.Shared.Components.DashboardComponents;
+using Microsoft.AspNetCore.Components;
 using MudBlazor;
 
 namespace CafeApp.Shared.Pages.Tables
 {
     public partial class TableList
     {
-
+        [CascadingParameter]
+        public TablesPanel _table { get; set; }
+        private MudDataGrid<TableDto> _dataGrid;
 
         public async Task<GridData<TableDto>> LoadData(GridState<TableDto> state)
         {
@@ -57,6 +61,9 @@ namespace CafeApp.Shared.Pages.Tables
                     await _unit.Tables.WriteSync(item);
                 }
                 await _unit.Tables.Apply();
+                _notification.NotifySuccess();
+               await _dataGrid.ReloadServerData();
+               await _table.ReloadTables();
             }
             catch (Exception e)
             {

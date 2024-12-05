@@ -1,49 +1,60 @@
 ﻿using CafeApp.Business.Helpers.Dtos;
 using Microsoft.AspNetCore.Components;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace CafeApp.Shared.Components.DashboardComponents
 {
     public partial class CategoriesSection
     {
         [Parameter]
-        public ICollection<DashboardFactorItemModel> FactorItems { get; set; }
-        private List<DashboardCategoryModel> _categories;
+        public DashboardTableModel Table { get; set; } =new DashboardTableModel();
+
+
         [Parameter]
         public Action<DashboardCategoryModel> ShowItemsMethod { get; set; }
-
         public CategoriesSection()
         {
-            _categories = new List<DashboardCategoryModel>();
         }
-        protected async override Task OnInitializedAsync()
+        private Guid _tableId;
+        public async void SyncItems(DashboardTableModel table)
         {
-            _categories = (await _unit.Categories.GetForDashboard()).ToList();
-            await SyncMenuItemsWithFactors();
+            //Categories = _tableCategories[table.Id];
+            //i
+            //if (factor.Items.Count == 0)
+            //{
+            //    _tableId = factor.TableId;
+                
+            //    Categories = (await _unit.Categories.GetForDashboard()).ToList();
+            //    await InvokeAsync(StateHasChanged);
+            //}
+            //else
+            //{
+            //    foreach (var item in factor.Items)
+            //    {
+            //        int _catIndex = Categories!.IndexOf(Categories.FirstOrDefault(x => x.Id == item.CategoryId)!);
+            //        var c = Categories[_catIndex];
+            //        int _itemIndex = c.Items.IndexOf(c.Items.FirstOrDefault(x => x.Id == item.ProductId)!);
+            //        Categories[_catIndex].Items[_itemIndex].Amount = item.TotalAmount;
+            //    }
+
+            //}
+            //if (factor.Items.Count > 0)
+            //    _first = false;
+            await Task.CompletedTask;
+        }
+        
+        public async Task Reload()
+        {
+            await OnInitializedAsync();
         }
         public void ShowItems(DashboardCategoryModel category)
         {
-            ShowItemsMethod.Invoke(category);
-        }
-        private async Task SyncMenuItemsWithFactors()
-        {
-            foreach (var item in FactorItems)
-            {
-                int _catIndex = _categories.IndexOf(_categories.FirstOrDefault(x => x.Id == item.CategoryId)!);
-                var c = _categories[_catIndex];
-                int _itemIndex = c.Items.IndexOf(c.Items.FirstOrDefault(x => x.Id == item.ProductId)!);
-                _categories[_catIndex].Items[_itemIndex].Amount = item.TotalAmount;
-            }
-            if (FactorItems.Count > 0)
-                _first = false;
-            await Task.CompletedTask;
+            Table.SelectedCategory = category;
+            this.ShowItemsMethod.Invoke(category);
         }
         private bool _first = true;
-        protected override async Task OnParametersSetAsync()
-        {
-            if (_first)
-            {
-                await SyncMenuItemsWithFactors();
-            }
-        }
+
+        
+
     }
 }

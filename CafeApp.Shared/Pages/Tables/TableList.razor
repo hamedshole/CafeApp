@@ -11,7 +11,7 @@
 
 <MudIconButton OnClick=GoToCreatePAge Icon="@Icons.Material.Filled.Add" Title="جدید">افزودن</MudIconButton>
 <MudIconButton OnClick=Sync Icon="@Icons.Material.Filled.Sync" Title="ارسال به سرور">ارسال به سرور</MudIconButton>
-<MudDataGrid Breakpoint="Breakpoint.None" T="TableDto"  ServerData="LoadData" >
+<MudDataGrid @ref=_dataGrid Breakpoint="Breakpoint.None" T="TableDto"  ServerData="LoadData" >
     <Columns>
         <PropertyColumn Sortable="false" Title="عنوان" Property="x => x.Title" />
         <PropertyColumn Sortable="false" Title="شماره" Property="x => x.Number" />

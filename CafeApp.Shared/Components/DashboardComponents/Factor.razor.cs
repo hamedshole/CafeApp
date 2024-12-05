@@ -1,5 +1,4 @@
 ﻿using CafeApp.Business.Helpers.Dtos;
-using CafeApp.Business.Helpers.Specifications;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 
@@ -13,7 +12,7 @@ namespace CafeApp.Shared.Components.DashboardComponents
         private long _livePaidAmount=0;
 
         [Parameter]
-        public DashboardFactorModel Item { get; set; } = new DashboardFactorModel();
+        public DashboardTableModel Table { get; set; } = new DashboardTableModel();
 
         public long LivePaidAmount { get; set; }
 
@@ -21,19 +20,19 @@ namespace CafeApp.Shared.Components.DashboardComponents
         private bool _dongi = false;
         public Factor()
         {
-            Item = new DashboardFactorModel();
+            Table = new DashboardTableModel();
         }
         public void SetCustomer(CustomerDto value)
         {
-            Item.CustomerId=value.Id;
+            Table.Factor.CustomerId=value.Id;
         }
         public void Add(DashboardProductModel dashboardProduct)
         {
-            DashboardFactorItemModel item = Item.Items.FirstOrDefault(x => x.ProductId == dashboardProduct.Id);
+            DashboardFactorItemModel item = Table.Factor.Items.FirstOrDefault(x => x.ProductId == dashboardProduct.Id);
             if (item == null)
             {
                 item = new DashboardFactorItemModel() {ProductId=dashboardProduct.Id, CategoryId=dashboardProduct.CategoryId, Id = dashboardProduct.Id, ProductTitle = dashboardProduct.Title, TotalAmount = dashboardProduct.Amount, UnitPrice = dashboardProduct.Price };
-                Item.Items.Add(item);
+                Table.Factor.Items.Add(item);
             }
             else
                 item.TotalAmount = item.TotalAmount + 1;
@@ -42,11 +41,11 @@ namespace CafeApp.Shared.Components.DashboardComponents
         }
         public void Minus(DashboardProductModel dashboardProduct)
         {
-            DashboardFactorItemModel item = Item.Items.FirstOrDefault(x => x.Id == dashboardProduct.Id);
+            DashboardFactorItemModel item = Table.Factor.Items.FirstOrDefault(x => x.Id == dashboardProduct.Id);
             if (item != null)
             {
                 if (item.TotalAmount == 1)
-                    Item.Items.Remove(item);
+                    Table.Factor.Items.Remove(item);
                 else
                 {
                     if (item.TotalAmount != 0)
@@ -61,9 +60,9 @@ namespace CafeApp.Shared.Components.DashboardComponents
            await _module.InvokeVoidAsync("enableDongi",_dongi);
             if (_dongi)
             {
-                foreach (var item in Item.Items)
+                foreach (var item in Table.Factor.Items)
                     item.SubmitDongi();
-                Item.Paid =Item.Paid+ _livePaidAmount;
+                Table.Factor.Paid =Table.Factor.Paid+ _livePaidAmount;
                 _livePaidAmount = 0;
                 StateHasChanged();
             }

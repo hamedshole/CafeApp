@@ -3,9 +3,9 @@
 @inject IJSRuntime _js;
 
 <div class="items" id="category1">
-    <h3>@Category.Title</h3>
+    <h3>@Table.SelectedCategory.Title</h3>
     <ul>
-        @foreach (var item in Category.Items)
+        @foreach (var item in Table.SelectedCategory.Items)
         {
             <li class="@GetClass(item)" id="item-@item.Id" @oncontextmenu="()=>Minus(item)" @onclick="()=>Add(item)">
                 @item.Title

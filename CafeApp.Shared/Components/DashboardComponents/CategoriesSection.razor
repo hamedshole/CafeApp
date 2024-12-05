@@ -5,7 +5,7 @@
 <div class="categories">
     <h2>دسته‌بندی‌ها</h2>
     <ul>
-        @foreach (var item in _categories)
+        @foreach (var item in Table.Categories)
         {
             <li class="@GetClass(item)" @onclick="()=> ShowItems(item)">‌ @item.Title</li>
         }

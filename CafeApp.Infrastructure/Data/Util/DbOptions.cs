@@ -1,4 +1,5 @@
-﻿namespace CafeApp.Infrastructure.Data.Util
+﻿
+namespace CafeApp.Infrastructure.Data.Util
 {
     internal class DbOptions
     {

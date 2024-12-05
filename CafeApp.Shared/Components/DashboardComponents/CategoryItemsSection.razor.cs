@@ -17,12 +17,15 @@ namespace CafeApp.Shared.Components.DashboardComponents
         public EventCallback<DashboardProductModel> MinusFactorItem { get; set; }
 
         [Parameter]
-        public DashboardCategoryModel Category { get; set; }
+        public DashboardTableModel Table { get; set; }
 
         public CategoryItemsSection()
         {
-            if (Category is null)
-                Category = new DashboardCategoryModel();
+            if (Table is null)
+            {
+                Table = new DashboardTableModel();
+                Table.SelectedCategory = new DashboardCategoryModel();
+            }
         }
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {

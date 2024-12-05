@@ -1,12 +1,14 @@
 ﻿
 @page "/dashboard/products"
 @using CafeApp.Business.Helpers.Dtos
+@using CafeApp.Domain.Interfaces
 @using CafeApp.Shared.RestClient.Interfaces
 @using System.Globalization
 @layout AdminLayout
 @inject IApplicationUnit _unit
 @inject NavigationManager _navigation;
 @inject IRestUnit _restUnit;
+@inject INotification _notification;
 <MudIconButton OnClick=GoToCreatePAge Icon="@Icons.Material.Filled.Add" Title="جدید">افزودن</MudIconButton>
 <MudIconButton OnClick=Sync Icon="@Icons.Material.Filled.Sync" Title="ارسال به سرور">ارسال به سرور</MudIconButton>
 <MudPaper Style="height:fit-content; margin-bottom:20px">

@@ -9,6 +9,7 @@ namespace CafeApp.Domain.Interfaces
         Task CreateRangeAsync(ICollection<TEntity> entities);
         Task<TEntity> CreateAsync(TEntity entity);
         Task UpdateAsync(TEntity entity);
+        Task UpdateStateAsync(TEntity entity);
         //Task ExecuteUpdateAsync(Expression<Func<TEntity, bool>> expression, params (string, object?)[] parameter);
         Task DeleteAsync(Guid id);
 

@@ -53,22 +53,23 @@
     {
         if(string.IsNullOrEmpty(Id))
         {
-        CreateInventoryParameter parameter = new CreateInventoryParameter();
-        parameter = new CreateInventoryParameter { Title = _model.Title, IsActive = _model.IsActive };
-        await _unit.Inventories.CreateAsync(parameter);
-        _notification.NotifySuccess();
+            CreateInventoryParameter parameter = new CreateInventoryParameter();
+            parameter = new CreateInventoryParameter { Title = _model.Title, IsActive = _model.IsActive };
+            await _unit.Inventories.CreateAsync(parameter);
+            _notification.NotifySuccess();
         }
         else{
             UpdateInventoryParameter parameter = new UpdateInventoryParameter();
             parameter = new UpdateInventoryParameter {Id=_model.Id, Title = _model.Title, IsActive = _model.IsActive };
-            await _unit.Tables.UpdateAsync(parameter);
+            await _unit.Inventories.UpdateAsync(parameter);
             _notification.NotifySuccess();
         }
+        Cancel();
 
     }
     public void Cancel()
     {
-        _navigation.NavigateTo("/dashboard/tables");
+        _navigation.NavigateTo("/dashboard/inventories");
     }
 
    

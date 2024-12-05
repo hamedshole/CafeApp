@@ -7,8 +7,10 @@ namespace CafeApp.Shared.Components.DashboardComponents
     public partial class TablesPanel
     {
         HubConnection hubConnection;
+        private List<DashboardCategoryModel> _defaultCategories = new List<DashboardCategoryModel>();
         private IJSObjectReference? _module;
         public List<DashboardTableModel> _tables { get; set; }
+        
         public TablesPanel()
         {
 
@@ -23,6 +25,7 @@ namespace CafeApp.Shared.Components.DashboardComponents
         }
         protected async override Task OnInitializedAsync()
         {
+
             try
             {
                 hubConnection = new HubConnectionBuilder()
@@ -39,7 +42,7 @@ namespace CafeApp.Shared.Components.DashboardComponents
                 hubConnection.Reconnected += HubConnection_Reconnected;
                 hubConnection.Closed += HubConnection_Closed;
                 await hubConnection.StartAsync();
-                
+
                 if (hubConnection.State == HubConnectionState.Connected)
                 {
                     IsConnected = true;
@@ -49,11 +52,12 @@ namespace CafeApp.Shared.Components.DashboardComponents
                 _tables = (await _restUnit.Tables.GetDashboardTables()).ToList();
                 for (int i = 0; i < _tables.Count; i++)
                 {
-                    var db_table= await _unit.Tables.GetDashboardTable(_tables[i].Id);
+                    var db_table = await _unit.Tables.GetDashboardTable(_tables[i].Id);
                     if (db_table is DashboardTableModel t)
                         _tables[i] = t;
                 }
             }
+
             catch (Exception e)
             {
                 if (hubConnection.State != HubConnectionState.Connected)
@@ -70,16 +74,16 @@ namespace CafeApp.Shared.Components.DashboardComponents
                     if (hubConnection.State == HubConnectionState.Connected && !IsConnected)
                     {
                         IsConnected = true;
-                         InvokeAsync(StateHasChanged);
+                        InvokeAsync(StateHasChanged);
                     }
                     else
                     {
-                    await hubConnection.StartAsync();
+                        await hubConnection.StartAsync();
 
                     }
                     await Task.Delay(10000);
                 }
-                catch (Exception )
+                catch (Exception)
                 {
                     await Task.Delay(10000);
 
@@ -122,9 +126,9 @@ namespace CafeApp.Shared.Components.DashboardComponents
 
         public async Task FillTable(Guid id)
         {
-            var filledTable=_tables.FirstOrDefault(x => x.Id == id);
-            filledTable!.State=TableState.filled;
-           await InvokeAsync(StateHasChanged);
+            var filledTable = _tables.FirstOrDefault(x => x.Id == id);
+            filledTable!.State = TableState.filled;
+            await InvokeAsync(StateHasChanged);
         }
         public async Task EmptyTable(Guid id)
         {
@@ -139,9 +143,14 @@ namespace CafeApp.Shared.Components.DashboardComponents
             {
                 _tables[i] = await _unit.Tables.GetDashboardTable(_tables[i].Id);
             }
-            _tables=_tables.ToList();
+            _tables = _tables.ToList();
             await InvokeAsync(StateHasChanged);
-
         }
+        public async Task<DashboardTableModel> GetTable(Guid tableId)
+        {
+            return await Task.FromResult(_tables.FirstOrDefault(x => x.Id == tableId)!);
+        }
+
+
     }
 }

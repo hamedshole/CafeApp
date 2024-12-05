@@ -1,27 +1,30 @@
-﻿@page "/dashboard/tableOrder/{Id}"
-@page "/dashboard/order/{Id}"
+﻿@page "/dashboard/tableOrder/{TableId}"
+@page "/dashboard/order/{OrderId}"
 
 @using CafeApp.Business.Helpers.Dtos
+@using CafeApp.Domain.Interfaces
 @using CafeApp.Shared.Components.DashboardComponents
 @layout AdminLayout
 @inject NavigationManager _navigation;
 @inject IApplicationUnit _unit;
+@inject INotification _notification;
+
 <div style="display:flex">
 
     <div class="order-system col-md-6 col-12">
         @* <MudAutocomplete @bind-Value="_factor.CustomerId" InputMode="InputMode.search" Variant="Variant.Text" Clearable=true Required=false T="Guid" Label="مشتری"
                          SearchFunc=SearchCustomer ToStringFunc="GetCustomerName" /> *@
-        <CategoriesSection FactorItems="_factor.Items" ShowItemsMethod="ShowItems"></CategoriesSection>
-        <CategoryItemsSection  MinusFactorItem="MinusItem" AddFactorItem="AddItem" @ref=_selectedCategory></CategoryItemsSection>
+        <CategoriesSection Table="_selectedTable"  @ref=_categoriesSection  ShowItemsMethod="ShowItems"></CategoriesSection>
+        <CategoryItemsSection Table="_selectedTable"   MinusFactorItem="MinusItem" AddFactorItem="AddItem" @ref=_selectedCategory></CategoryItemsSection>
         <div>
             <MudButton OnClick="Fill" Style="background-color:green" ButtonType="ButtonType.Button" FullWidth="true" Class=" fishbtn btn btn-settle-all col-12">ثبت سفارش</MudButton>
         </div>
     </div>
     <div class="order-system col-md-6 col-12">
-        <Factor Pay="Pay" Item="_factor" @ref=_factorPanel></Factor>
+        <Factor Pay="Pay" Table="_selectedTable" @ref=_factorPanel></Factor>
         توضیحات
         <MudPaper Style="border-radius:15px" Elevation="20">
-            <MudTextField @bind-Text="_factor.Description" Style="padding:5px" T="string" Lines="5"></MudTextField>
+            <MudTextField @bind-Text="_selectedTable.Factor.Description" Style="padding:5px" T="string" Lines="5"></MudTextField>
             <MudButton OnClick="Fill" Style="background-color:green" ButtonType="ButtonType.Button" FullWidth="true" Class="mobile-submit fishbtn btn btn-settle-all col-12">ثبت سفارش</MudButton>
 
         </MudPaper>
@@ -30,22 +33,24 @@
 </div>
 @code {
     [Parameter]
-    public string Id { get; set; }
+    public string? TableId { get; set; }
 
-    [CascadingParameter]
-    public TablesPanel _table { get; set; }
+    [Parameter]
+    public string? OrderId { get; set; }
+
+  
     private async Task Fill()
     {
         CreateOrderParameter orderParameter = new CreateOrderParameter
             {
-                Description=_factor.Description,
+                Description = _selectedTable.Factor.Description,
                 Type=Domain.Common.FactorType.Inside,
                 Time=DateTime.Now,
                 State=Domain.Common.FactorState.New,
                 UserId = Guid.Parse("C5A4121B-7FE9-48F8-9576-09B6F082F494"),
-                CustomerId = _factor.CustomerId,
-                TableId = _factor.TableId,
-                Items = _factor.Items.Select(x => new CreateOrderItemParameter
+                CustomerId = _selectedTable.Factor.CustomerId,
+                TableId = _selectedTable.Factor.TableId,
+                Items = _selectedTable.Factor.Items.Select(x => new CreateOrderItemParameter
                 {
                     HasAdditive = false,
                     ProductId = x.Id,
@@ -61,8 +66,9 @@
                 orderParameter.CustomerId = null;
             }
             await _unit.Orders.CreateAsync(orderParameter);
-            await _table.FillTable(_factor.TableId);
-
+            await TablesPanel.FillTable(_selectedTable.Factor.TableId);
+            _notification.NotifySuccess();
+            _navigation.NavigateTo("dashboard/orders");
         }
         catch (Exception e)
         {
@@ -72,8 +78,9 @@
     }
     public async Task Pay()
     {
-        await _unit.Orders.ChangeState(Guid.Parse(Id), 4);
-        await _table.EmptyTable(_factor.TableId);
+        await _unit.Orders.ChangeState(Guid.Parse(TableId), 4);
+        await TablesPanel.EmptyTable(_selectedTable.Factor.TableId);
+        _notification.NotifySuccess();
         _navigation.NavigateTo("dashboard/orders");
     }
 }

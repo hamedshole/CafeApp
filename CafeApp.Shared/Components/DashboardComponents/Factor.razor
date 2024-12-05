@@ -18,11 +18,11 @@
 @*                 <div class="detail">ویتر:  @Item.UserName</div>
  *@            </div>
             <div class="header-center">
-                <div class="table-number">@Item.TableTitle</div>
+                <div class="table-number">@Table.Factor.TableTitle</div>
             </div>
             <div class="header-right">
-                <div class="detail">تاریخ: @Item.RecordDate</div>
-                <div class="detail">ساعت: @Item.RecordTime</div>
+                <div class="detail">تاریخ: @Table.Factor.RecordDate</div>
+                <div class="detail">ساعت: @Table.Factor.RecordTime</div>
 
                 @* <div class="detail">فاکتور: @Item.FactorNumber</div> *@
             </div>
@@ -40,7 +40,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Item.Items)
+                    @foreach (var item in Table.Factor.Items)
                     {
                     <FactorItem Factor="this"  Item="item"></FactorItem>
                     }
@@ -49,7 +49,7 @@
             <div class="invoice-summary">
                 <div class="summary-item">
                     <span class="summary-label">مجموع:</span>
-                    <span class="summary-value">@Item.TotalPrice</span>
+                    <span class="summary-value">@Table.Factor.TotalPrice</span>
                 </div>
                 <div class="summary-item">
                     <span class="summary-label">تسویه دنگی:</span>
@@ -57,11 +57,11 @@
                 </div>
                 <div class="summary-item">
                     <span class="summary-label">تسویه شده:</span>
-                    <span class="summary-value">@Item.Paid</span>
+                    <span class="summary-value">@Table.Factor.Paid</span>
                 </div>
                 <div class="summary-item">
                     <span class="summary-label">مانده:</span>
-                    <span class="summary-value">@(Item.TotalPrice-Item.Paid)</span>
+                    <span class="summary-value">@(Table.Factor.TotalPrice - Table.Factor.Paid)</span>
                 </div>
             </div>
         </div>

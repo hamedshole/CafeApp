@@ -24,22 +24,22 @@ namespace CafeApp.Business.Services
                                 Id = x.Id,
                                 Title = x.Title
                             }).OrderBy(x=>x.Number).ToList();
-            foreach (var table in tables)
-            {
+            //foreach (var table in tables)
+            //{
 
 
-                OrderEntity? order = _repository.DataUnit.Orders.Get(OrderSpecifications.GetTableState(table.Id)).FirstOrDefault();
-                if (order is OrderEntity)
-                {
-                    table.State = TableState.filled;
-                    table.LastState = TableState.filled;
-                }
-                else
-                {
-                    table.State = TableState.empty;
-                    table.LastState = TableState.empty;
-                }
-            }
+            //    OrderEntity? order = _repository.DataUnit.Orders.Get(OrderSpecifications.GetTableState(table.Id)).FirstOrDefault();
+            //    if (order is OrderEntity)
+            //    {
+            //        table.State = TableState.filled;
+            //        table.LastState = TableState.filled;
+            //    }
+            //    else
+            //    {
+            //        table.State = TableState.empty;
+            //        table.LastState = TableState.empty;
+            //    }
+            //}
             return tables;
         }
         public async Task<DashboardTableModel> GetDashboardTable(Guid id)

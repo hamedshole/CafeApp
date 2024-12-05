@@ -1,6 +1,7 @@
 ﻿using CafeApp.Business.Helpers.Common;
 using CafeApp.Business.Helpers.Dtos;
 using CafeApp.Domain.Entities;
+using CafeApp.Domain.Interfaces;
 using MudBlazor;
 
 namespace CafeApp.Shared.Pages.Additive
@@ -52,6 +53,8 @@ namespace CafeApp.Shared.Pages.Additive
                     await _unit.Additives.WriteSync(dbEntity);
                 }
                 await _unit.Additives.Apply();
+                _notification.NotifySuccess();
+                await _dataGrid.ReloadServerData();
             }
             catch (Exception e)
             {

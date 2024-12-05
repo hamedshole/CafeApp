@@ -96,12 +96,40 @@ namespace CafeApp.Infrastructure.Data.Repositories
             try
             {
                 TEntity? updateEntity = await _dbSet.FindAsync(entity.Id) ?? throw new NotFoundException(nameof(TEntity), entity.Id);
-                _dbSet.Entry(updateEntity).State = EntityState.Detached;
+              _dbSet.Entry(updateEntity).State = EntityState.Detached;
                 updateEntity = entity;
                 //updateEntity.Update(_auth.GetUserId());
                 updateEntity.Update(Guid.Empty);
+                _dbSet.Update(updateEntity);
+                //_dbSet.Entry(updateEntity).State = EntityState.Modified;
 
-                _dbSet.Entry(updateEntity).State = EntityState.Modified;
+
+            }
+            catch (NotFoundException)
+            {
+                throw;
+            }
+            catch (DbUpdateException dbe) when (dbe.InnerException?.HResult == -2146232060)
+            {
+                throw new WrongNeccasaryFieldException();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        async Task IRepository<TEntity>.UpdateStateAsync(TEntity entity)
+        {
+            try
+            {
+                TEntity? updateEntity = await _dbSet.FindAsync(entity.Id) ?? throw new NotFoundException(nameof(TEntity), entity.Id);
+                //_dbSet.Entry(updateEntity).State = EntityState.Detached;
+                //updateEntity = entity;
+                //updateEntity.Update(_auth.GetUserId());
+                updateEntity.Update(Guid.Empty);
+                //_dbSet.Update(updateEntity);
+                //_dbSet.Entry(updateEntity).State = EntityState.Modified;
 
 
             }

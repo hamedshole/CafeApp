@@ -17,13 +17,16 @@ namespace CafeApp.Shared.Pages.Category
             }
         }
 
-
+        public void Cancel()
+        {
+            _navigation.NavigateTo("/dashboard/categories");
+        }
         private async void UploadFiles(IBrowserFile? browserFile)
         {
             if (browserFile != null)
             {
 
-            value.Image =await ConvertToBase64(browserFile.OpenReadStream(maxAllowedSize:int.MaxValue));
+                value.Image = await ConvertToBase64(browserFile.OpenReadStream(maxAllowedSize: int.MaxValue));
             }
             StateHasChanged();
         }
@@ -46,7 +49,8 @@ namespace CafeApp.Shared.Pages.Category
                     (
                     value.Id, value.Order, value.Title, value.IsActive, value.Image, value.Description
                     );
-               await _unit.Categories.UpdateAsync(parameter);
+                await _unit.Categories.UpdateAsync(parameter);
+                _notification.NotifySuccess();
             }
             else
             {
@@ -59,7 +63,9 @@ namespace CafeApp.Shared.Pages.Category
                     Title = value.Title
                 };
                 await _unit.Categories.CreateAsync(parameter);
+                _notification.NotifySuccess();
             }
+            Cancel();
         }
     }
 }

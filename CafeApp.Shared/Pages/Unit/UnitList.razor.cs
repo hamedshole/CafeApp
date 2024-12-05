@@ -8,12 +8,12 @@ namespace CafeApp.Shared.Pages.Unit
     public partial class UnitList
     {
         private UnitDetail _panel;
+        private ListUnitParameter _filter = new();
         private async Task<GridData<UnitDto>> LoadData(GridState<UnitDto> gridState)
         {
-            ListUnitParameter parameter = new ListUnitParameter();
-            parameter.PageSize=gridState.PageSize;
-            parameter.Page=gridState.Page+1;
-            var res = await _unit.Units.GetPaged(parameter.GetSpecifications(),parameter);
+            _filter.PageSize=gridState.PageSize;
+            _filter.Page=gridState.Page+1;
+            var res = await _unit.Units.GetPaged(_filter.GetSpecifications(), _filter);
             if (res.Items is null)
                 res = new PagedList<UnitDto>(new List<UnitDto>(), res.TotalItems);
             return new GridData<UnitDto> { Items = res.Items, TotalItems = res.TotalItems };

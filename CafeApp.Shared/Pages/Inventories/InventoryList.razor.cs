@@ -1,5 +1,6 @@
 ﻿using CafeApp.Business.Helpers.Dtos;
 using CafeApp.Domain.Entities;
+using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using MudBlazor;
 
 namespace CafeApp.Shared.Pages.Inventories
@@ -7,16 +8,16 @@ namespace CafeApp.Shared.Pages.Inventories
     public partial class InventoryList
     {
 
-
+        MudDataGrid<InventoryDto> _dataGrid;
+        ListInventoryParameter _filter = new ListInventoryParameter();
         public async Task<GridData<InventoryDto>> LoadData(GridState<InventoryDto> state)
         {
             try
             {
 
-            ListInventoryParameter parameter = new ListInventoryParameter();
-            parameter.PageSize = state.PageSize;
-            parameter.Page = state.Page+1;
-            var res = await _unit.Inventories.GetPaged(parameter.GetSpecifications(), parameter);
+            _filter.PageSize = state.PageSize;
+                _filter.Page = state.Page+1;
+            var res = await _unit.Inventories.GetPaged(_filter.GetSpecifications(), _filter);
             return new GridData<InventoryDto> { Items = res.Items, TotalItems = res.TotalItems };
             }
             catch (Exception e)
@@ -57,6 +58,8 @@ namespace CafeApp.Shared.Pages.Inventories
                     await _unit.Inventories.WriteSync(dbEntity);
                 }
                 await _unit.Inventories.Apply();
+                _notification.NotifySuccess();
+                await _dataGrid.ReloadServerData();
             }
             catch (Exception e)
             {

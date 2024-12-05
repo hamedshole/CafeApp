@@ -24,6 +24,10 @@
     outline: none;
     border: none;
 }
+ h1:focus-visible {
+    outline: none;
+    border: none;
+}
 .mainbody {
     overflow-y:auto;
     direction:rtl;

@@ -11,7 +11,7 @@ namespace CafeApp.Business.Services
     {
         public async Task ChangeState(Guid orderId, short state)
         {
-            var order = await _repository.GetByIdAsync(orderId);
+            var order =  _repository.Get(x=>x.Id==orderId).FirstOrDefault()!;
             order.State = (FactorState)state;
             order.Update(Guid.Empty);
             await _repository.UpdateAsync(order);

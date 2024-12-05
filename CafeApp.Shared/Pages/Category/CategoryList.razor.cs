@@ -1,18 +1,18 @@
 ﻿using CafeApp.Business.Helpers.Common;
 using CafeApp.Business.Helpers.Dtos;
 using CafeApp.Domain.Entities;
+using CafeApp.Domain.Interfaces;
 using MudBlazor;
 namespace CafeApp.Shared.Pages.Category
 {
     public partial class CategoryList
     {
-        private CategoryDetail _panel;
+        private ListProductCategoryParameter _filter = new();
         private async Task<GridData<ProductCategoryDto>> LoadData(GridState<ProductCategoryDto> gridState)
         {
-            ListProductCategoryParameter parameter = new ListProductCategoryParameter();
-            parameter.PageSize=gridState.PageSize;
-            parameter.Page=gridState.Page+1;
-            var res = await _unit.Categories.GetPaged(parameter.GetSpecifications(),parameter);
+            _filter.PageSize=gridState.PageSize;
+            _filter.Page=gridState.Page+1;
+            var res = await _unit.Categories.GetPaged(_filter.GetSpecifications(), _filter);
             if (res.Items is null)
                 res = new PagedList<ProductCategoryDto>(new List<ProductCategoryDto>(), res.TotalItems);
             return new GridData<ProductCategoryDto> { Items = res.Items, TotalItems = res.TotalItems };
@@ -47,6 +47,8 @@ namespace CafeApp.Shared.Pages.Category
                     await _unit.Categories.WriteSync(dbEntity);
                 }
                 await _unit.Categories.Apply();
+                _notification.NotifySuccess();
+                await _dataGrid.ReloadServerData();
             }
             catch (Exception e)
             {

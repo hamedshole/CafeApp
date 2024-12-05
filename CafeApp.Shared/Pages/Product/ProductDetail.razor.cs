@@ -1,4 +1,5 @@
 ﻿using CafeApp.Business.Helpers.Dtos;
+using CafeApp.Domain.Interfaces;
 using Microsoft.AspNetCore.Components.Forms;
 using MudBlazor;
 
@@ -62,6 +63,8 @@ namespace CafeApp.Shared.Pages.Product
                     value.Id, value.Order, _category.Id, value.Title, value.Image, value.Price, value.Description, value.IsNew, value.IsActive, _materials.Select(x => new CreateProductMaterialParameter(x.Id,x.UnitId, x.Amount)).ToList(), _additives.Select(x => x.Id).ToList()
                     );
                 await _unit.Products.UpdateAsync(parameter);
+                _notification.NotifySuccess();
+
             }
             else
             {
@@ -71,8 +74,10 @@ namespace CafeApp.Shared.Pages.Product
                     );
 
                 await _unit.Products.CreateAsync(parameter);
+                _notification.NotifySuccess();
             }
             value = new ProductDetailModel();
+            Cancel();
         }
 
         private async Task<IEnumerable<AdditiveDto>> SearchAdditives(string text, CancellationToken cancellationToken = default)
@@ -146,6 +151,10 @@ namespace CafeApp.Shared.Pages.Product
             }
 
 
+        }
+        public void Cancel()
+        {
+            _navigation.NavigateTo("/dashboard/products");
         }
         private async Task<IEnumerable<ProductCategoryDto>> SearchCategory(string text,CancellationToken cancellationToken=default)
         {

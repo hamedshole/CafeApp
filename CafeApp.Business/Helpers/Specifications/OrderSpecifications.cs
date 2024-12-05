@@ -57,7 +57,7 @@ namespace CafeApp.Business.Helpers.Specifications
                 SetFilterCondition(x => x.Time >= parameter.Start);
             if (parameter.End.HasValue)
                 SetFilterCondition(x => x.Time <= parameter.End);
-            if (parameter.State.HasValue)
+            if (parameter.State.HasValue && parameter.State.Value!=0)
                 SetFilterCondition(x => (byte)x.State == parameter.State);
 
             return this;

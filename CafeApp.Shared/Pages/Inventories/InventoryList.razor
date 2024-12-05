@@ -11,7 +11,23 @@
 
 <MudIconButton OnClick=GoToCreatePAge Icon="@Icons.Material.Filled.Add" Title="جدید">افزودن</MudIconButton>
 <MudIconButton OnClick=Sync Icon="@Icons.Material.Filled.Sync" Title="ارسال به سرور">ارسال به سرور</MudIconButton>
-<MudDataGrid Breakpoint="Breakpoint.None" T="InventoryDto"  ServerData="LoadData" >
+<MudPaper Style="height:fit-content; margin-bottom:20px">
+    <MudStack Row>
+        <div class="col-md-2 col-3">
+            <MudTextField Label="عنوان" T="string" @bind-Value="_filter.Title"></MudTextField>
+        </div>
+        <div class="col-md-1 col-3">
+            <MudSelect Label="وضعیت" T="bool?" @bind-Value=_filter.IsActive>
+                <MudSelectItem Value=null T="bool?">همه</MudSelectItem>
+                <MudSelectItem Value=true T="bool?"> فعال</MudSelectItem>
+                <MudSelectItem Value=false T="bool?">غیرفعال</MudSelectItem>
+            </MudSelect>
+        </div>
+        <MudIconButton OnClick=_dataGrid.ReloadServerData Icon="@Icons.Material.Filled.Search" Title="ارسال به سرور">ارسال به سرور</MudIconButton>
+
+    </MudStack>
+</MudPaper>
+<MudDataGrid @ref=_dataGrid Breakpoint="Breakpoint.None" T="InventoryDto"  ServerData="LoadData" >
     <Columns>
         <PropertyColumn Sortable="false" Title="عنوان" Property="x => x.Title" />
         <TemplateColumn Title="وضعیت"  >

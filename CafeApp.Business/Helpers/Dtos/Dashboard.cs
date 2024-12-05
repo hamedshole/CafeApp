@@ -6,9 +6,11 @@
         public string Title { get; set; }
         public int Number { get; set; }
         public TableState State { get; set; }
-        public DashboardFactorModel Factor { get; set; }
+        public DashboardFactorModel Factor { get; set; }=new DashboardFactorModel();
         public string LastConnectionId { get; set; }
         public TableState LastState { get; set; }
+        public List<DashboardCategoryModel>? Categories { get; set; } = new List<DashboardCategoryModel>();
+        public DashboardCategoryModel? SelectedCategory { get; set; } = new DashboardCategoryModel();
     }
     public enum TableState
     {

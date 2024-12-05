@@ -12,12 +12,14 @@ namespace CafeApp.Shared.Pages.Order
         [CascadingParameter]
         public TablesPanel _table { get; set; }
         private readonly string _route = "orders";
+        private ListOrderParameter _filter = new();
         private async Task<GridData<OrderDto>> LoadData(GridState<OrderDto> gridState)
         {
-            ListOrderParameter parameter = new ListOrderParameter();
-            parameter.PageSize = gridState.PageSize;
-            parameter.Page = gridState.Page + 1;
-            var res = await _unit.Orders.GetPaged(parameter.GetSpecifications(), parameter);
+            _filter.Start = _dateRange!.Start;
+            _filter.End = _dateRange!.End;
+            _filter.PageSize = gridState.PageSize;
+            _filter.Page = gridState.Page + 1;
+            var res = await _unit.Orders.GetPaged(_filter.GetSpecifications(), _filter);
             if (res.Items is null)
                 res = new PagedList<OrderDto>(new List<OrderDto>(), res.TotalItems);
             return new GridData<OrderDto> { Items = res.Items, TotalItems = res.TotalItems };

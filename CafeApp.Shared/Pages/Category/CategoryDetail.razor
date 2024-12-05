@@ -1,6 +1,9 @@
 ﻿@using System.Globalization
+@using CafeApp.Domain.Interfaces
 @using Microsoft.AspNetCore.Components.Forms
 @inject IApplicationUnit _unit
+@inject INotification _notification
+@inject NavigationManager _navigation
 @page "/dashboard/categories/new"
 @page "/dashboard/categories/{id}"
 <MudContainer Style="margin:20px;overflow-y:hidden" MaxWidth=MaxWidth.Large Class="mt-16">
@@ -26,7 +29,7 @@
 
                     <MudItem xs="12" Class="d-flex justify-center">
                         <MudButton OnClick=Submit Style="margin:10px" Variant="Variant.Filled" DisableElevation="true" Color="Color.Success" Size="Size.Large" Class="mt-8">ثبت</MudButton>
-                        <MudButton  Style="margin:10px" Variant="Variant.Filled" DisableElevation="true" Color="Color.Error" Size="Size.Large" Class="mt-8">لغو</MudButton>
+                        <MudButton OnClick=Cancel  Style="margin:10px" Variant="Variant.Filled" DisableElevation="true" Color="Color.Error" Size="Size.Large" Class="mt-8">لغو</MudButton>
 
                     </MudItem>
                 </MudGrid>

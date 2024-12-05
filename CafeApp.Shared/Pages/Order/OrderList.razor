@@ -12,21 +12,23 @@
 <MudPaper Style="margin-bottom:20px">
     <MudStack Row>
         <div class="col-md-2 col-4">
-            <MudDateRangePicker Label="تاریخ" Style="font-family:Ariz" Culture=cultureInfo></MudDateRangePicker>
+            <MudDateRangePicker ValueChanged=OnValueChanged @bind-DateRange=_dateRange Label="تاریخ" Style="font-family:Ariz" Culture=cultureInfo></MudDateRangePicker>
         </div>
         <div class="col-md-2 col-3">
             <MudAutocomplete Label="مشتری" T="CustomerDto"></MudAutocomplete>
         </div>
         <div class="col-md-1 col-3">
-            <MudSelect Label="وضعیت" Value="1" T="short">
-                <MudSelectItem Value=1 T="short">جدید</MudSelectItem>
-                <MudSelectItem Value=2 T="short">آماده سازی</MudSelectItem>
-                <MudSelectItem Value=3 T="short">تحویل</MudSelectItem>
-                <MudSelectItem Value=4 T="short">تسویه</MudSelectItem>
-                <MudSelectItem Value=5 T="short">لغو</MudSelectItem>
+            <MudSelect Label="وضعیت" @bind-Value=_filter.State T="byte?">
+                <MudSelectItem Value=0 T="byte?">همه</MudSelectItem>
+                <MudSelectItem Value=1 T="byte?">جدید</MudSelectItem>
+                <MudSelectItem Value=2 T="byte?">آماده سازی</MudSelectItem>
+                <MudSelectItem Value=3 T="byte?">تحویل</MudSelectItem>
+                <MudSelectItem Value=4 T="byte?">تسویه</MudSelectItem>
+                <MudSelectItem Value=5 T="byte?">لغو</MudSelectItem>
             </MudSelect>
         </div>
-       
+        <MudIconButton OnClick=_dataGrid.ReloadServerData Icon="@Icons.Material.Filled.Search" Title="ارسال به سرور">ارسال به سرور</MudIconButton>
+
     </MudStack>
 </MudPaper>
 
@@ -61,16 +63,16 @@
 
 
     </Columns>
-<PagerContent>
-    <MudDataGridPager  RowsPerPageString="اندازه صفحه"></MudDataGridPager>
-</PagerContent>
+    <PagerContent>
+        <MudDataGridPager  RowsPerPageString="اندازه صفحه"></MudDataGridPager>
+    </PagerContent>
 </MudDataGrid>
 
 
 @code {
     private MudDataGrid<OrderDto> _dataGrid;
     private CultureInfo cultureInfo = new CultureInfo("fa-ir");
-
+    private DateRange _dateRange = new DateRange();
     private string IsActiveString(bool isActive)
     {
         if (isActive)
@@ -79,6 +81,10 @@
             return "غیرفعال";
     }
 
-
-
+    private void OnValueChanged(PickerVariant variant)
+    {
+        _filter.Start = _dateRange!.Start;
+        _filter.End = _dateRange!.End;
+    }
 }
+

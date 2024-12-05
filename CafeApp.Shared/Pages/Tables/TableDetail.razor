@@ -15,9 +15,9 @@
             Immediate="true"
             Label="عنوان" />
             <MudTextField @bind-Value="_model.Number"
-                          For="@(() => _model.Number)"
-                          Immediate="true"
-                          Label="شماره" />
+            For="@(() => _model.Number)"
+            Immediate="true"
+            Label="شماره" />
             <MudCheckBox @bind-Value="_model.IsActive"
             For="@(() => _model.IsActive)"
             Immediate="true"
@@ -56,10 +56,10 @@
     {
         if(string.IsNullOrEmpty(Id))
         {
-        CreateTableParameter parameter = new CreateTableParameter();
-        parameter = new CreateTableParameter {Number=_model.Number, Title = _model.Title, IsActive = _model.IsActive };
-        await _unit.Tables.CreateAsync(parameter);
-        _notification.NotifySuccess();
+            CreateTableParameter parameter = new CreateTableParameter();
+            parameter = new CreateTableParameter {Number=_model.Number, Title = _model.Title, IsActive = _model.IsActive };
+            await _unit.Tables.CreateAsync(parameter);
+            _notification.NotifySuccess();
         }
         else{
             UpdateTableParameter parameter = new UpdateTableParameter();
@@ -67,7 +67,7 @@
             await _unit.Tables.UpdateAsync(parameter);
             _notification.NotifySuccess();
         }
-
+        Cancel();
     }
     public void Cancel()
     {
