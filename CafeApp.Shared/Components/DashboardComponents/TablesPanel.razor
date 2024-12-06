@@ -13,7 +13,7 @@
     <div class="dashboard-tables">
         @foreach (var item in _tables)
         {
-            <TableItem Item="item" ></TableItem>
+            <TableItem TablesPanel="this" Item="item" ></TableItem>
         }
     </div>
 </MudStack>

@@ -30,6 +30,14 @@ namespace CafeApp.Business.Services
             await _repository.UpdateAsync(order);
             await _repository.DataUnit.SaveChangesAsync();
         }
+        public async Task ChangeTable(Guid orderId, Guid tableId)
+        {
+            var order = _repository.Get(x => x.Id == orderId).FirstOrDefault()!;
+            order.TableId = tableId;
+            order.Update(Guid.Empty);
+            await _repository.UpdateAsync(order);
+            await _repository.DataUnit.SaveChangesAsync();
+        }
 
         public async Task PayOrder(Guid orderId, long paidValue)
         {

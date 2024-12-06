@@ -2,7 +2,7 @@
 {
     public interface INotification
     {
-        void NotifySuccess();
+        void NotifySuccess(string message = "");
         void Error(string message);
     }
 }

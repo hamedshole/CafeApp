@@ -10,13 +10,28 @@ namespace CafeApp.Shared.Components.DashboardComponents
         private List<DashboardCategoryModel> _defaultCategories = new List<DashboardCategoryModel>();
         private IJSObjectReference? _module;
         public List<DashboardTableModel> _tables { get; set; }
-        
+        private bool _changeTable;
+        private Guid _sourceTable;
+        private DashboardFactorModel _order;
+        public DashboardFactorModel Factor { get { return _order; } }
         public TablesPanel()
         {
 
             _tables = new List<DashboardTableModel>();
 
 
+        }
+        public bool ChangeTable { get { return _changeTable; } }
+        public void EnableTableChange(Guid sourceTable,DashboardFactorModel order)
+        {
+            _changeTable = true;
+            _sourceTable = sourceTable;
+            _order= order;
+        }
+        public void DisableTableChange()
+        {
+            _sourceTable = Guid.Empty;
+            _changeTable = false;
         }
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {

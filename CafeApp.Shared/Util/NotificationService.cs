@@ -14,11 +14,16 @@ namespace CafeApp.Shared.Util
 
         public void Error(string message)
         {
+            _snakbar.Add(message, Severity.Warning);
+
         }
 
-        public void NotifySuccess()
+        public void NotifySuccess(string message = "")
         {
-            _snakbar.Add(StaticMessages.Success, Severity.Success);
+            if (string.IsNullOrEmpty(message))
+                _snakbar.Add(StaticMessages.Success, Severity.Success);
+            else
+                _snakbar.Add(message, Severity.Success);
         }
     }
 }

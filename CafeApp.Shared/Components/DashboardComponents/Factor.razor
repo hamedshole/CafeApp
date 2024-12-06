@@ -1,8 +1,10 @@
 ﻿@using CafeApp.Business.Helpers.Dtos
+@using CafeApp.Domain.Interfaces
 @using Microsoft.AspNetCore.Components.Forms
 @using Microsoft.JSInterop
 @using System.Globalization
 @inject IJSRuntime _js;
+@inject INotification _notification;
 @inject IApplicationUnit _unit;
 <div class="invoice-wrapper">
     <!-- فاکتور اول -->
@@ -70,6 +72,8 @@
             <button id="btndongi" @onclick="EnableDongi"   class="btn btn-settle-partial">تسویه دنگی</button>
             <button @onclick="DeleteOrder" class="fishbtn btn btn-delete">حذف</button>
             <button @onclick="UpdateOrder" class="fishbtn btn btn-edit">ویرایش</button>
+            <button @onclick="ChangeTable" style="background-color:orange" class="fishbtn btn btn-edit">تغییر میز</button>
+
         </div>
     </div>
 </div>

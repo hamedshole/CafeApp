@@ -9,5 +9,6 @@ namespace CafeApp.Business.Interfaces
         Task ApplyDeliver(DashboardFactorItemModel item, Guid orderId);
         Task PayOrder(Guid orderId, long paidValue);
         Task PayOrderItem(Guid orderId, Guid orderItemId, int amount);
+        Task ChangeTable(Guid orderId, Guid tableId);
     }
 }

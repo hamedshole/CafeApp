@@ -9,6 +9,8 @@ namespace CafeApp.Shared.Components.DashboardComponents
     {
         [Parameter]
         public EventCallback Pay { get; set; }
+        [CascadingParameter]
+        public TablesPanel TablesPanel { get; set; }
 
         private long _livePaidAmount = 0;
 
@@ -61,6 +63,11 @@ namespace CafeApp.Shared.Components.DashboardComponents
             await _module.InvokeVoidAsync("enableDongi", _dongi);
             if (_dongi)
             {
+                if(Table.Factor.Id==Guid.Empty)
+                {
+                    _notification.Error("فاکتور هنوز ثبت نشده است");
+                    return;
+                }
                 foreach (var item in Table.Factor.Items)
                 {
                     item.SubmitDongi();
@@ -69,8 +76,8 @@ namespace CafeApp.Shared.Components.DashboardComponents
                 Table.Factor.Paid = Table.Factor.Paid + _livePaidAmount;
                 _livePaidAmount = 0;
                 StateHasChanged();
-                await _unit.Orders.PayOrder(Table.Factor.Id,Table.Factor.Paid);
-                
+                await _unit.Orders.PayOrder(Table.Factor.Id, Table.Factor.Paid);
+
             }
             _dongi = !_dongi;
         }
@@ -113,6 +120,16 @@ namespace CafeApp.Shared.Components.DashboardComponents
             if (Table.Factor.Id != Guid.Empty)
                 await _unit.Orders.ApplyDeliver(item, Table.Factor.Id);
         }
+        public async Task ChangeTable()
+        {
+            if (!TablesPanel.ChangeTable)
+            {
+                TablesPanel.EnableTableChange(Table.Id,Table.Factor);
+                _notification.NotifySuccess("میز موردنظر را انتخاب کنید");
+            }
+            else
+                TablesPanel.DisableTableChange();
+        }
         public async Task UpdateOrder()
         {
             try
@@ -121,9 +138,9 @@ namespace CafeApp.Shared.Components.DashboardComponents
                 {
                     Id = Table.Factor.Id,
                     Description = Table.Factor.Description,
-                    Type =(FactorType)Table.Factor.Type,
-                    Time =Table.Factor.Time,
-                    State =(FactorState) Table.Factor.State,
+                    Type = (FactorType)Table.Factor.Type,
+                    Time = Table.Factor.Time,
+                    State = (FactorState)Table.Factor.State,
                     UserId = Table.Factor.UserId,
                     TableId = Table.Factor.TableId,
                     Items = Table.Factor.Items.Select(x => new CreateOrderItemParameter
@@ -138,7 +155,7 @@ namespace CafeApp.Shared.Components.DashboardComponents
                 };
                 if (Table.Factor.CustomerId == Guid.Empty)
                     orderParameter.CustomerId = null;
-                await _unit.Orders.DeleteAsync(Table.Factor.Id,false);
+                await _unit.Orders.DeleteAsync(Table.Factor.Id, false);
                 await _unit.Orders.CreateAsync(orderParameter);
 
             }
