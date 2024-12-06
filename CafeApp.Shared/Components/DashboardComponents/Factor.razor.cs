@@ -1,4 +1,5 @@
 ﻿using CafeApp.Business.Helpers.Dtos;
+using CafeApp.Domain.Common;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 
@@ -9,7 +10,7 @@ namespace CafeApp.Shared.Components.DashboardComponents
         [Parameter]
         public EventCallback Pay { get; set; }
 
-        private long _livePaidAmount=0;
+        private long _livePaidAmount = 0;
 
         [Parameter]
         public DashboardTableModel Table { get; set; } = new DashboardTableModel();
@@ -24,14 +25,14 @@ namespace CafeApp.Shared.Components.DashboardComponents
         }
         public void SetCustomer(CustomerDto value)
         {
-            Table.Factor.CustomerId=value.Id;
+            Table.Factor.CustomerId = value.Id;
         }
         public void Add(DashboardProductModel dashboardProduct)
         {
             DashboardFactorItemModel item = Table.Factor.Items.FirstOrDefault(x => x.ProductId == dashboardProduct.Id);
             if (item == null)
             {
-                item = new DashboardFactorItemModel() {ProductId=dashboardProduct.Id, CategoryId=dashboardProduct.CategoryId, Id = dashboardProduct.Id, ProductTitle = dashboardProduct.Title, TotalAmount = dashboardProduct.Amount, UnitPrice = dashboardProduct.Price };
+                item = new DashboardFactorItemModel() { ProductId = dashboardProduct.Id, CategoryId = dashboardProduct.CategoryId, ProductTitle = dashboardProduct.Title, TotalAmount = dashboardProduct.Amount, UnitPrice = dashboardProduct.Price };
                 Table.Factor.Items.Add(item);
             }
             else
@@ -57,14 +58,19 @@ namespace CafeApp.Shared.Components.DashboardComponents
         }
         public async void EnableDongi()
         {
-           await _module.InvokeVoidAsync("enableDongi",_dongi);
+            await _module.InvokeVoidAsync("enableDongi", _dongi);
             if (_dongi)
             {
                 foreach (var item in Table.Factor.Items)
+                {
                     item.SubmitDongi();
-                Table.Factor.Paid =Table.Factor.Paid+ _livePaidAmount;
+                    await _unit.Orders.PayOrderItem(Table.Factor.Id, item.Id, item.PaidAmount);
+                }
+                Table.Factor.Paid = Table.Factor.Paid + _livePaidAmount;
                 _livePaidAmount = 0;
                 StateHasChanged();
+                await _unit.Orders.PayOrder(Table.Factor.Id,Table.Factor.Paid);
+                
             }
             _dongi = !_dongi;
         }
@@ -92,7 +98,7 @@ namespace CafeApp.Shared.Components.DashboardComponents
         }
         public void AddPrice(long unitPrice)
         {
-            _livePaidAmount+=unitPrice;
+            _livePaidAmount += unitPrice;
             InvokeAsync(StateHasChanged);
 
         }
@@ -100,6 +106,51 @@ namespace CafeApp.Shared.Components.DashboardComponents
         {
             _livePaidAmount -= unitPrice;
             InvokeAsync(StateHasChanged);
+        }
+
+        public async Task ApplyDeliver(DashboardFactorItemModel item)
+        {
+            if (Table.Factor.Id != Guid.Empty)
+                await _unit.Orders.ApplyDeliver(item, Table.Factor.Id);
+        }
+        public async Task UpdateOrder()
+        {
+            try
+            {
+                CreateOrderParameter orderParameter = new CreateOrderParameter
+                {
+                    Id = Table.Factor.Id,
+                    Description = Table.Factor.Description,
+                    Type =(FactorType)Table.Factor.Type,
+                    Time =Table.Factor.Time,
+                    State =(FactorState) Table.Factor.State,
+                    UserId = Table.Factor.UserId,
+                    TableId = Table.Factor.TableId,
+                    Items = Table.Factor.Items.Select(x => new CreateOrderItemParameter
+                    {
+                        Id = x.Id,
+                        HasAdditive = false,
+                        ProductId = x.ProductId,
+                        TotalPrice = x.TotalPrice,
+                        Amount = x.TotalAmount,
+                        Additives = null
+                    }).ToList()
+                };
+                if (Table.Factor.CustomerId == Guid.Empty)
+                    orderParameter.CustomerId = null;
+                await _unit.Orders.DeleteAsync(Table.Factor.Id,false);
+                await _unit.Orders.CreateAsync(orderParameter);
+
+            }
+            catch (Exception e)
+            {
+
+                throw;
+            }
+        }
+        public async Task DeleteOrder()
+        {
+            await _unit.Orders.DeleteAsync(Table.Factor.Id);
         }
     }
 }

@@ -34,9 +34,9 @@ namespace CafeApp.Business.Services
             }
         }
 
-        public virtual async Task DeleteAsync(Guid id)
+        public virtual async Task DeleteAsync(Guid id, bool softdelete = true)
         {
-            await _repository.DeleteAsync(id);
+            await _repository.DeleteAsync(id,softdelete);
             await _repository.DataUnit.SaveChangesAsync();
         }
 

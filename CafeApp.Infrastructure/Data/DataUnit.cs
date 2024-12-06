@@ -36,7 +36,7 @@ namespace CafeApp.Infrastructure.Data
         private readonly IRepository<InventoryEntity>? _inventoriyRepository;
         private readonly IRepository<InventoryLogEntity>? _inventoryLogrepository;
         private readonly IRepository<OrderEntity>? _orderRepository;
-        private readonly IRepository<OrderItemEntity>? _orderItemRepository;
+        private readonly IRepository<OrderDetailEntity>? _orderItemRepository;
         private readonly IRepository<OrderItemAdditiveEntity>? _orderItemAdditiveRepository;
         private readonly IRepository<UserEntity>? _userRepository;
         private readonly IRepository<InventoryFactorEntity> _inventoryFactorsRepository;
@@ -59,7 +59,7 @@ namespace CafeApp.Infrastructure.Data
         public IRepository<InventoryEntity> Inventories => _inventoriyRepository ?? new DataRepository<InventoryEntity>(_context, this);
         public IRepository<InventoryLogEntity> InventoryLogs => _inventoryLogrepository ?? new DataRepository<InventoryLogEntity>(_context, this);
         public IRepository<OrderEntity> Orders => _orderRepository ?? new DataRepository<OrderEntity>(_context, this);
-        public IRepository<OrderItemEntity> OrderItems => _orderItemRepository ?? new DataRepository<OrderItemEntity>(_context, this);
+        public IRepository<OrderDetailEntity> OrderItems => _orderItemRepository ?? new DataRepository<OrderDetailEntity>(_context, this);
         public IRepository<OrderItemAdditiveEntity> OrderItemAdditives => _orderItemAdditiveRepository ?? new DataRepository<OrderItemAdditiveEntity>(_context, this);
         public IRepository<UserEntity> Users => _userRepository ?? new DataRepository<UserEntity>(_context, this);
         public IRepository<InventoryFactorEntity> InventoryFactors => _inventoryFactorsRepository ?? new DataRepository<InventoryFactorEntity>(_context, this);

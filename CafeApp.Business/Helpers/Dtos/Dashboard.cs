@@ -28,6 +28,9 @@
         public Guid UserId { get; set; }
         public string UserName { get; set; }
         public string FactorNumber { get; set; }
+        public DateTime Time { get; set; }
+        public short Type { get; set; }
+        public short State { get; set; }
         public string RecordDate { get; set; }
         public string RecordTime { get; set; }
 
@@ -43,6 +46,10 @@
     }
     public class DashboardFactorItemModel
     {
+        public DashboardFactorItemModel()
+        {
+            Id=Guid.NewGuid();
+        }
         public Guid Id { get; set; }
         public Guid? CategoryId { get; set; }
         public Guid ProductId { get; set; }
@@ -53,6 +60,7 @@
         public long UnitPrice { get; set; }
         public string Description { get; set; }
         public string State { get; set; }
+        public bool StateChecked { get; set; }
         public int SubmittedDongi { get; set; }
         public void SubmitDongi()
         {

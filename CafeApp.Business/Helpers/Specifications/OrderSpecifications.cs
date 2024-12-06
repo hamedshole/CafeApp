@@ -1,4 +1,5 @@
 ﻿using CafeApp.Business.Helpers.Dtos;
+using CafeApp.Domain.Common;
 using CafeApp.Domain.Entities;
 
 namespace CafeApp.Business.Helpers.Specifications
@@ -40,7 +41,7 @@ namespace CafeApp.Business.Helpers.Specifications
         {
             OrderSpecifications specs = new OrderSpecifications();
             specs.SetFilterCondition(x => x.TableId == tableId);
-            specs.SetFilterCondition(x => x.State == Domain.Common.FactorState.New || x.State == Domain.Common.FactorState.InProgress);
+            specs.SetFilterCondition(x => x.State == FactorState.New || x.State == FactorState.InProgress|| x.State==FactorState.Completed);
             specs.SetFilterCondition(x => DateOnly.FromDateTime(x.Time) == DateOnly.FromDateTime(DateTime.Now));
             specs.AddInclude("Details.Product");
             specs.AddInclude("Table");

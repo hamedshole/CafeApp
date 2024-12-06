@@ -8,5 +8,6 @@ namespace CafeApp.Business.Services
 {
     internal class FactorService(IRepository<InventoryFactorEntity> repository, IMapper mapper) : BaseService<InventoryFactorEntity, FactorDto>(repository, mapper), IFactorService
     {
+       
     }
 }

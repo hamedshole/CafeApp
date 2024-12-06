@@ -104,6 +104,9 @@ namespace CafeApp.Business.Helpers
 
 
             CreateMap<OrderEntity, DashboardFactorModel>()
+                .ForMember(x=>x.Type,opt=>opt.MapFrom(x=>(short)x.Type))
+                .ForMember(x=>x.State,opt=>opt.MapFrom(x=>(short)x.State))
+                .ForMember(x=>x.Paid,opt=>opt.MapFrom(x=>x.PaidAmount))
                 .ForMember(x => x.Items, opt => opt.MapFrom(x => x.Details))
                 .ForMember(x => x.CustomerName, opt => opt.MapFrom(x => x.Customer!.FullName))
                 .ForMember(x => x.TableTitle, opt => opt.MapFrom(x => x.Table!.Title))
@@ -111,17 +114,33 @@ namespace CafeApp.Business.Helpers
                 .ForMember(x => x.RecordDate, opt => opt.MapFrom(x => x.Time.ToString("yyyy/MM/dd",new CultureInfo("fa-ir"))));
 
             CreateMap<OrderDetailEntity, DashboardFactorItemModel>()
+                .ForMember(x=>x.StateChecked,opt=>opt.MapFrom(x=>x.Delivered))
                 .ForMember(x => x.ProductId, opt => opt.MapFrom(x => x.ProductId))
                 .ForMember(x => x.CategoryId, opt => opt.MapFrom(x => x.Product!.CategoryId))
                 .ForMember(x => x.ProductTitle, opt => opt.MapFrom(x => x.Product!.Title))
                 .ForMember(x => x.TotalAmount, opt => opt.MapFrom(x => x.Amount))
-                .ForMember(x => x.UnitPrice, opt => opt.MapFrom(x => x.Product!.Price));
+                .ForMember(x => x.UnitPrice, opt => opt.MapFrom(x => x.Product!.Price))
+                .ReverseMap();
 
             CreateMap<CreateOrderParameter, OrderEntity>()
+                .ForMember(x=>x.Id,opt=>opt.MapFrom(x=>x.Id))
                 .ForMember(x => x.Details, opt => opt.MapFrom(x => x.Items))
                 .ForMember(x => x.TotalPrice, opt => opt.MapFrom(x => x.Items.Sum(x => x.TotalPrice)));
-            CreateMap<CreateOrderItemParameter, OrderDetailEntity>();
+            CreateMap<CreateOrderItemParameter, OrderDetailEntity>()
+                .ForMember(x=>x.Id,opt=>opt.MapFrom(x=>x.Id));
             CreateMap<CreateOrderItemParameter, InventoryFactorEntity>();
+
+            CreateMap<UpdateOrderParameter, OrderEntity>()
+                .ForMember(x=>x.CustomerId,opt=>opt.Ignore())
+                .ForMember(x=>x.TableId,opt=>opt.Ignore())
+                .ForMember(x=>x.Description,opt=>opt.Ignore())
+                .ForMember(x=>x.Time,opt=>opt.Ignore())
+                .ForMember(x=>x.HasDiscount,opt=>opt.Ignore())
+                .ForMember(x=>x.State,opt=>opt.Ignore())
+                .ForMember(x=>x.Description,opt=>opt.Ignore())
+                .ForMember(x=>x.Details,opt=>opt.MapFrom(x=>x.Items));
+            
+
         }
         public static string GetGender(Gender gender)
         {

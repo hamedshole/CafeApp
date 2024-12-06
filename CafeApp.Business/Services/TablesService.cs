@@ -55,7 +55,7 @@ namespace CafeApp.Business.Services
             {
                 OrderEntity? order = _repository.DataUnit.Orders.Get(OrderSpecifications.GetTableState(table.Id)).FirstOrDefault();
                 table.Factor = _mapper.Map<DashboardFactorModel>(order);
-                if (order is OrderEntity && (order.State == Domain.Common.FactorState.InProgress || order.State == Domain.Common.FactorState.New))
+                if (order is OrderEntity && (order.State == Domain.Common.FactorState.InProgress || order.State == Domain.Common.FactorState.New ||order.State==Domain.Common.FactorState.Completed))
                 {
                     table.State = TableState.filled;
                     table.LastState = TableState.filled;

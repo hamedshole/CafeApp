@@ -1,5 +1,4 @@
-﻿using CafeApp.Domain.Common;
-using CafeApp.Domain.Entities;
+﻿using CafeApp.Domain.Entities;
 using CafeApp.Infrastructure.Data.Configurations;
 using Microsoft.EntityFrameworkCore;
 namespace CafeApp.Infrastructure.Data.Context

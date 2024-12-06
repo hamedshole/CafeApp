@@ -36,7 +36,7 @@
                         <th class="NotMobile">تسویه شده</th>
                         <th>قیمت</th>
                         <th>فی</th>
-                        <th class="NotMobile">وضعیت</th>
+                        <th class="NotMobile">تحویل</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -51,7 +51,7 @@
                     <span class="summary-label">مجموع:</span>
                     <span class="summary-value">@Table.Factor.TotalPrice</span>
                 </div>
-                <div class="summary-item">
+                <div class="summary-item" style="background-color:#beff50">
                     <span class="summary-label">تسویه دنگی:</span>
                     <span class="summary-value">@_livePaidAmount</span>
                 </div>
@@ -68,8 +68,8 @@
         <div class="invoice-footer">
             <button @onclick=Pay class="fishbtn btn btn-settle-all">تسویه کل</button>
             <button id="btndongi" @onclick="EnableDongi"   class="btn btn-settle-partial">تسویه دنگی</button>
-            <button class="fishbtn btn btn-delete">حذف</button>
-            <button class="fishbtn btn btn-edit">ویرایش</button>
+            <button @onclick="DeleteOrder" class="fishbtn btn btn-delete">حذف</button>
+            <button @onclick="UpdateOrder" class="fishbtn btn btn-edit">ویرایش</button>
         </div>
     </div>
 </div>

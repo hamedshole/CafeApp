@@ -23,7 +23,7 @@ namespace CafeApp.Domain.Interfaces
         IRepository<InventoryEntity> Inventories { get; }
         IRepository<InventoryLogEntity> InventoryLogs { get; }
         IRepository<OrderEntity> Orders { get; }
-        IRepository<OrderItemEntity> OrderItems { get; }
+        IRepository<OrderDetailEntity> OrderItems { get; }
         IRepository<OrderItemAdditiveEntity> OrderItemAdditives { get; }
         IRepository<UserEntity> Users { get; }
         IRepository<InventoryFactorEntity> InventoryFactors { get; }

@@ -55,7 +55,7 @@ namespace CafeApp.Infrastructure.Data.Repositories
         {
             try
             {
-                var result = SpecificationEvaluator<TEntity>.GetQuery(_dbSet, specifications).Where(x=>x.IsDeleted==false);
+                var result = SpecificationEvaluator<TEntity>.GetQuery(_dbSet, specifications).AsNoTracking().Where(x=>x.IsDeleted==false);
                 return result;
             }
             catch (Exception)
@@ -148,12 +148,18 @@ namespace CafeApp.Infrastructure.Data.Repositories
         }
 
 
-        async Task IRepository<TEntity>.DeleteAsync(Guid id)
+        async Task IRepository<TEntity>.DeleteAsync(Guid id, bool softDelete = true)
         {
             TEntity? entity = await _dbSet.FindAsync(id) ?? throw new NotFoundException(nameof(TEntity), id);
+            if (softDelete)
+            {
             entity.Delete(Guid.Empty);
             _dbSet.Entry(entity).State = EntityState.Modified;
-            //entity.Delete(_auth.GetUserId());
+            }
+            else
+            {
+                _dbSet.Remove(entity);
+            }
         }
 
         public T GetLastValue<T>(Expression<Func<TEntity,bool>> expression,Expression<Func<TEntity, T>> property)

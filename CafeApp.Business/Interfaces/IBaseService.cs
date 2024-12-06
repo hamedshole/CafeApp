@@ -9,7 +9,7 @@ namespace CafeApp.Business.Interfaces
     {
         Task CreateAsync<TParameter>(TParameter parameters);
         Task UpdateAsync<TParameter>(TParameter parameters);
-        Task DeleteAsync(Guid id);
+        Task DeleteAsync(Guid id,bool softdelete=true);
         Task<TDetailedDto> GetById(Guid id);
         Task<List<TDto>> GetAll(ISpecifications<TEntity> parameters);
         TDetailedDto GetBy(ISpecifications<TEntity> parameters);

@@ -11,7 +11,7 @@ namespace CafeApp.Domain.Interfaces
         Task UpdateAsync(TEntity entity);
         Task UpdateStateAsync(TEntity entity);
         //Task ExecuteUpdateAsync(Expression<Func<TEntity, bool>> expression, params (string, object?)[] parameter);
-        Task DeleteAsync(Guid id);
+        Task DeleteAsync(Guid id,bool softDelete=true);
 
         Task<TEntity> GetByIdAsync(Guid id);
         IQueryable<TEntity> Get(ISpecifications<TEntity> specifications);

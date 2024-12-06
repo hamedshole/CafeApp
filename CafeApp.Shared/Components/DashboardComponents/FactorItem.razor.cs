@@ -36,5 +36,11 @@ namespace CafeApp.Shared.Components.DashboardComponents
             }
         }
         public void SubmitDongi() => Item.SubmittedDongi = Item.PaidAmount;
+
+        public void ApplyDeliver(DashboardFactorItemModel item,object v)
+        {
+            item.StateChecked = (bool)v;
+           Task.Run(async()=> await Factor.ApplyDeliver(item));
+        }
     }
 }

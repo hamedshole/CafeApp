@@ -37,11 +37,12 @@ namespace CafeApp.Business.Helpers.Dtos
         public ICollection<CreateOrderItemAdditiveParameter>? Additives { get; set; }
         public CreateOrderItemParameter()
         {
-
+            Id=Guid.NewGuid();
         }
     }
     public class CreateOrderParameter
     {
+        public Guid Id { get; set; }
         public string? Description { get; set; }
         public FactorType Type { get; set; }
         public DateTime Time { get; set; }
@@ -54,6 +55,15 @@ namespace CafeApp.Business.Helpers.Dtos
         {
 
         }
+    }
+    public class UpdateOrderParameter
+    {
+        public Guid Id { get; set; }
+        public Guid? CustomerId { get; set; }
+        public Guid TableId { get; set; }
+        public ICollection<CreateOrderItemParameter> Items { get; set; }
+        public string? Description { get; set; }
+
     }
     public class ListOrderParameter : PagingParameter, IGetParameter<OrderEntity>
     {

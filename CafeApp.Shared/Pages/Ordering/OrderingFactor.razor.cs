@@ -1,7 +1,7 @@
 ﻿using CafeApp.Business.Helpers.Dtos;
+using CafeApp.Business.Helpers.Specifications;
 using CafeApp.Shared.Components.DashboardComponents;
 using Microsoft.AspNetCore.Components;
-using System.Numerics;
 
 namespace CafeApp.Shared.Pages.Ordering
 {
@@ -26,12 +26,14 @@ namespace CafeApp.Shared.Pages.Ordering
         {
             if (_navigation.Uri.Contains("dashboard/tableOrder/"))
                 await FromTableRoute(firstRender, null);
-
+            else
+                await LoadOrder();
         }
 
         private async Task LoadOrder()
         {
-            var order = await _unit.Orders.GetById(Guid.Parse(OrderId));
+
+            var order =  _unit.Orders.GetBy(OrderSpecifications.GetOrder(Guid.Parse(OrderId!)));
             TableId = order.TableId.ToString();
             await FromTableRoute(false, order);
         }
@@ -53,7 +55,7 @@ namespace CafeApp.Shared.Pages.Ordering
                 }
 
                 _selectedTable = _tables.FirstOrDefault(x => x.Id == Guid.Parse(TableId));
-                if (factor is DashboardFactorModel && _selectedTable.Factor is null)
+                if (factor is DashboardFactorModel)
                     _selectedTable!.Factor = factor;
                 if (_selectedTable!.Factor is null)
                     _selectedTable!.Factor = new DashboardFactorModel() { TableId = _selectedTable.Id, TableTitle = _selectedTable.Title };
